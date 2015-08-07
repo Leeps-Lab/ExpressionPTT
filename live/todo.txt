@@ -1,0 +1,9 @@
+reserve price
+	people who bid below the reserve price aren't allocated a slot
+	implemented in the config
+
+ticks are now a full second when they should be a half second
+
+ctr of 1 to lowest bidder
+	look into why this appears at the beginning
+	should be 0

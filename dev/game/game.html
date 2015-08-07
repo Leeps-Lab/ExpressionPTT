@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+	   <title>Kristian's Game</title>
+     <script type="text/javascript" src="libs/jquery.min.js"></script>
+     <script type="text/javascript" src="libs/flot/jquery.flot.min.js"></script>
+     <script type="text/javascript" src="libs/bootstrap.min.js"></script>
+     <link type="text/css" rel="stylesheet" href="libs/bootstrap.min.css">
+     <script type="text/javascript" src="game.js"></script>
+  </head>
+  <body>
+    <div class="container" id="ngshow">
+      <div class="row">
+        <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
+      </div>
+      <div class="row">
+        <h3 class="text-center" id="currentTask">The current task can earn you a maximum of 30 points.</h3>
+      </div>
+      <div class="row">
+        <p class="col-md-10 col-md-offset-1">Task: Use the <em>left-click</em> of the mouse to <em>drag and drop</em>
+           the maroon square (in the left graph) and search for the location that gives you the highest
+           score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
+           The assigned time is 35 seconds.
+        </p>
+      </div>
+  		<div class="row">
+  			<div class="col-md-7">
+  			<!-- Game -->
+  				<div id="placeholder" style="width:600px;height:300px"></div>
+  			</div>
+  			<div class="col-md-3">
+  				<!-- points earned -->
+  				<div class="row">
+            <div class="col-md-9" style="border-style:solid; border-width: 1px">
+              <h3 id="points" class="text-center">Points earned : 0.0</h3>
+            </div>
+  				</div>
+  				<!-- locator -->
+  				<div class="row">
+            <div class="col-md-3">
+              <canvas id="locator" style="width:200px;height:300px;
+                border-style:solid; border-width: 1px"></canvas>
+            </div>
+  				</div>
+  			</div>
+  		</div>
+      <div class="row">
+        <p id="earned" class="text-center">Money earned for this task (cents) : 0.0</p>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+          <button id="nexttask" type="button" class="btn btn-success">Go To Next Task</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

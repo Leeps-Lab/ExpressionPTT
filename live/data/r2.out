@@ -1,0 +1,708 @@
+('period', 'time', 'value')
+('0', '%H:28:49', '__set_config__')
+
+('0', '%H:27:42', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "5"
+}
+('0', '%H:27:43', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:43', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "8"
+}
+('0', '%H:27:43', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:43', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:43', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "4"
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "6"
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "1"
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "2"
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "7"
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__page_loaded__')
+
+('0', '%H:00:00', '__register__')
+{
+   "user_id": "3"
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:44', '__page_loaded__')
+
+('0', '%H:27:45', 'do_lottery')
+
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 1
+}
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 2
+}
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 2
+}
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 2
+}
+('0', '%H:27:45', '__set_group__')
+{
+   "group": 2
+}
+('0', '%H:27:46', 'change_auction_type')
+{
+   "auction_type": "GSP"
+}
+('0', '%H:27:46', 'start_session')
+
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_period__')
+{
+   "period": 0
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:46', '__set_page__')
+{
+   "page": "Wait"
+}
+('0', '%H:27:48', '__page_loaded__')
+
+('0', '%H:27:48', '__page_loaded__')
+
+('0', '%H:27:49', '__page_loaded__')
+
+('0', '%H:27:50', '__page_loaded__')
+
+('0', '%H:27:52', '__page_loaded__')
+
+('0', '%H:27:52', '__page_loaded__')
+
+('0', '%H:27:52', '__page_loaded__')
+
+('0', '%H:27:52', '_at_barrier')
+
+('0', '%H:27:52', '_at_barrier')
+
+('0', '%H:27:52', '_at_barrier')
+
+('0', '%H:27:52', '_at_barrier')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '__page_loaded__')
+
+('0', '%H:27:52', '_accumulated_points')
+0
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('0', '%H:27:52', '_at_barrier')
+
+('0', '%H:27:52', '_at_barrier')
+
+('0', '%H:27:52', '_at_barrier')
+
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('0', '%H:27:52', '_at_barrier')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '_next_period')
+
+('0', '%H:27:52', '_accumulated_points')
+0
+('0', '%H:27:52', '_accumulated_points')
+0
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('0', '%H:27:52', '_accumulated_points')
+0
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('0', '%H:27:52', '_accumulated_points')
+0
+('0', '%H:27:52', '_accumulated_points')
+0
+('0', '%H:27:52', '_accumulated_points')
+0
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('0', '%H:27:52', '_accumulated_points')
+0
+('1', '%H:27:52', '__set_period__')
+{
+   "period": 1
+}
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('1', '%H:27:52', '__page_loaded__')
+
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('1', '%H:27:52', '__set_page__')
+{
+   "page": "Start"
+}
+('1', '%H:27:52', '_at_barrier')
+
+('1', '%H:27:54', '__page_loaded__')
+
+('1', '%H:27:54', '__page_loaded__')
+
+('1', '%H:27:54', '__page_loaded__')
+
+('1', '%H:27:54', '__page_loaded__')
+
+('1', '%H:27:55', '__page_loaded__')
+
+('1', '%H:27:55', '_at_barrier')
+
+('1', '%H:27:55', '_at_barrier')
+
+('1', '%H:27:55', '_at_barrier')
+
+('1', '%H:27:55', '__page_loaded__')
+
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', '__page_loaded__')
+
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', '_at_barrier')
+
+('1', '%H:27:55', '_at_barrier')
+
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', '_at_barrier')
+
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', '_at_barrier')
+
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "1"
+}
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', 'config')
+{}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:55', 'setup')
+{
+   "chosen": true,
+   "time_keeper": "2"
+}
+('1', '%H:27:56', '_at_barrier')
+
+('1', '%H:27:56', '_at_barrier')
+
+('1', '%H:27:56', '_at_barrier')
+
+('1', '%H:27:56', '_at_barrier')
+
+('1', '%H:27:56', '_____CURRENT_TICK_____')
+{
+   "t": 1
+}
+('1', '%H:27:56', 'sync_time')
+{
+   "t": 1
+}
+('1', '%H:27:56', 'sync_net')
+{
+   "tmp": [
+      {
+         "bid": 0,
+         "cost": 0,
+         "ctr": 190,
+         "current_slot": -1,
+         "name": 1,
+         "payoff": 1900,
+         "revenue": 1900,
+         "vfc": 10
+      },
+      {
+         "bid": 0,
+         "cost": 0,
+         "ctr": 380,
+         "current_slot": -1,
+         "name": 4,
+         "payoff": 7600,
+         "revenue": 7600,
+         "vfc": 20
+      },
+      {
+         "bid": 0,
+         "cost": 0,
+         "ctr": 400,
+         "current_slot": -1,
+         "name": 6,
+         "payoff": 12000,
+         "revenue": 12000,
+         "vfc": 30
+      },
+      {
+         "bid": 0,
+         "cost": 0,
+         "ctr": 1,
+         "current_slot": -1,
+         "name": 7,
+         "payoff": 40,
+         "revenue": 40,
+         "vfc": 40
+      }
+   ]
+}
+('1', '%H:27:56', 'replace_bids')
+{
+   "id": "1",
+   "new_bid": "0.25"
+}
+('1', '%H:27:56', 'sync_net')
+{
+   "tmp": [
+      {
+         "bid": 0.25,
+         "cost": 0,
+         "ctr": 400,
+         "current_slot": 0,
+         "name": 1,
+         "payoff": 1900,
+         "revenue": 1900,
+         "vfc": 10
+      },
+      {
+         "bid": 0,
+         "cost": 0,
+         "ctr": 380,
+         "current_slot": 1,
+         "name": 4,
+         "payoff": 7600,
+         "revenue": 7600,
+         "vfc": 20
+      },
+      {
+         "bid": 0,
+         "cost": 0,
+         "ctr": 190,
+         "current_slot": 2,
+         "name": 6,
+         "payoff": 12000,
+         "revenue": 12000,
+         "vfc": 30
+      },
+      {
+         "bid": 0,
+         "cost": 0,
+         "ctr": 0,
+         "current_slot": 3,
+         "name": 7,
+         "payoff": 0,
+         "revenue": 0,
+         "vfc": 40
+      }
+   ]
+}

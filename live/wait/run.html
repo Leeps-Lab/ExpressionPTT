@@ -1,0 +1,126 @@
+{% load verbatim %}
+<!DOCTYPE HTML>
+<html ng-app="Redwood">
+	<head>
+		<title>Start</title>
+
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/angular/angular-1.2.16.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodCore.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodHelpers.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodSubject.js"></script>
+    
+    <script language="javascript" type="text/javascript" src="{{ STATIC_URL}}framework/js/lib/flot/jquery.flot.js"></script>
+    <script language="javascript" type="text/javascript" src="{{ STATIC_URL}}framework/js/lib/flot/jquery.flot.selection.js"></script>
+    
+    <script src="{{ STATIC_URL}}experiments/AdAuction/simple-slider.js"></script>
+    <link href="{{ STATIC_URL}}experiments/AdAuction/simple-slider.css" rel="stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL}}experiments/AdAuction/simple-slider-volume.css" rel="stylesheet" type="text/css" />
+		
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/bootstrap-3.1.1.min.css"></link>
+		<script type="text/javascript">
+			{{ js }}
+		</script>
+		<style type="text/css">
+			{{ css }}
+		</style>
+	</head>
+{% verbatim %}
+	<body ng-controller="SubjectCtrl">
+    <div class='container'>
+  		<!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      
+        <div class="modal-dialog">
+          <div class="modal-content"> 
+            <div class="modal-body">
+              <p>Please wait... A new round will begin shortly.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  		<div class="navbar navbar-fixed-top container">
+  			<div class="navbar navbar-default" style="margin-bottom: 0;">
+  				<div class="navbar-brand" href="#">Economics Experiment</div>
+  				<ul class="nav navbar-nav">
+  					<li class="active">
+  						<a>User ID: <span>{{ $root.user_id }}</span></a>
+  					</li>
+  				</ul>
+  			</div>
+  		</div>
+  		
+  		<div class="row marketing" align="center">
+        <div class="span6">
+          
+          
+          <div class="progress" style="text-align: left;">
+            <div id="progressbar" class="progress-bar progress-bar-striped active" style="width: 0%"></div>
+          </div>
+          <h2 id="adv_slot" align = "left"></h4>
+
+
+          <div class='row'>
+            <div class='col-md-2'>
+              <h4 id="vpc_slot" align = "left">Value Per Item: -</h4>
+                  <h4 id="all_vpc" align = "left">Others' Values Per Item: -</h4>
+                  <h4 id="ctr_slot" align = "left">Items per Bundle: -</h4>
+                  <h4 id="time_slot" align = "left">Time Remaining: </h4>
+                  <h4 id="pay_slot" align = "left">Cumulative Payoff: </h4>
+                  <h4 id="timekeeper" align = "left"></h4>
+                  <h3 id="error"></h3>
+                  <h3 id="p_bid"></h3>
+                  <p align="left"> Move slider to set a bid amount &shy; &shy; &shy; &shy;
+                  <input id="bidamnt" type="integer" value="" style="text-align: right; width:3em" onkeyup="if (event.keyCode == 13) document.getElementById('sub_bid').click()"> <span id="bidamnt">
+                  
+          
+          
+                  <button input id="sub_bid" type="button">Bid</button></p>
+                  <input id="hbid" type="integer" value="" style="text-align: right; width:3em; display: none;"> <span id="hbid">
+                  <h3 align="left" id="notice"></h3>
+                  <p align="left">
+                  </p>
+            </div>
+            <div class='col-md-4'>
+              <div class="demo-container" >
+                      <div id="placeholder" style="height:550px; width:450px" class="demo-placeholder">  </div>
+                  </div>
+                  <h4 align = "center"> Bid Amount</h4>
+                  <input id="slider" align="left" type="text" data-slider="true" data-slider-range="0,100">
+            </div>
+            <div class='col-md-2'>
+              <h4>&shy;&shy; Payoff  &shy;&shy; </h4>
+                  <p id = "arrow" style="padding-top: 275px;">
+                    <img border="0" src="http://econlab.ucsc.edu/redwood/static/slickgrid/images/arrow.png" width="61" height="76">
+                  </p>
+                  <p id = "arrow2" style="padding-top: 275px;">
+                      <img border="0" src="http://econlab.ucsc.edu/redwood/static/slickgrid/images/spacer.png" width="61" height="76">
+                  </p>
+            </div>
+            <div class='col-md-4'>
+              <div class="demo-container" >
+                    <div id="placeholder2" style="height:550px; width:450px" class="demo-placeholder">  </div>
+                  </div>
+                  <h4 align = "center"> Time </h4>
+                  <h4> &nbsp; </h4>
+            </div>
+          </div>
+                       
+          
+
+       
+        </div>
+      </div>
+    
+    
+    
+        <div class="footer" align="center">
+        </div>
+    
+    </div>
+	</body>
+{% endverbatim %}
+</html>
+

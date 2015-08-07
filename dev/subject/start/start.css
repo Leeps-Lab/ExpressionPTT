@@ -1,0 +1,82 @@
+body {
+  padding-top: 60px;
+}
+
+.no-transition:hover{
+   -webkit-transition: none;
+   background-position: 0 0;
+ }
+
+ #input-matrix {
+   text-align: center;
+   vertical-align: middle !important;
+ }
+
+ #input-matrix > tbody > tr > td {
+   text-align: center;
+   vertical-align: middle !important;
+ }
+
+ .input-cell {
+   padding: 0 !important;
+   width: 80px;
+   font-weight:bold;
+ }
+ td.selected {
+   background-image: url('/static/experiments/continuousMatrix/img/InputShadingLight.png');
+ }
+ td.double-selected {
+   background-image: url('/static/experiments/continuousMatrix/img/InputShadingDark.png');
+ }
+
+.input-link {
+  display: block;
+}
+.disabled {
+  color: grey;
+}
+
+#results-table > tbody > tr > th {
+  text-align: center;
+}
+
+#plot {
+  height:300px;
+  width: 100%;
+}
+
+#heatMap {
+  max-width: 300px;
+  height: 300px;
+}
+#heatLegend {
+  width: 50px;
+  height: 260px;
+
+}
+#actionSpace {
+  position: absolute;
+  top: 0;
+  width: 300px;
+  height: 300px;
+  left: 15px;
+  z-index: 5;
+}
+
+#slider {
+  width: 300px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#slider label {
+  position: absolute;
+  width: 20px;
+  margin-top: 20px;
+  margin-left: -10px;
+  text-align: center;
+}
+.tickLabel {
+  margin-right: 20px;
+
+}
