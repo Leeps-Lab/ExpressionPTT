@@ -29,7 +29,7 @@
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>To begin the experiment click Continue</h3>
-        <input class="success" type="button" value="Continue" ng-click="startExperiment()" />
+        <input class="success" type="button" value="Continue" ng-click="showStartExperiment = false; initalquestions = 0;" />
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Part 1</h3>
         <p>To start click continue</p>
-        <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+        <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
       </div>
     </div>
   </div>
@@ -81,7 +81,7 @@
           </div>
         </div>
         <input class="text" />
-        <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+        <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
       </div>
     </div>
   </div>
@@ -132,7 +132,7 @@
           <p>Overall (i.e. in general), how would you descibe youself?</p>
           <input class="text" />
         </div>
-        <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+        <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
       </div>
     </div>
   </div>
@@ -223,7 +223,7 @@
         <input type="text" />
       </div>
     </div>
-    <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+    <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
   </div>
   <!-- question 4 -->
   <div class="container" ng-show="initalquestions === 4">
@@ -277,7 +277,7 @@
       In many ways, I feel disappointed about my achievements in life.
       <input type="text" />
     </div>
-    <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+    <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
   </div>
   <!-- question 5 -->
   <div class="container" ng-show="initalquestions === 5">
@@ -387,7 +387,7 @@
         Joyful
       </div>
     </div>
-    <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+    <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
   </div>
   <!-- question 6 -->
   <div class="container" ng-show="initalquestions === 6">
@@ -522,34 +522,34 @@
     <input class="success" type="button" value="Continue" ng-click="finishQuestions()" />
   </div>
   <!-- start part 2 -->
-  <div class="container">
+  <div class="container" ng-show="part2">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Part 2</h3>
         <p>To start click continue</p>
-        <input class="success" type="button" value="Continue" />
+        <input class="success" type="button" value="Continue" ng-click="part2 = false; exampleTasks = true" />
       </div>
     </div>
   </div>
   <!-- instructions -->
-  <div class="container">
+  <div class="container" ng-show="exampleTasks">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>You will be asked to complete a sequence of tasks.<br>
           The first two tasks are practice screens.
         </h3>
-        <input class="success" type="button" value="Continue" />
+        <input class="success" type="button" value="Continue" ng-click="realTasks = true; exampleTasks = false;" />
       </div>
     </div>
   </div>
   <!-- real tasks -->
-  <div class="container">
+  <div class="container" ng-show="realTasks">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
-        <h3>Practive screens are over.<br>
+        <h3>Practice screens are over.<br>
           The following tasks do count towards your income.
         </h3>
-        <input class="success" type="button" value="Continue" />
+        <input class="success" type="button" value="Continue" ng-click="showgame()" />
       </div>
     </div>
   </div>
@@ -598,18 +598,120 @@
       </div>
     </div>
   </div>
-  <!-- core interaction -->
-  <!-- slider -->
-  <div ng-show="">
+  <!-- start part 3 -->
+  <div class="container" ng-show="part3">
+    <div class="row">
+      <h3 class="text-center">Part 3</h3>
+      <p class="text-center">To start click continue</p>
+      <div class="col-mid-4 col-mid-offset-4">
+        <input class="success" type="button" value="Continue" ng-click="roles = true; part3 = false;" />
+      </div>
+    </div>
   </div>
+  <!-- core interaction -->
+
+  <!-- assign roles -->
+  <div class="container" ng-show="roles">
+    <div class="row">
+      <h2 class="text-center">Your role is {{role}}</h2>
+      <h2 class="text-center">In Part 2, you have recieved {{endownment}} as
+        endownment and earned {{income}} of income.</h2>
+      <h2 class="text-center">Your counterpart, {{partner.role}}, has received {{partner.endownment}} as
+        endownment and earned {{partner.income}} of income.</h2>
+      <input class="success" type="button" value="Continue" ng-click="roles = false; slider = true" />
+    </div>
+  </div>
+  <!-- slider -->
+
+  <!-- T slider -->
+  <div class="container" ng-show="slider && role === 'T'">
+    <div class="row">
+      <h3>Being T, you are given the authority to transfer money from P's account to your own account.
+        The maximum amount of money you can collect is what P has earned as income in Part 2 (${{partner.income}}).
+      </h3>
+    </div>
+    <div class="row">
+      <h3>What percentage of P's income do you want to transfer to your account?</h3>
+      <p>(Use the slider below to set this percentage)</p>
+    </div>
+    <div class="row">
+      <input id="ex" style="width:600px;" data-slider-id="exSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
+        data-slider-value="0" />
+    </div>
+    <div class="row">
+      <h2>Money (in $) transferred to your account : {{transfered}}</h2>
+      <h2>Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+          <input class="success" type="button" value="Send your Decision" ng-click="sendDecision()" />
+      </div>
+    </div>
+  </div>
+  <!-- P slider -->
+  <div class="container" ng-show="slider && role === 'P'">
+    <div class="row">
+      <h3>At this moment, your counterpart T is deciding what proportion of your income ({{income}})
+        to transfer to his/her own account.
+      </h3>
+    </div>
+    <div class="row">
+      <h3>What percentage of your income do you expect T will transfer to his/her own account?</h3>
+      <p>(Use the slider below to set this percentage)</p>
+    </div>
+    <div class="row">
+      <h2>Amount (in $) expected to be transferred to T's account: {{transfered}}</h2>
+      <h2>Your expected avaliable earnings (in $) are: {{totalincome}}</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+          <input class="success" type="button" value="Send your Estimate" ng-click="sendEstimate()" />
+      </div>
+    </div>
+  </div>
+
   <!-- bid -->
-  <div ng-show="">
+  <div class="container" ng-show="willingnesspage && role === 'P'">
+    <div class="row">
+      <h3>Your counterpart, T, has transferred {{percent}} of your income () to his/her own account.</h3>
+      <h3>Your avaliable earnings are now $8.12</h3>
+    </div>
+    <div class="row">
+      <h3>What is the maximum amount you would be willing to pay to write and send a message that your
+        counterpart T will read?</h3>
+      <p>(Express the amount in dollars and cents)</p>
+      <input type="text" />
+    </div>
+    <div class="row">
+      <h3>The actual price of sending a message will be shown on the next screen.</h3>
+    </div>
+    <div class="row">
+      <input class="success" type="button" value="Send your Decision" ng-click="sendWillingness()" />
+    </div>
+  </div>
+  <!-- check price -->
+  <div class="container" ng-show="checkprice && role === 'P'">
+    <div class="row">
+      <h3>The actual price is $1.05</h3>
+      <h3>Your maximum willingness was $3.00</h3>
+      <h3>Therefore, you will be able to write a message to your counterpart</h3>
+    </div>
+    <div class="row">
+      <input class="success" type="button" value="Continue" ng-click="messagePage = true" />
+    </div>
   </div>
   <!-- message box -->
-  <div ng-show="">
+  <div ng-show="messagePage && role ==='P'">
   </div>
   <!-- final questions -->
-  <div ng-repeat="">
+  <div>
+  </div>
+  <!-- thanks -->
+  <div class="container" ng-show"thanks">
+    <div class="row">
+      <h2>Thank you for participating in this experiment.</h2>
+      <h3>Please remain seated until the experimenter attends to you.</h3>
+    </div>
   </div>
 </body>
 {% endverbatim %}

@@ -15,24 +15,18 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
 }]);
 */
 
-Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
+//Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
+angular.module('testApp', [])
+  .controller('TestController', ['$scope', function($scope) {
+
+  // variables that determine what is on screen
   $scope.initalResponses = [];
-
-  // all the variables for ng show
-  $scope.showStartExperiment = false;
-  $scope.part2 = false;
-  $scope.exampleTasks = false;
   $scope.gametime = false;
-  $scope.realTasks = false;
-  $scope.part3 = false;
+  $scope.slider = true;
   $scope.roles = false;
-  $scope.slider = false;
   $scope.willingnesspage = false;
-  $scope.checkprice = false;
-  $scope.messagePage = false;
-  $scope.thanks = false;
+  $scope.checkprice = true;
 
-  // part 3
   var slider = $("#ex").slider({
     ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
@@ -58,88 +52,88 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   };
 
   // closes one question and shows the next
-  $scope.nextQuestion = function() {
-    $scope.initalquestions++;
-  };// finishes questions onto money part
-  $scope.finishQuestions = function() {
-    $scope.initalquestions++;
-    $scope.part2 = true;
+  $scope.nextQuestion = function(question) {
+    question++;
   };
-  $scope.showgame = function() {
-    $scope.gametime = true;
-    $scope.realTasks = false;
 
-    $scope.points = [];
-    $scope.income = 900;
-    $scope.plot = $.plot("#placeholder",[{
-        data: $scope.points,
-        points: {show : true}
-      }], {
-        xaxis: {
-            ticks:10,
-            min:0,
-            max:100
-        },
-        yaxis: {
-            ticks:10,
-            min:0,
-            max:100
-        },
-        grid: {
-          clickable: true
+  // finishes questions onto money part
+  $scope.finishQuestions = function() {
+      var points = [];
+      $scope.income = 0;
+      var plot = $.plot("#placeholder",[{
+          data: points,
+          points: {show : true}
+        }], {
+          xaxis: {
+              ticks:10,
+              min:0,
+              max:100
+          },
+          yaxis: {
+              ticks:10,
+              min:0,
+              max:100
+          },
+          grid: {
+            clickable: true
+          }
+      });
+
+      var locatorState = new LocatorState(document.getElementById("locator"));
+      locatorState.setGoal();
+      locatorState.draw();
+
+      $("#placeholder").bind("plotclick", function(event, pos, item) {
+        points.pop();
+        points.push([pos.x, pos.y]);
+        plot.setData([{
+          data: points,
+          clickable: false,
+          points: {
+            show: true,
+            fill: true,
+            radius: 10,
+          }
+        }]);
+        plot.draw();
+        locatorState.update(pos);
+        locatorState.draw();
+        /*
+        if (item) {
+          highlight(item.series, item.datapoint);
+          console.log("You clicked a point!");
         }
-    });
+        */
+      });
 
-    $scope.locatorState = new LocatorState(document.getElementById("locator"));
-    $scope.locatorState.setGoal();
-    $scope.locatorState.draw();
 
-    $("#placeholder").bind("plotclick", function(event, pos, item) {
-      $scope.points.pop();
-      $scope.points.push([pos.x, pos.y]);
-      $scope.plot.setData([{
-        data: $scope.points,
-        clickable: false,
-        points: {
-          show: true,
-          fill: true,
-          radius: 10,
-        }
-      }]);
-      $scope.plot.draw();
-      $scope.locatorState.update(pos);
-      $scope.locatorState.draw();
-      /*
-      if (item) {
-        highlight(item.series, item.datapoint);
-        console.log("You clicked a point!");
-      }
-      */
-    });
   };
   $scope.nexttask = function() {
-    $scope.income += $scope.locatorState.getPointvalue();
+    $scope.income += locatorState.getPointvalue();
     $("#income").text("So far, your income is $" +
       parseFloat(parseInt($scope.income)) / 100 + ".");
 
       // reaches income goal
       if ($scope.income > 10 * 100) {
-        $scope.gametime = false;
-        $scope.part3 = true;
+        $("#ngshow").hide();
         console.log("income : " + $scope.income);
       }
       // clear dot and set new goal
       else {
-        $scope.points.pop();
-        $scope.plot.setData([$scope.points]);
-        $scope.plot.draw();
-        $scope.locatorState.setGoal();
-        $scope.locatorState.pointvalue = 0;
+        points.pop();
+        plot.setData([points]);
+        plot.draw();
+        locatorState.setGoal();
+        locatorState.pointvalue = 0;
         $("#earned").text("Money earned for this task (cents) : " +
-          parseFloat($scope.locatorState.pointvalue).toFixed(1));
-        $("#points").text("Points earned : " + parseFloat($scope.locatorState.pointvalue).toFixed(1));
+          parseFloat(locatorState.pointvalue).toFixed(1));
+        $("#points").text("Points earned : " + parseFloat(locatorState.pointvalue).toFixed(1));
 
       }
+  };
+  $scope.assignRoles = function() {
+    $scope.roles = false;
+    $scope.slider = true;
   };
   $scope.sendDecision = function() {
     $scope.slider = false;
@@ -195,7 +189,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
 
   LocatorState.prototype.getPointvalue = function() {
     return this.pointvalue;
-  };
+  }
 
   LocatorState.prototype.setGoal = function() {
     this.goal = {
@@ -244,6 +238,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     this.point.draw(this.ctx);
   };
 
+/*
   rs.on_load(function() {
     console.log("hello world");
     console.log(rs);
@@ -252,8 +247,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       $scope.questions = false;
       $scope.showGame = true;
       console.log("its barrier time");
-      $scope.thanks = false;
     });
 	});
-
+*/
 }]);
