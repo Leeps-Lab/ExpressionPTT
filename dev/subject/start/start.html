@@ -4,16 +4,23 @@
 <head>
   <title>Start</title>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/jquery/jquery.min.js"></script>
+
+    <!--
   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  -->
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/flot/jquery.flot.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-slider.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/angular/angular-1.2.16.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodCore.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodHelpers.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodSubject.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/synchronizedStopWatch.js"></script>
+
   <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/bootstrap-3.1.1.min.css"></link>
+  <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/bootstrap-slider.css"></link>
+
 	<script type="text/javascript">
 		{{ js }}
 	</script>
@@ -29,8 +36,11 @@
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>To begin the experiment click Continue</h3>
-        <input class="success" type="button" value="Continue" ng-click="showStartExperiment = false; initalquestions = 0;" />
       </div>
+    </div>
+    <div class="col-md-2 col-md-offset-5">
+      <button type="button" class="btn btn-info"
+        ng-click="showStartExperiment = false; initalquestions = 0;">Continue</button>
     </div>
   </div>
   <!-- start part 1 -->
@@ -39,7 +49,9 @@
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Part 1</h3>
         <p>To start click continue</p>
-        <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
       </div>
     </div>
   </div>
@@ -80,8 +92,12 @@
             9:<br>Extremeley<br><strong>happy</strong>
           </div>
         </div>
-        <input class="text" />
-        <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
+        <div class="row">
+          <input class="text" ng-model="initalResponses.question1.answer" />
+        </div>
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
       </div>
     </div>
   </div>
@@ -122,17 +138,19 @@
         </div>
         <div class="row">
           <p>Over the past week, what is the lowest level you experienced?</p>
-          <input class="text" />
+          <input class="text" ng-model="initalResponses.question2.answer1" />
         </div>
         <div class="row">
           <p>Over the past week, what is the highest level you experienced?</p>
-          <input class="text" />
+          <input class="text" ng-model="initalResponses.question2.answer2" />
         </div>
         <div class="row">
           <p>Overall (i.e. in general), how would you descibe youself?</p>
-          <input class="text" />
+          <input class="text" ng-model="initalResponses.question2.answer3" />
         </div>
-        <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
       </div>
     </div>
   </div>
@@ -167,63 +185,68 @@
         7<br>Emotions feels very intense
       </div>
     </div>
+    <br>
     <div class="row">
       <div class="col-md-3">
         Irritation
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer1" />
       </div>
       <div class="col-md-3">
         Sadness
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer2" />
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
         Anger
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer3" />
       </div>
       <div class="col-md-3">
         Happiness
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer4" />
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
         Contempt
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer5" />
       </div>
       <div class="col-md-3">
         Fear
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer6" />
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
         Surprise
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer7" />
       </div>
       <div class="col-md-3">
         Joy
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer8" />
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
         Envy
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer9" />
       </div>
       <div class="col-md-3">
         Shame
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer10" />
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
         Jealousy
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question3.answer11" />
       </div>
     </div>
-    <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+      </div>
+    </div>
   </div>
   <!-- question 4 -->
   <div class="container" ng-show="initalquestions === 4">
@@ -235,7 +258,7 @@
     </div>
     <div class="row">
       <div class="col-md-1">
-        1:<br>Strongly<strong>disagree</strong>
+        1:<br>Strongly<br><strong>disagree</strong>
       </div>
       <div class="col-md-1">
         2:<br>Moderately disagree
@@ -250,34 +273,39 @@
         5:<br>Moderately agree
       </div>
       <div class="col-md-1">
-        6:<br>Strongly<strong>agree</strong>
+        6:<br>Strongly<br><strong>agree</strong>
       </div>
     </div>
+    <br>
     <div class="row">
       For me, life has been a continuous process of learning, changing and growth.
-      <input type="text" />
+      <input type="text" ng-model="initalResponses.question4.answer1" />
     </div>
     <div class="row">
       Some people wader aimlessly through life, but I am not one of them.
-      <input type="text" />
+      <input type="text" ng-model="initalResponses.question4.answer2" />
     </div>
     <div class="row">
       I judge myself by what I think is important, not by the values of what others think is important.
-      <input type="text" />
+      <input type="text" ng-model="initalResponses.question4.answer3" />
     </div>
     <div class="row">
       I am quite good at managing the many responsibilities of my daily life,
-      <input type="text" />
+      <input type="text" ng-model="initalResponses.question4.answer4" />
     </div>
     <div class="row">
       I have not experienced many warm and trusting relationships with others.
-      <input type="text" />
+      <input type="text" ng-model="initalResponses.question4.answer5" />
     </div>
     <div class="row">
       In many ways, I feel disappointed about my achievements in life.
-      <input type="text" />
+      <input type="text" ng-model="initalResponses.question4.answer6" />
     </div>
-    <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+      </div>
+    </div>
   </div>
   <!-- question 5 -->
   <div class="container" ng-show="initalquestions === 5">
@@ -326,7 +354,7 @@
         Bad mood
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question5.answer1" />
       </div>
       <div class="col-md-3">
         Good mood
@@ -337,7 +365,7 @@
         Sad
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question5.answer2" />
       </div>
       <div class="col-md-3">
         Happy
@@ -348,7 +376,7 @@
         Depressed
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question5.answer3" />
       </div>
       <div class="col-md-3">
         Elated
@@ -359,7 +387,7 @@
         Gloomy
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question5.answer4" />
       </div>
       <div class="col-md-3">
         Cheerful
@@ -370,7 +398,7 @@
         Displeased
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question5.answer5" />
       </div>
       <div class="col-md-3">
         Pleased
@@ -381,13 +409,17 @@
         Sorrowful
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question5.answer6" />
       </div>
       <div class="col-md-3">
         Joyful
       </div>
     </div>
-    <input class="success" type="button" value="Continue" ng-click="nextQuestion()" />
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+      </div>
+    </div>
   </div>
   <!-- question 6 -->
   <div class="container" ng-show="initalquestions === 6">
@@ -436,7 +468,7 @@
         Nervous
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer1" />
       </div>
       <div class="col-md-3">
         Calm
@@ -447,7 +479,7 @@
         Tense
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer2" />
       </div>
       <div class="col-md-3">
         Relaxed
@@ -458,7 +490,7 @@
         Unconfortable
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer3" />
       </div>
       <div class="col-md-3">
         Confortable
@@ -469,7 +501,7 @@
         Apathetic
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer4" />
       </div>
       <div class="col-md-3">
         Caring
@@ -480,7 +512,7 @@
         Lethargic
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer5" />
       </div>
       <div class="col-md-3">
         Energetic
@@ -491,7 +523,7 @@
         Unconfident
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer6" />
       </div>
       <div class="col-md-3">
         Confident
@@ -502,7 +534,7 @@
         Unresponsive
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer7" />
       </div>
       <div class="col-md-3">
         Emotional
@@ -513,13 +545,17 @@
         Passive
       </div>
       <div class="col-md-3">
-        <input type="text" />
+        <input type="text" ng-model="initalResponses.question6.answer8" />
       </div>
       <div class="col-md-3">
         Active
       </div>
     </div>
-    <input class="success" type="button" value="Continue" ng-click="finishQuestions()" />
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="finishQuestions()">Continue</button>
+      </div>
+    </div>
   </div>
   <!-- start part 2 -->
   <div class="container" ng-show="part2">
@@ -527,7 +563,9 @@
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Part 2</h3>
         <p>To start click continue</p>
-        <input class="success" type="button" value="Continue" ng-click="part2 = false; exampleTasks = true" />
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="part2 = false; exampleTasks = true">Continue</button>
       </div>
     </div>
   </div>
@@ -538,7 +576,9 @@
         <h3>You will be asked to complete a sequence of tasks.<br>
           The first two tasks are practice screens.
         </h3>
-        <input class="success" type="button" value="Continue" ng-click="realTasks = true; exampleTasks = false;" />
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="realTasks = true; exampleTasks = false;">Continue</button>
       </div>
     </div>
   </div>
@@ -618,7 +658,7 @@
         endownment and earned {{income}} of income.</h2>
       <h2 class="text-center">Your counterpart, {{partner.role}}, has received {{partner.endownment}} as
         endownment and earned {{partner.income}} of income.</h2>
-      <input class="success" type="button" value="Continue" ng-click="roles = false; slider = true" />
+      <input class="success" type="button" value="Continue" ng-click="createSliders();" />
     </div>
   </div>
   <!-- slider -->
@@ -637,6 +677,7 @@
     <div class="row">
       <input id="ex" style="width:600px;" data-slider-id="exSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
         data-slider-value="0" />
+        <p id="percentTransfered">Percentage transfered: {{percent}}</p>
     </div>
     <div class="row">
       <h2>Money (in $) transferred to your account : {{transfered}}</h2>
@@ -707,7 +748,7 @@
   <div>
   </div>
   <!-- thanks -->
-  <div class="container" ng-show"thanks">
+  <div class="container" ng-show="thanks">
     <div class="row">
       <h2>Thank you for participating in this experiment.</h2>
       <h3>Please remain seated until the experimenter attends to you.</h3>

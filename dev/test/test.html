@@ -4,18 +4,19 @@
     <head>
       <meta charset="utf-8" />
   	   <title>Kristian's Test</title>
+       <script type="text/javascript" src="libs/angular.min.js"></script>
        <script type="text/javascript" src="libs/jquery.min.js"></script>
        <script type="text/javascript" src="libs/flot/jquery.flot.min.js"></script>
        <script type="text/javascript" src="libs/bootstrap.min.js"></script>
-       <script type="text/javascript" src="libs/angular.min.js"></script>
+      <link type="text/css" rel="stylesheet" href="libs/bootstrap.min.css">
 
        <!-- other scripts/links -->
-       <script type="text/javascript" src="libs/bootstrap-slider.js"></script>
        <link type="text/css" rel="stylesheet" href="libs/bootstrap-slider.css">
+       <script type="text/javascript" src="libs/bootstrap-slider.js"></script>
+       <script type="text/javascript" src="libs/slider.js"></script>
 
        <script type="text/javascript" src="test.js"></script>
 
-       <link type="text/css" rel="stylesheet" href="libs/bootstrap.min.css">
     </head>
     <body>
       <div ng-controller="TestController">
@@ -29,10 +30,9 @@
             <h3>What percentage of P's income do you want to transfer to your account?</h3>
             <p>(Use the slider below to set this percentage)</p>
           </div>
-          <div class="row">
-            <input id="ex" style="width:600px;" data-slider-id="exSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
-              data-slider-value="0" />
-          </div>
+      <slider slideStop="executeMe()" ng-model="sliders.sliderValue" min="0" step="1" max="100"
+      ticks="ticks" ticks_labels="ticks_labels"></slider>
+
           <div class="row">
             <h2>Money (in $) transferred to your account : {{transfered}}</h2>
             <h2>Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>

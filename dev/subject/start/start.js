@@ -16,7 +16,55 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
 */
 
 Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
-  $scope.initalResponses = [];
+  $scope.initalResponses = {
+    question1: {
+      answer: ''
+    },
+    question2: {
+      answer1: '',
+      answer2: '',
+      answer3: ''
+    },
+    question3: {
+      answer1: '',
+      answer2: '',
+      answer3: '',
+      answer4: '',
+      answer5: '',
+      answer6: '',
+      answer7: '',
+      answer8: '',
+      answer9: '',
+      answer10: '',
+      answer11: ''
+    },
+    question4: {
+      answer1: '',
+      answer2: '',
+      answer3: '',
+      answer4: '',
+      answer5: '',
+      answer6: ''
+    },
+    question5: {
+      answer1: '',
+      answer2: '',
+      answer3: '',
+      answer4: '',
+      answer5: '',
+      answer6: ''
+    },
+    question6: {
+      answer1: '',
+      answer2: '',
+      answer3: '',
+      answer4: '',
+      answer5: '',
+      answer6: '',
+      answer7: '',
+      answer8: ''
+    }
+  };
 
   // all the variables for ng show
   $scope.showStartExperiment = false;
@@ -32,11 +80,17 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   $scope.messagePage = false;
   $scope.thanks = false;
 
-  // part 3
-  var slider = $("#ex").slider({
+  /*
+
+  $scope.percentSlider = $("#ex").slider({
     ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
   });
+  $scope.percentSlider.on("slide", function(slideEvt) {
+    $scope.percent = slideEvt.value;
+  });
+
+  */
 
   //set in config
   $scope.role = "T";
@@ -48,6 +102,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   };
 
   // variables used for slider
+  $scope.percent = 0;
   $scope.transfered = 0;
   $scope.totalincome = 0;
 
@@ -127,6 +182,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         $scope.gametime = false;
         $scope.part3 = true;
         console.log("income : " + $scope.income);
+
+        //part 3
+
+        console.log("slider is up");
       }
       // clear dot and set new goal
       else {
@@ -138,7 +197,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         $("#earned").text("Money earned for this task (cents) : " +
           parseFloat($scope.locatorState.pointvalue).toFixed(1));
         $("#points").text("Points earned : " + parseFloat($scope.locatorState.pointvalue).toFixed(1));
-
       }
   };
   $scope.sendDecision = function() {
@@ -244,10 +302,26 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     this.point.draw(this.ctx);
   };
 
+  $scope.createSliders = function() {
+    console.log("begin creation");
+    $scope.percentSlider = $("#ex").slider({
+      ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+      ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
+    });
+    $scope.percentSlider.on("change", function(slideEvt) {
+      $scope.percent = slideEvt.value.newValue;
+      $("#percentTransfered").text("Percentage transfered: " + $scope.percent);
+    });
+      console.log("sliders created");
+      $scope.roles = false;
+      $scope.slider = true;
+  };
+
   rs.on_load(function() {
     console.log("hello world");
     console.log(rs);
     $scope.showStartExperiment = true;
+
     rs.synchronizationBarrier('initalQuestions').then(function() {
       $scope.questions = false;
       $scope.showGame = true;

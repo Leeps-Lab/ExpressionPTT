@@ -16,7 +16,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
 */
 
 //Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
-angular.module('testApp', [])
+angular.module('testApp', ['ui.bootstrap-slider'])
   .controller('TestController', ['$scope', function($scope) {
 
   // variables that determine what is on screen
@@ -27,10 +27,23 @@ angular.module('testApp', [])
   $scope.willingnesspage = false;
   $scope.checkprice = true;
 
+  $scope.sliders = {};
+  $scope.sliders.sliderValue = 50;
+  $scope.testOptions = {
+    min : 0,
+    step : 1,
+    max : 100,
+    ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+    ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
+  };
+
+
+  /*
   var slider = $("#ex").slider({
     ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
     ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
   });
+  */
 
   //set in config
   $scope.role = "T";
