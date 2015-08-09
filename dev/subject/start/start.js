@@ -1,20 +1,3 @@
-/*
-Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
-  rs.on_load(function() {
-    console.log("hello world");
-    console.log(rs);
-    $scope.questionInital = 0;
-  });
-
-  rs.synchronizationBarrier('initalQuestions').then(function() {
-    $scope.questions = false;
-    $scope.showGame = true;
-    console.log("its barrier time");
-  });
-
-}]);
-*/
-
 Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
   $scope.initalResponses = {
     question1: {
@@ -96,14 +79,15 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   $scope.role = "T";
   $scope.endownment = 300;
   $scope.partner = {
-    endownment: 300,
-    role: "P",
-    income: 1045
+    index: '',
+    endownment: 0,
+    role: 0,
+    income: ''
   };
 
   // variables used for slider
   $scope.percent = 0;
-  $scope.transfered = 0;
+  $scope.transferred = 0;
   $scope.totalincome = 0;
 
   // starts showing the questions
@@ -304,23 +288,59 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
 
   $scope.createSliders = function() {
     console.log("begin creation");
-    $scope.percentSlider = $("#ex").slider({
-      ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-      ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
-    });
-    $scope.percentSlider.on("change", function(slideEvt) {
-      $scope.percent = slideEvt.value.newValue;
-      $("#percentTransfered").text("Percentage transfered: " + $scope.percent);
-    });
-      console.log("sliders created");
-      $scope.roles = false;
-      $scope.slider = true;
+
+    if ($scope.role === "T") {
+      $scope.percentSlider = $("#tSlider").slider({
+        ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
+      });
+      $scope.percentSlider.on("change", function(slideEvt) {
+        console.log("T slider");
+        $scope.percent = slideEvt.value.newValue;
+        $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent);
+        $scope.transferred = $scope.partner.income * $scope.percent / 100;
+        $("#tMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.transferred);
+        $scope.finalEarnings = $scope.income + $scope.transferred;
+        $("#tFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.finalEarnings);
+      });
+    } else {
+      $scope.percentSlider = $("#pSlider").slider({
+        ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
+      });
+      $scope.percentSlider.on("change", function(slideEvt) {
+        console.log("P slider");
+        $scope.percent = slideEvt.value.newValue;
+        $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent);
+        $scope.transferred = $scope.partner.income * $scope.percent / 100;
+        $("#pMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.transferred);
+        $scope.finalEarnings = $scope.income + $scope.transferred;
+        $("#pFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.finalEarnings);
+      });
+    }
+    console.log("sliders created");
+    $scope.roles = false;
+    $scope.slider = true;
   };
 
   rs.on_load(function() {
     console.log("hello world");
     console.log(rs);
     $scope.showStartExperiment = true;
+    // get user index from rs
+    $scope.userIndex = parseInt(rs.user_id);
+
+    // set role and partner index/role
+    if ($scope.userIndex % 2 === 0) {
+      $scope.role = "P";
+      $scope.partner.index = $scope.userIndex - 1;
+      $scope.partner.role = "T";
+    } else {
+      $scope.role = "T";
+      $scope.partner.index = $scope.userIndex + 1;
+      $scope.partner.role = "P";
+    }
+    console.log($scope.partner);
 
     rs.synchronizationBarrier('initalQuestions').then(function() {
       $scope.questions = false;

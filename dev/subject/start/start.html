@@ -675,13 +675,13 @@
       <p>(Use the slider below to set this percentage)</p>
     </div>
     <div class="row">
-      <input id="ex" style="width:600px;" data-slider-id="exSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
+      <input id="tSlider" style="width:600px;" data-slider-id="tSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
         data-slider-value="0" />
-        <p id="percentTransfered">Percentage transfered: {{percent}}</p>
+        <p id="tPercentTransfered">Percentage transfered: {{percent}}</p>
     </div>
     <div class="row">
-      <h2>Money (in $) transferred to your account : {{transfered}}</h2>
-      <h2>Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>
+      <h2 id="tMoneyTransferred">Money (in $) transferred to your account : {{transfered}}</h2>
+      <h2 id="tFinalEarnings">Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>
     </div>
     <div class="row">
       <div class="col-md-4 col-md-offset-4">
@@ -701,8 +701,13 @@
       <p>(Use the slider below to set this percentage)</p>
     </div>
     <div class="row">
-      <h2>Amount (in $) expected to be transferred to T's account: {{transfered}}</h2>
-      <h2>Your expected avaliable earnings (in $) are: {{totalincome}}</h2>
+      <input id="pSlider" style="width:600px;" data-slider-id="pSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
+        data-slider-value="0" />
+      <p id="pPercentTransferred">Percentage transfered: {{percent}}</p>
+    </div>
+    <div class="row">
+      <h2 id="pMoneyTransferred">Amount (in $) expected to be transferred to T's account: {{transfered}}</h2>
+      <h2 id="pFinalEarnings">Your expected avaliable earnings (in $) are: {{totalincome}}</h2>
     </div>
     <div class="row">
       <div class="col-md-4 col-md-offset-4">
