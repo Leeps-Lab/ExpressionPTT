@@ -598,7 +598,9 @@
       <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
     </div>
     <div class="row">
-      <h3 class="text-center" id="currentTask">The current task can earn you a maximum of 30 points.</h3>
+      <h3 class="text-center" id="currentTask">The current task can earn you a
+        maximum of {{maxpoints}} points.
+      </h3>
     </div>
     <div class="row">
       <p class="col-md-10 col-md-offset-1">Task: Use the <em>left-click</em> of the mouse to <em>drag and drop</em>
@@ -654,10 +656,12 @@
   <div class="container" ng-show="showpage.roles">
     <div class="row">
       <h2 class="text-center">Your role is {{role}}</h2>
-      <h2 class="text-center">In Part 2, you have recieved {{endownment}} as
-        endownment and earned {{income}} of income.</h2>
-      <h2 class="text-center">Your counterpart, {{partner.role}}, has received {{partner.endownment}} as
-        endownment and earned {{partner.income}} of income.</h2>
+      <h2 class="text-center">In Part 2, you have recieved {{floatToMoney(endownment)}} as
+        endownment and earned {{floatToMoney(income)}} of income.</h2>
+      <h2 class="text-center">Your counterpart, {{partner.role}}, has received
+        {{floatToMoney(partner.endownment)}} as endownment and earned
+        {{floatToMoney(partner.income)}} of income.
+      </h2>
       <input class="success" type="button" value="Continue" ng-click="createSliders();" />
     </div>
   </div>
@@ -668,7 +672,8 @@
   <div class="container" ng-show="showpage.slider && role === 'T'">
     <div class="row">
       <h3>Being T, you are given the authority to transfer money from P's account to your own account.
-        The maximum amount of money you can collect is what P has earned as income in Part 2 (${{partner.income}}).
+        The maximum amount of money you can collect is what P has earned as income in Part 2
+        (${{floatToMoney(partner.income)}}).
       </h3>
     </div>
     <div class="row">
@@ -721,8 +726,9 @@
   <!-- P Willingnesspage-->
   <div class="container" ng-show="showpage.willingnesspage && role === 'P'">
     <div class="row">
-      <h3>Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income ({{partner.moneytransferred}}) to his/her own account.</h3>
-      <h3>Your avaliable earnings are now ${{income - partner.moneytransferred}}</h3>
+      <h3>Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
+        ({{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
+      <h3>Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
     </div>
     <div class="row">
       <h3>What is the maximum amount you would be willing to pay to write and send a message that your
@@ -747,8 +753,8 @@
   <!-- check price -->
   <div class="container" ng-show="showpage.checkprice && role === 'P'">
     <div class="row">
-      <h3>The actual price is ${{actualprice}}</h3>
-      <h3>Your maximum willingness was ${{bid}}</h3>
+      <h3>The actual price is ${{floatToMoney(actualprice)}}</h3>
+      <h3>Your maximum willingness was ${{floatToMoney(bid)}}</h3>
       <h3>Therefore, you will be able to write a message to your counterpart</h3>
     </div>
     <div class="row">

@@ -230,6 +230,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     $("#placeholder").bind("plotclick", function(event, pos, item) {
       $scope.points.pop();
       $scope.points.push([pos.x, pos.y]);
+      console.log($scope.maxpoints);
       $scope.plot.setData([{
         data: $scope.points,
         clickable: false,
@@ -252,8 +253,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   };
   $scope.nexttask = function() {
     $scope.income += $scope.locatorState.getPointvalue();
+    $scope.maxpoints = Math.floor(Math.random() * 100) + 1;
     $("#income").text("So far, your income is $" +
-      parseFloat(parseInt($scope.income)) / 100 + ".");
+      $scope.floatToMoney($scope.income) + ".");
 
       // reaches income goal
       if ($scope.income > 10 * 100) {
@@ -422,6 +424,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     });
   };
 
+  $scope.floatToMoney = function(number) {
+    return parseFloat(parseInt(number)) / 100;
+  };
+
   function Point(x, y, radius) {
     this.x = x || 0;
     this.y = y || 0;
@@ -460,6 +466,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     this.maxlength = Math.sqrt(square(100 - 0) + square(100 - 0));
 
     this.point = new Point(this.width / 2, this.height * 3 / 4, 20);
+    $scope.maxpoints = Math.floor(Math.random() * 100) + 1;
   }
 
   LocatorState.prototype.getPointvalue = function() {
@@ -473,12 +480,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     };
   };
 
+  $scope.maxpoints = 0;
   LocatorState.prototype.update = function(guess) {
     console.log(this.goal);
     var distance = Math.sqrt(square(this.goal.x - guess.x) + square(this.goal.y - guess.y));
     // update locator position
-    this.pointvalue = 100 - distance * this.linelength / 100;
-    var linescale = this.pointvalue * this.linelength / 100;
+    this.pointvalue = $scope.maxpoints - distance * $scope.maxpoints / this.maxlength;
+    var linescale = this.pointvalue * this.linelength / $scope.maxpoints;
     this.point.update(linescale);
     $("#earned").text("Money earned for this task (cents) : " + parseFloat(this.pointvalue).toFixed(1));
     $("#points").text("Points earned : " + parseFloat(this.pointvalue).toFixed(1));
@@ -530,9 +538,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         console.log("transferred : " + $scope.transferred);
         console.log($scope.partner.income);
         console.log($scope.percent);
-        $("#tMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.transferred);
+        $("#tMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.floatToMoney($scope.transferred));
         $scope.finalEarnings = $scope.income + $scope.transferred;
-        $("#tFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.finalEarnings);
+        $("#tFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.floatToMoney($scope.finalEarnings));
       });
     } else {
       $scope.percentSlider = $("#pSlider").slider({
@@ -544,9 +552,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         $scope.percent = slideEvt.value.newValue;
         $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent);
         $scope.transferred = $scope.income * $scope.percent / 100;
-        $("#pMoneyTransferred").text("Amount (in $) expected to be transferred to T's account : " + $scope.transferred);
+        $("#pMoneyTransferred").text("Amount (in $) expected to be transferred to T's account : " + $scope.floatToMoney($scope.transferred));
         $scope.finalEarnings = $scope.income - $scope.transferred;
-        $("#pFinalEarnings").text("Your expected avaliable earnings (in $) are : " + $scope.finalEarnings);
+        $("#pFinalEarnings").text("Your expected avaliable earnings (in $) are : " + $scope.floatToMoney($scope.finalEarnings));
       });
     }
     console.log("sliders created");
