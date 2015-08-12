@@ -1,1 +1,2 @@
-period,group,pairs,matrix,period_length_s,num_sub_periods,initial_actions,initial_delay_s,action_delay_s,action_cost,endownment,roles1,0,"[2, 1, 4, 3]","[[[3, 3], [2, 5]], [[5, 0], [1, 1]]]",10,5,"[1, 2, 1, 1, 2, 2, 1, 2, 1, 1]",0,0,0,300,"[""T"", ""P"", ""T"", ""P""]"
+period,group,pairs,matrix,period_length_s,num_sub_periods,initial_actions,initial_delay_s,action_delay_s,action_cost,endownment,roles
+1,0,"[2, 1, 4, 3]","[[[3, 3], [2, 5]], [[5, 0], [1, 1]]]",10,5,"[1, 2, 1, 1, 2, 2, 1, 2, 1, 1]",0,0,0,300,"[""T"", ""P"", ""T"", ""P""]"

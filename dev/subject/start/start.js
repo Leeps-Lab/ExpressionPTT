@@ -4,112 +4,190 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       answer: ''
     },
     question2: {
-      answer1: '',
-      answer2: '',
-      answer3: ''
+      answer1: '', answer2: '', answer3: ''
     },
     question3: {
-      answer1: '',
-      answer2: '',
-      answer3: '',
-      answer4: '',
-      answer5: '',
-      answer6: '',
-      answer7: '',
-      answer8: '',
-      answer9: '',
-      answer10: '',
-      answer11: ''
+      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: '', answer9: '', answer10: '', answer11: ''
     },
     question4: {
-      answer1: '',
-      answer2: '',
-      answer3: '',
-      answer4: '',
-      answer5: '',
-      answer6: ''
+      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: ''
     },
     question5: {
-      answer1: '',
-      answer2: '',
-      answer3: '',
-      answer4: '',
-      answer5: '',
-      answer6: ''
+      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: ''
     },
     question6: {
-      answer1: '',
-      answer2: '',
-      answer3: '',
-      answer4: '',
-      answer5: '',
-      answer6: '',
-      answer7: '',
-      answer8: ''
+      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: ''
+    }
+  };
+  $scope.finalResponses = {
+  };
+
+  $scope.checkboxOptions = [
+    {
+      value: 'Completely satisfied.',
+      selected: false
+    },
+    {
+      value: 'Very satisfied.',
+      selected: false
+    },
+    {
+      value: 'Rather satisfied.',
+      selected: false
+    },
+    {
+      value: 'Neither satisfied nor dissatisfied.',
+      selected: false
+    },
+    {
+      value: 'Rather dissatisfied.',
+      selected: false
+    },
+    {
+      value: 'Very dissatisfied.',
+      selected: false
+    },
+    {
+      value: 'Completely dissatisfied.',
+      selected: false
+    }
+  ];
+  $scope.moneyOptions = [
+    {
+      value: '$0 to less than $25,000',
+      selected: false
+    },
+    {
+      value: '$25,000 to less than $50,000',
+      selected: false
+    },
+    {
+      value: '$50,000 to less than $75,000',
+      selected: false
+    },
+    {
+      value: '$75,000 to less than $100,000',
+      selected: false
+    },
+    {
+      value: '$100,000 to less than $125,000',
+      selected: false
+    },
+    {
+      value: '$125,000 to less than $150,000',
+      selected: false
+    },
+    {
+      value: '$150,000 or more',
+      selected: false
+    },
+  ];
+  $scope.optionToggled = function(index) {
+    for(var i = 0; i < $scope.checkboxOptions.length; i++) {
+      if (index === i) continue;
+      $scope.checkboxOptions[i].selected = false;
+    }
+  };
+  $scope.moneyToggled = function(index) {
+    for(var i = 0; i < $scope.moneyOptions.length; i++) {
+      if (index === i) continue;
+      $scope.moneyOptions[i].selected = false;
     }
   };
 
   // all the variables for ng show
-  $scope.showStartExperiment = false;
-  $scope.part2 = false;
-  $scope.exampleTasks = false;
-  $scope.gametime = false;
-  $scope.realTasks = false;
-  $scope.part3 = false;
-  $scope.roles = false;
-  $scope.slider = false;
-  $scope.willingnesspage = false;
-  $scope.checkprice = false;
-  $scope.messagePage = false;
-  $scope.thanks = false;
+  $scope.showpage = {
+    showStartExperiment: false,
+    initalquestions: null,
+    part2: false,
+    part2ready: false,
+    exampleTasks: false,
+    gametime: false,
+    realTasks: false,
+    part3: false,
+    part3ready: false,
+    roles: false,
+    slider: false,
+    willingnesspage: false,
+    checkprice: false,
+    messagePage: false,
+    readMessage: false,
+    showEarnings: false,
+    part4: false,
+    part4ready: true,
+    finalquestions: null,
+    thanks: false
+  };
 
-  /*
-
-  $scope.percentSlider = $("#ex").slider({
-    ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-    ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
-  });
-  $scope.percentSlider.on("slide", function(slideEvt) {
-    $scope.percent = slideEvt.value;
-  });
-
-  */
-
-  //set in config
+  // user variables
+  // set in config
   $scope.role = "T";
   $scope.endownment = 300;
+  $scope.income = 900;
+  $scope.percent = 0;
+  $scope.transferred = 0;
+  $scope.percentTransferred= 0;
+  $scope.moneytransferred = 0;
+  $scope.totalincome = 0;
+  $scope.messages = [];
+
+  // variables for P
+  $scope.bid = 0;
+  $scope.actualprice = 0;
+
+  // partner variables
   $scope.partner = {
     index: '',
     endownment: 0,
     role: 0,
-    income: ''
+    income: '',
+    percent: '',
+    transferred: '',
+    percentTransferred: 0,
+    moneytransferred: '',
+    totalincome: ''
   };
-
-  // variables used for slider
-  $scope.percent = 0;
-  $scope.transferred = 0;
-  $scope.totalincome = 0;
 
   // starts showing the questions
   $scope.startExperiment = function() {
-    $scope.showStartExperiment = false;
-    $scope.initalquestions = 0;
+    $scope.showpage.showStartExperiment = false;
+    $scope.showpage.initalquestions = 0;
   };
 
   // closes one question and shows the next
   $scope.nextQuestion = function() {
-    $scope.initalquestions++;
-  };// finishes questions onto money part
+    $scope.showpage.initalquestions++;
+    // send responses in case of a refresh
+    rs.trigger("saveinitalanswers", {
+      initalResponses: $scope.initalResponses,
+      showpage: $scope.showpage
+    });
+  };
+  // finishes questions onto money part
+  // barrier : have all people ready for part 2
   $scope.finishQuestions = function() {
-    $scope.initalquestions++;
-    $scope.part2 = true;
+    $scope.showpage.initalquestions++;
+    $scope.showpage.part2 = true;
+    // send answers back to server
+    rs.trigger("sendinitalanswers", {
+      initalResponses: $scope.initalResponses,
+      showpage: $scope.showpage
+    });
+    // get ready for a barrier
+    console.log("ready for part 2?");
+    rs.synchronizationBarrier('part2').then(function() {
+      console.log("I was born ready");
+      $scope.showpage.part2ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
   };
   $scope.showgame = function() {
-    $scope.gametime = true;
-    $scope.realTasks = false;
+    $scope.showpage.gametime = true;
+    $scope.showpage.realTasks = false;
 
     $scope.points = [];
-    $scope.income = 900;
     $scope.plot = $.plot("#placeholder",[{
         data: $scope.points,
         points: {show : true}
@@ -163,11 +241,31 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
 
       // reaches income goal
       if ($scope.income > 10 * 100) {
-        $scope.gametime = false;
-        $scope.part3 = true;
+        console.log("sending payload, over.");
+        rs.send("sendIncome", {
+          income: $scope.income
+        });
+        rs.trigger("saveIncome", {
+          role: $scope.role,
+          endownment: $scope.endownment,
+          income: $scope.income,
+          percent: $scope.percent,
+          transferred: $scope.transferred,
+          percentTransferred: $scope.percentTransferred,
+          moneytransferred: $scope.moneytransferred,
+          totalincome: $scope.totalincome
+        });
+        $scope.showpage.gametime = false;
+        $scope.showpage.part3 = true;
         console.log("income : " + $scope.income);
 
         //part 3
+        rs.synchronizationBarrier('part3').then(function() {
+          $scope.showpage.part3ready = true;
+          rs.trigger("afterbarrier", {
+            showpage: $scope.showpage
+          });
+        });
 
         console.log("slider is up");
       }
@@ -184,15 +282,119 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       }
   };
   $scope.sendDecision = function() {
-    $scope.slider = false;
+    $scope.showpage.slider = false;
+    // send values
+    $scope.percentTransferred = $scope.percent;
+    $scope.moneytransferred = $scope.transferred;
+    $scope.totalincome = $scope.finalEarnings;
+    console.log("sending payload, over.");
+    rs.send("sendDecision", {
+      percent: $scope.percent,
+      transferred: $scope.transferred,
+      percentTransferred: $scope.percent,
+      moneytransferred: $scope.transferred,
+      totalincome: $scope.totalincome
+    });
+    rs.trigger("saveIncome", {
+      role: $scope.role,
+      endownment: $scope.endownment,
+      income: $scope.income,
+      percent: $scope.percent,
+      transferred: $scope.transferred,
+      percentTransferred: $scope.percentTransferred,
+      moneytransferred: $scope.moneytransferred,
+      totalincome: $scope.totalincome
+    });
+
+    // barrier time
+    rs.synchronizationBarrier('transferProcess').then(function() {
+      $scope.showpage.willingnesspage = true;
+
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
   };
   $scope.sendEstimate = function() {
-    $scope.slider = false;
-    $scope.willingnesspage = true;
+    $scope.showpage.slider = false;
+    // send values
+    console.log("sending payload, over.");
+    rs.send("sendEstimate", {
+      percent: $scope.percent,
+      transferred: $scope.transferred
+    });
+    rs.trigger("saveIncome", {
+      role: $scope.role,
+      endownment: $scope.endownment,
+      income: $scope.income,
+      percent: $scope.percent,
+      transferred: $scope.transferred,
+      percentTransferred: $scope.percentTransferred,
+      moneytransferred: $scope.moneytransferred,
+      totalincome: $scope.totalincome
+    });
+
+    // barrier time
+    rs.synchronizationBarrier('transferProcess').then(function() {
+      $scope.showpage.willingnesspage = true;
+
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
   };
   $scope.sendWillingness = function() {
-    $scope.willingnesspage = false;
-    $scope.checkprice = true;
+    $scope.showpage.willingnesspage = false;
+    $scope.actualprice = Math.floor(Math.random() * ($scope.income - $scope.partner.moneytransferred));
+
+    if ($scope.bid > $scope.actualprice) {
+      $scope.showpage.checkprice = true;
+      // p gets to send message
+      rs.trigger("saveWillingness", {
+        bid: $scope.bid,
+        actualprice: $scope.actualprice
+      });
+    } else {
+      // p doesnt get to send message
+      $scope.showpage.showEarnings = true;
+    }
+    rs.send("sendWillingness", {
+      bid: $scope.bid,
+      message: $scope.bid > $scope.actualprice
+    });
+  };
+  $scope.saveMessage = function(event) {
+    if (event.keyCode === 13) {
+      $scope.messages.push($scope.message);
+      $scope.message = '';
+    }
+  };
+  $scope.sendMessage = function() {
+    // send message to other person
+    rs.send("sendMessage", {
+      messages: $scope.messages
+    });
+    // navigate to correct page
+    $scope.showpage.messagePage = false;
+  };
+  $scope.readMessage = function() {
+    $scope.showpage.messagePage = false;
+    rs.send("readMessage", {
+    });
+  };
+  $scope.messageConfirm = function() {
+    $scope.showpage.readMessage = false;
+    $scope.showpage.showEarnings = true;
+    rs.send("messageConfirm", {
+    });
+  };
+  $scope.nextFinalQuestion = function() {
+    $scope.showpage.finalquestions++;
+    // send responses in case of a refresh
+    rs.trigger("savefinalanswers", {
+      finalResponses: $scope.finalResponses,
+      showpage: $scope.showpage
+    });
   };
 
   function Point(x, y, radius) {
@@ -286,6 +488,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     this.point.draw(this.ctx);
   };
 
+  // creates the respective sliders for the percentage page
   $scope.createSliders = function() {
     console.log("begin creation");
 
@@ -299,6 +502,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         $scope.percent = slideEvt.value.newValue;
         $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent);
         $scope.transferred = $scope.partner.income * $scope.percent / 100;
+        console.log("transferred : " + $scope.transferred);
+        console.log($scope.partner.income);
+        console.log($scope.percent);
         $("#tMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.transferred);
         $scope.finalEarnings = $scope.income + $scope.transferred;
         $("#tFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.finalEarnings);
@@ -312,41 +518,140 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         console.log("P slider");
         $scope.percent = slideEvt.value.newValue;
         $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent);
-        $scope.transferred = $scope.partner.income * $scope.percent / 100;
-        $("#pMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.transferred);
-        $scope.finalEarnings = $scope.income + $scope.transferred;
-        $("#pFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.finalEarnings);
+        $scope.transferred = $scope.income * $scope.percent / 100;
+        $("#pMoneyTransferred").text("Amount (in $) expected to be transferred to T's account : " + $scope.transferred);
+        $scope.finalEarnings = $scope.income - $scope.transferred;
+        $("#pFinalEarnings").text("Your expected avaliable earnings (in $) are : " + $scope.finalEarnings);
       });
     }
     console.log("sliders created");
-    $scope.roles = false;
-    $scope.slider = true;
+    $scope.showpage.roles = false;
+    $scope.showpage.slider = true;
   };
 
-  rs.on_load(function() {
-    console.log("hello world");
-    console.log(rs);
-    $scope.showStartExperiment = true;
-    // get user index from rs
-    $scope.userIndex = parseInt(rs.user_id);
-
-    // set role and partner index/role
-    if ($scope.userIndex % 2 === 0) {
-      $scope.role = "P";
-      $scope.partner.index = $scope.userIndex - 1;
-      $scope.partner.role = "T";
-    } else {
-      $scope.role = "T";
-      $scope.partner.index = $scope.userIndex + 1;
-      $scope.partner.role = "P";
+  // rs.recv
+  // sent from self to server and self
+  rs.recv("sendIncome", function(sender, value) {
+    console.log("got from the other person");
+    console.log(sender == $scope.partner.index);
+    if (sender == parseInt($scope.partner.index)) {
+      console.log("got the payload, over.");
+      $scope.partner.income = value.income;
+      console.log("income from " + $scope.partner.index + " is " + $scope.partner.income);
     }
+  });
+  // sends decision on percent
+  rs.recv("sendDecision", function(sender, value) {
+    console.log(sender);
+    console.log(value);
+    if (sender == parseInt($scope.partner.index)) {
+      console.log("got the payload, over.");
+      $scope.partner.percent = value.percent;
+      $scope.partner.transferred = value.transferred;
+      $scope.partner.percentTransferred = value.percentTransferred;
+      $scope.partner.moneytransferred = value.moneytransferred;
+      $scope.partner.totalincome = value.totalincome;
+    }
+  });
+  rs.recv("sendEstimate", function(sender, value) {
+    console.log(sender);
+    console.log(value);
+    if (sender == parseInt($scope.partner.index)) {
+      console.log("got the payload, over.");
+      $scope.partner.percent = value.percent;
+      $scope.partner.transferred = value.transferred;
+    }
+  });
+  rs.recv("sendWillingness", function(sender, value) {
+    if (sender == parseInt($scope.partner.index)) {
+      $scope.showpage.willingnesspage = false;
+      if (value.message) {
+        //$scope.showpage.messagePage = true;
+        $scope.partner.bid = value.bid;
+      } else {
+        $scope.showpage.showEarnings = true;
+      }
+    }
+  });
+  rs.recv("sendMessage", function(sender, value) {
+    if (sender == parseInt($scope.partner.index)) {
+      $scope.messages = value.messages;
+      $scope.showpage.messagePage = true;
+    }
+  });
+  rs.recv("readMessage", function(sender, value) {
+    if (sender == parseInt($scope.partner.index)) {
+      $scope.showpage.readMessage = true;
+    }
+  });
+  rs.recv("messageConfirm", function(sender, value) {
+    console.log("got the message. it is confirmed");
+    if (sender == parseInt($scope.partner.index)) {
+      $scope.showpage.showEarnings = true;
+    }
+  });
+
+  // rs.on
+  // sent from others to server and everyone
+
+  // saves answers and location on page
+  rs.on("saveinitalanswers", function(value) {
+    $scope.initalResponses = value.initalResponses;
+    $scope.showpage = value.showpage;
+  });
+  // saves place and responces in experiment
+  rs.on("sendinitalanswers", function(value) {
+    $scope.initalResponses = value.initalResponses;
+    $scope.showpage = value.showpage;
+  });
+  // responce after a barrier
+  rs.on("afterbarrier", function(value) {
+    $scope.showpage = value.showpage;
+  });
+  // recieves income after game
+  rs.on("saveIncome", function(value) {
+    $scope.role = value.role;
+    $scope.endownment = value.endownment;
+    $scope.income = value.income;
+    $scope.percent = value.percent;
+    $scope.transferred = value.transferred;
+    $scope.percentTransferred = value.percentTransferred;
+    $scope.moneytransferred = value.moneytransferred;
+    $scope.totalincome = value.totalincome;
+  });
+  // stores bid and actualprice
+  rs.on("saveWillingness", function(value) {
+    $scope.bid = value.bid;
+    $scope.actualprice = value.actualprice;
+  });
+  rs.on("savefinalanswers", function(value) {
+    $scope.finalResponses = value.finalResponses;
+    $scope.showpage = value.showpage;
+  });
+
+  rs.on_load(function() {
+    console.log("hello experiment");
+    $scope.showpage.showStartExperiment = true;
+    // set values from config file
+    // role index endownment
+    $scope.userIndex = parseInt(rs.user_id);
+    $scope.role = rs.config.roles[$scope.userIndex - 1];
+    $scope.endownment = rs.config.endownment;
+
+    // set partner values from config file
+    // index role endownment
+    $scope.partner.index = rs.config.pairs[$scope.userIndex - 1];
+    $scope.partner.role = rs.config.roles[$scope.partner.index - 1];
+    $scope.partner.endownment = rs.config.endownment;
+    console.log($scope.userIndex);
+    console.log($scope.role);
     console.log($scope.partner);
 
     rs.synchronizationBarrier('initalQuestions').then(function() {
       $scope.questions = false;
       $scope.showGame = true;
       console.log("its barrier time");
-      $scope.thanks = false;
+      $scope.showpage.thanks = false;
     });
 	});
 

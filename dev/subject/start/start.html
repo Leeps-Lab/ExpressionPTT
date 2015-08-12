@@ -4,11 +4,6 @@
 <head>
   <title>Start</title>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/jquery/jquery.min.js"></script>
-
-    <!--
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  -->
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/flot/jquery.flot.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-slider.js"></script>
@@ -32,7 +27,7 @@
 <!-- <body style="padding-top:80px;" ng-controller="SubjectCtrl" ng-include="'/static/experiments/continuousMatrix/continuousMatrixStart.html'"></body> -->
 <body style="padding-top:80px;" ng-controller="SubjectCtrl">
   <!-- start experiment -->
-  <div class="container" ng-show="showStartExperiment">
+  <div class="container" ng-show="showpage.showStartExperiment">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>To begin the experiment click Continue</h3>
@@ -40,11 +35,11 @@
     </div>
     <div class="col-md-2 col-md-offset-5">
       <button type="button" class="btn btn-info"
-        ng-click="showStartExperiment = false; initalquestions = 0;">Continue</button>
+        ng-click="showpage.showStartExperiment = false; showpage.initalquestions = 0;">Continue</button>
     </div>
   </div>
   <!-- start part 1 -->
-  <div class="container" ng-show="initalquestions === 0;">
+  <div class="container" ng-show="showpage.initalquestions === 0;">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Part 1</h3>
@@ -58,7 +53,7 @@
   <!-- inital questions -->
 
   <!-- question 1 -->
-  <div class="container" ng-show="initalquestions === 1">
+  <div class="container" ng-show="showpage.initalquestions === 1">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Right now, how would you describe yourself?</h3>
@@ -102,7 +97,7 @@
     </div>
   </div>
   <!-- question 2 -->
-  <div class="container" ng-show="initalquestions === 2">
+  <div class="container" ng-show="showpage.initalquestions === 2">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>For each question, give the number that best describes you:</h3>
@@ -155,7 +150,7 @@
     </div>
   </div>
   <!-- question 3 -->
-  <div class="container" ng-show="initalquestions === 3">
+  <div class="container" ng-show="showpage.initalquestions === 3">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Please, give the number that best describes the emotions you experienced at this moment:</h3>
@@ -249,7 +244,7 @@
     </div>
   </div>
   <!-- question 4 -->
-  <div class="container" ng-show="initalquestions === 4">
+  <div class="container" ng-show="showpage.initalquestions === 4">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Please, give the number that best describes your agreement with the following statements:</h3>
@@ -308,7 +303,7 @@
     </div>
   </div>
   <!-- question 5 -->
-  <div class="container" ng-show="initalquestions === 5">
+  <div class="container" ng-show="showpage.initalquestions === 5">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Below you are given pairs of opposite feelings. Use the following scale to inducate your current mood relative to these feelings</h3>
@@ -331,7 +326,7 @@
         4
       </div>
       <div class="col-md-1">
-        5
+        5<br>Neutral
       </div>
       <div class="col-md-1">
         6
@@ -345,10 +340,9 @@
       <div class="col-md-1">
         9
       </div>
-      <div class="row">
-        Neutral
-      </div>
     </div>
+    <br>
+    <br>
     <div class="row">
       <div class="col-md-3">
         Bad mood
@@ -422,7 +416,7 @@
     </div>
   </div>
   <!-- question 6 -->
-  <div class="container" ng-show="initalquestions === 6">
+  <div class="container" ng-show="showpage.initalquestions === 6">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Below you are given pairs of opposite feelings. Use the following scale to inducate your current mood relative to these feelings</h3>
@@ -558,19 +552,22 @@
     </div>
   </div>
   <!-- start part 2 -->
-  <div class="container" ng-show="part2">
+  <!-- have a barrier here -->
+  <div class="container" ng-show="showpage.part2">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Part 2</h3>
-        <p>To start click continue</p>
+        <p ng-show="showpage.part2ready">To start click continue</p>
       </div>
-      <div class="col-md-2 col-md-offset-5">
-        <button type="button" class="btn btn-info" ng-click="part2 = false; exampleTasks = true">Continue</button>
+      <div class="col-md-2 col-md-offset-5" ng-show="showpage.part2ready">
+        <button type="button" class="btn btn-info" ng-click="showpage.part2 = false; showpage.exampleTasks = true">
+          Continue
+        </button>
       </div>
     </div>
   </div>
   <!-- instructions -->
-  <div class="container" ng-show="exampleTasks">
+  <div class="container" ng-show="showpage.exampleTasks">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>You will be asked to complete a sequence of tasks.<br>
@@ -578,12 +575,14 @@
         </h3>
       </div>
       <div class="col-md-2 col-md-offset-5">
-        <button type="button" class="btn btn-info" ng-click="realTasks = true; exampleTasks = false;">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="showpage.realTasks = true; showpage.exampleTasks = false;">
+          Continue
+        </button>
       </div>
     </div>
   </div>
   <!-- real tasks -->
-  <div class="container" ng-show="realTasks">
+  <div class="container" ng-show="showpage.realTasks">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3>Practice screens are over.<br>
@@ -594,7 +593,7 @@
     </div>
   </div>
   <!-- income earning -->
-  <div class="container" ng-show="gametime">
+  <div class="container" ng-show="showpage.gametime">
     <div class="row">
       <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
     </div>
@@ -639,19 +638,20 @@
     </div>
   </div>
   <!-- start part 3 -->
-  <div class="container" ng-show="part3">
+  <div class="container" ng-show="showpage.part3">
     <div class="row">
       <h3 class="text-center">Part 3</h3>
-      <p class="text-center">To start click continue</p>
+      <p class="text-center" ng-show="showpage.part3ready">To start click continue</p>
       <div class="col-mid-4 col-mid-offset-4">
-        <input class="success" type="button" value="Continue" ng-click="roles = true; part3 = false;" />
+        <input class="success" type="button" value="Continue" ng-show="showpage.part3ready"
+          ng-click="showpage.roles = true; showpage.part3 = false;" />
       </div>
     </div>
   </div>
   <!-- core interaction -->
 
   <!-- assign roles -->
-  <div class="container" ng-show="roles">
+  <div class="container" ng-show="showpage.roles">
     <div class="row">
       <h2 class="text-center">Your role is {{role}}</h2>
       <h2 class="text-center">In Part 2, you have recieved {{endownment}} as
@@ -662,9 +662,10 @@
     </div>
   </div>
   <!-- slider -->
+  <!-- barrier after the respective sliders -->
 
   <!-- T slider -->
-  <div class="container" ng-show="slider && role === 'T'">
+  <div class="container" ng-show="showpage.slider && role === 'T'">
     <div class="row">
       <h3>Being T, you are given the authority to transfer money from P's account to your own account.
         The maximum amount of money you can collect is what P has earned as income in Part 2 (${{partner.income}}).
@@ -690,7 +691,7 @@
     </div>
   </div>
   <!-- P slider -->
-  <div class="container" ng-show="slider && role === 'P'">
+  <div class="container" ng-show="showpage.slider && role === 'P'">
     <div class="row">
       <h3>At this moment, your counterpart T is deciding what proportion of your income ({{income}})
         to transfer to his/her own account.
@@ -717,16 +718,17 @@
   </div>
 
   <!-- bid -->
-  <div class="container" ng-show="willingnesspage && role === 'P'">
+  <!-- P Willingnesspage-->
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P'">
     <div class="row">
-      <h3>Your counterpart, T, has transferred {{percent}} of your income () to his/her own account.</h3>
-      <h3>Your avaliable earnings are now $8.12</h3>
+      <h3>Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income ({{partner.moneytransferred}}) to his/her own account.</h3>
+      <h3>Your avaliable earnings are now ${{income - partner.moneytransferred}}</h3>
     </div>
     <div class="row">
       <h3>What is the maximum amount you would be willing to pay to write and send a message that your
         counterpart T will read?</h3>
       <p>(Express the amount in dollars and cents)</p>
-      <input type="text" />
+      <input ng-model="bid" type="text" />
     </div>
     <div class="row">
       <h3>The actual price of sending a message will be shown on the next screen.</h3>
@@ -735,25 +737,583 @@
       <input class="success" type="button" value="Send your Decision" ng-click="sendWillingness()" />
     </div>
   </div>
-  <!-- check price -->
-  <div class="container" ng-show="checkprice && role === 'P'">
+  <!-- T Willingnesspage -->
+  <div class="container" ng-show="showpage.willingnesspage && role === 'T'">
     <div class="row">
-      <h3>The actual price is $1.05</h3>
-      <h3>Your maximum willingness was $3.00</h3>
+      <h3>Willingness page for T role</h3>
+    </div>
+  </div>
+
+  <!-- check price -->
+  <div class="container" ng-show="showpage.checkprice && role === 'P'">
+    <div class="row">
+      <h3>The actual price is ${{actualprice}}</h3>
+      <h3>Your maximum willingness was ${{bid}}</h3>
       <h3>Therefore, you will be able to write a message to your counterpart</h3>
     </div>
     <div class="row">
-      <input class="success" type="button" value="Continue" ng-click="messagePage = true" />
+      <input class="success" type="button" value="Continue" ng-click="showpage.messagePage = true; showpage.checkprice = false;" />
     </div>
   </div>
   <!-- message box -->
-  <div ng-show="messagePage && role ==='P'">
+
+  <!-- T message box -->
+  <div class="container" ng-show="showpage.messagePage && role === 'T'">
+    <div class="row">
+      <p>Here is it the message from your counterpart :</p>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2"
+          style="border-style:solid;border-width:2px;min-height:300px;">
+          <div ng-repeat="message in messages track by $index">
+            <p>{{message}}</p>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+        <button type="button" class="btn btn-info" ng-click="readMessage()">
+          I have read the message
+        </button>
+    </div>
+  </div>
+  <!-- P message box -->
+  <div class="container" ng-show="showpage.messagePage && role === 'P'">
+    <div class="row">
+      <p>
+        After writing your message, please press the ENTER key to record the message.
+      </p>
+    </div>
+    <div class="row">
+      <p>
+        Once it is recorded, the message should appear in the upper part of the message box.
+        Only then press the SEND button.
+      </p>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2"
+          style="border-style:solid;border-width:2px;min-height:300px;">
+          <div ng-repeat="message in messages track by $index">
+            <p>{{message}}</p>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <input type="text" style="width:585px;" ng-keypress="saveMessage($event)"
+          ng-model="message" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info"
+          ng-click="sendMessage()">Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- read message -->
+  <div class="container" ng-show="showpage.readMessage && role === 'P'">
+    <div class="row">
+      <h3>Your Counterpart T has read the message</h3>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info" ng-click="messageConfirm()">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- show earnings -->
+  <div class="container" ng-show="showpage.showEarnings">
+    <h3 class="text-center">
+      Earnings <h2>(in $)</h2>
+    </h3>
+    <table class="table table-striped table-bordered">
+      <tr>
+        <td></td>
+        <td>Role {{role}} (You)</td>
+        <td>Role {{partner.role}}</td>
+      </tr>
+      <tr>
+        <td>Endownment</td>
+        <td>{{endownment}}</td>
+        <td>{{partner.endownment}}</td>
+      </tr>
+      <tr>
+        <td>Income</td>
+        <td>{{income}}</td>
+        <td>{{partner.income}}</td>
+      </tr>
+      <tr>
+        <td>Money<br>Transferred</td>
+        <td>{{moneytransferred}}</td>
+        <td>{{partner.moneytransferred}}</td>
+      </tr>
+      <tr>
+        <td>Message Price</td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>Total Earnings</td>
+        <td>{{totalincome}}</td>
+        <td>{{partner.totalincome}}</td>
+      </tr>
+    </table>
+    <div class="col-md-2 col-md-offset-5">
+      <button type="button" class="btn btn-info"
+        ng-click="showpage.part4 = true; showpage.showEarnings = false;">Continue</button>
+    </div>
+  </div>
+  <!-- start part 4 -->
+  <div class="container" ng-show="showpage.part4">
+    <div class="row">
+      <h3 class="text-center">Part 4</h3>
+      <p class="text-center" ng-show="showpage.part4ready">To start click continue</p>
+      <div class="col-mid-4 col-mid-offset-4">
+        <input class="success" type="button" value="Continue" ng-show="showpage.part4ready"
+          ng-click="showpage.finalquestions = 1; showpage.part4 = false;" />
+      </div>
+    </div>
   </div>
   <!-- final questions -->
-  <div>
+
+  <!-- question 1 -->
+  <div class="container" ng-show="showpage.finalquestions === 1">
+    <div class="row">
+      <div class="col-mid-4 col-mid-offset-4">
+        <h3>Right now, how would you describe yourself?</h3>
+        <p>(Please enter the number that best applies to you at this moment)</p>
+        <div class="row">
+          <div class="col-md-1">
+            1:<br>Extremeley<br><strong>unhappy</strong>
+          </div>
+          <div class="col-md-1">
+            2:<br>Very unhappy
+          </div>
+          <div class="col-md-1">
+            3:<br>Unhappy
+          </div>
+          <div class="col-md-1">
+            4:<br>Somewhat happy
+          </div>
+          <div class="col-md-1">
+            5:<br>Neutral
+          </div>
+          <div class="col-md-1">
+            6:<br>Somewhat happy
+          </div>
+          <div class="col-md-1">
+            7:<br>Happy
+          </div>
+          <div class="col-md-1">
+            8:<br>Very happy
+          </div>
+          <div class="col-md-1">
+            9:<br>Extremeley<br><strong>happy</strong>
+          </div>
+        </div>
+        <div class="row">
+          <input class="text" ng-model="initalResponses.question1.answer" />
+        </div>
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info"
+          ng-click="nextFinalQuestion()">Continue</button>
+      </div>
+    </div>
   </div>
+  <!-- question 2 -->
+  <div class="container" ng-show="showpage.finalquestions === 2">
+    <div class="row">
+      <h3>Please, give the number that best describes the emotons you
+        are experiencing at this moment :</h3>
+        <p>(Follow the scale below)</p>
+        <div class="row">
+          <div class="col-md-1">
+            1<br>Emotion is not<br>present at all
+          </div>
+          <div class="col-md-1">
+            2
+          </div>
+          <div class="col-md-1">
+            3
+          </div>
+          <div class="col-md-1">
+            4
+          </div>
+          <div class="col-md-1">
+            5
+          </div>
+          <div class="col-md-1">
+            6
+          </div>
+          <div class="col-md-1">
+            7<br>Emotion feels<br>very intense
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-3">
+            Irritation
+            <input type="text" ng-model="initalResponses.question3.answer1" />
+          </div>
+          <div class="col-md-3">
+            Sadness
+            <input type="text" ng-model="initalResponses.question3.answer2" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            Anger
+            <input type="text" ng-model="initalResponses.question3.answer3" />
+          </div>
+          <div class="col-md-3">
+            Happiness
+            <input type="text" ng-model="initalResponses.question3.answer4" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            Contempt
+            <input type="text" ng-model="initalResponses.question3.answer5" />
+          </div>
+          <div class="col-md-3">
+            Fear
+            <input type="text" ng-model="initalResponses.question3.answer6" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            Surprise
+            <input type="text" ng-model="initalResponses.question3.answer7" />
+          </div>
+          <div class="col-md-3">
+            Joy
+            <input type="text" ng-model="initalResponses.question3.answer8" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            Envy
+            <input type="text" ng-model="initalResponses.question3.answer9" />
+          </div>
+          <div class="col-md-3">
+            Shame
+            <input type="text" ng-model="initalResponses.question3.answer10" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            Jealousy
+            <input type="text" ng-model="initalResponses.question3.answer11" />
+          </div>
+        </div>
+        <div class="col-md-2 col-md-offset-5">
+          <button type="button" class="btn btn-info"
+            ng-click="nextFinalQuestion()">Continue</button>
+        </div>
+    </div>
+  </div>
+  <!-- question 3 -->
+  <div class="container" ng-show="showpage.finalquestions === 3">
+    <div class="row">
+      <h3>Below you are given pairs of opposite feelings. Use the following scale
+        to indicate your current modd relative to these feelings.</h3>
+      <p>(1: you are experiencing the feeling on the left side very strongly.
+        9: you are experiencing the feeling on the right side very strongly.)</p>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        1
+      </div>
+      <div class="col-md-1">
+        2
+      </div>
+      <div class="col-md-1">
+        3
+      </div>
+      <div class="col-md-1">
+        4
+      </div>
+      <div class="col-md-1">
+        5<br>Neutral
+      </div>
+      <div class="col-md-1">
+        6
+      </div>
+      <div class="col-md-1">
+        7
+      </div>
+      <div class="col-md-1">
+        8
+      </div>
+      <div class="col-md-1">
+        9
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-md-3">
+          Bad mood
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer1" />
+        </div>
+        <div class="col-md-3">
+          Good mood
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Sad
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer2" />
+        </div>
+        <div class="col-md-3">
+          Happy
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Depressed
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer3" />
+        </div>
+        <div class="col-md-3">
+          Elated
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Gloomy
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer4" />
+        </div>
+        <div class="col-md-3">
+          Cheerful
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Displeased
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer5" />
+        </div>
+        <div class="col-md-3">
+          Pleased
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Sorrowful
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer6" />
+        </div>
+        <div class="col-md-3">
+          Joyful
+        </div>
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info"
+          ng-click="nextFinalQuestion()">Continue</button>
+      </div>
+    </div>
+  </div>
+  <!-- question 4 -->
+  <div class="container" ng-show="showpage.finalquestions === 4">
+    <div class="row">
+      <h3>Below you are given pairs of opposite feelings. Use the following scale
+        to indicate your current modd relative to these feelings.</h3>
+      <p>(1: you are experiencing the feeling on the left side very strongly.
+        9: you are experiencing the feeling on the right side very strongly.)</p>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        1
+      </div>
+      <div class="col-md-1">
+        2
+      </div>
+      <div class="col-md-1">
+        3
+      </div>
+      <div class="col-md-1">
+        4
+      </div>
+      <div class="col-md-1">
+        5<br>Neutral
+      </div>
+      <div class="col-md-1">
+        6
+      </div>
+      <div class="col-md-1">
+        7
+      </div>
+      <div class="col-md-1">
+        8
+      </div>
+      <div class="col-md-1">
+        9
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-md-3">
+          Nervous
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer1" />
+        </div>
+        <div class="col-md-3">
+          Calm
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Tense
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer2" />
+        </div>
+        <div class="col-md-3">
+          Relaxed
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Unconfortable
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer3" />
+        </div>
+        <div class="col-md-3">
+          Confortable
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Apathetic
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer4" />
+        </div>
+        <div class="col-md-3">
+          Caring
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Lethargic
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer5" />
+        </div>
+        <div class="col-md-3">
+          Energetic
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Unconfident
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer6" />
+        </div>
+        <div class="col-md-3">
+          Confident
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Unresponsive
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer6" />
+        </div>
+        <div class="col-md-3">
+          Emotional
+          <div class="row">
+            <div class="col-md-3">
+              Unconfident
+            </div>
+            <div class="col-md-3">
+              <input type="text" ng-model="initalResponses.question5.answer6" />
+            </div>
+            <div class="col-md-3">
+              Confident
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Passive
+        </div>
+        <div class="col-md-3">
+          <input type="text" ng-model="initalResponses.question5.answer6" />
+        </div>
+        <div class="col-md-3">
+          Active
+        </div>
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info"
+          ng-click="nextFinalQuestion()">Continue</button>
+      </div>
+    </div>
+  </div>
+  <!-- question 5 -->
+  <div class="container" ng-show="showpage.finalquestions === 5">
+    <div class="row">
+      <h3>Regarding this experiment, how satisfied would you say that you are with it?</h3>
+      <p>(Check the option that best describes your satisfaction with respect to this experiment)</p>
+
+      <div ng-repeat="checkbox in checkboxOptions track by $index">
+        <input type="checkbox" ng-model="checkbox.selected" ng-change="optionToggled($index)">
+        {{checkbox.value}}
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info"
+          ng-click="nextFinalQuestion()">Continue</button>
+      </div>
+    </div>
+  </div>
+  <!-- question 6 -->
+  <div class="container" ng-show="showpage.finalquestions === 6">
+    <div class="row">
+      <h3>What is your best estimate of your total expenditures this school year?</h3>
+      <h4>(Please consider all expenses, even if some are convered by financial
+        aid or grants, including tuition, housing, food, clothing, transportation,
+        entertainment, etc. Indicate in whole dollars)
+      </h4>
+      <div class="col-md-3">
+        <input type="text" ng-model="initalResponses.question5.answer6" />
+      </div>
+      <h3>What is the total (gross) income last year of your parents or guardians
+        (or spouse, if married)?
+      </h3>
+      <h4>(Exclude your own earnings)</h4>
+      <div ng-repeat="checkbox in moneyOptions track by $index">
+        <input type="checkbox" ng-model="checkbox.selected" ng-change="moneyToggled($index)">
+        {{checkbox.value}}
+      </div>
+      <div class="col-md-2 col-md-offset-5">
+        <button type="button" class="btn btn-info"
+          ng-click="showpage.finalquestions = 7; showpage.thanks = true;">Continue</button>
+      </div>
+    </div>
+  </div>
+
   <!-- thanks -->
-  <div class="container" ng-show="thanks">
+  <div class="container" ng-show="showpage.thanks">
     <div class="row">
       <h2>Thank you for participating in this experiment.</h2>
       <h3>Please remain seated until the experimenter attends to you.</h3>
