@@ -20,78 +20,94 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     }
   };
   $scope.finalResponses = {
+    question1: {
+      answer: ''
+    },
+    question2: {
+      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: '', answer9: '', answer10: '', answer11: ''
+    },
+    question3: {
+      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: ''
+    },
+    question4: {
+      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: '', answer9: ''
+    },
+    question5: {
+      satisfiedOptions: [
+        {
+          value: 'Completely satisfied.',
+          selected: false
+        },
+        {
+          value: 'Very satisfied.',
+          selected: false
+        },
+        {
+          value: 'Rather satisfied.',
+          selected: false
+        },
+        {
+          value: 'Neither satisfied nor dissatisfied.',
+          selected: false
+        },
+        {
+          value: 'Rather dissatisfied.',
+          selected: false
+        },
+        {
+          value: 'Very dissatisfied.',
+          selected: false
+        },
+        {
+          value: 'Completely dissatisfied.',
+          selected: false
+        }
+      ]
+    },
+    question6: {
+      answer1: '',
+      moneyOptions: [
+        {
+          value: '$0 to less than $25,000',
+          selected: false
+        },
+        {
+          value: '$25,000 to less than $50,000',
+          selected: false
+        },
+        {
+          value: '$50,000 to less than $75,000',
+          selected: false
+        },
+        {
+          value: '$75,000 to less than $100,000',
+          selected: false
+        },
+        {
+          value: '$100,000 to less than $125,000',
+          selected: false
+        },
+        {
+          value: '$125,000 to less than $150,000',
+          selected: false
+        },
+        {
+          value: '$150,000 or more',
+          selected: false
+        },
+      ]
+    },
   };
-
-  $scope.checkboxOptions = [
-    {
-      value: 'Completely satisfied.',
-      selected: false
-    },
-    {
-      value: 'Very satisfied.',
-      selected: false
-    },
-    {
-      value: 'Rather satisfied.',
-      selected: false
-    },
-    {
-      value: 'Neither satisfied nor dissatisfied.',
-      selected: false
-    },
-    {
-      value: 'Rather dissatisfied.',
-      selected: false
-    },
-    {
-      value: 'Very dissatisfied.',
-      selected: false
-    },
-    {
-      value: 'Completely dissatisfied.',
-      selected: false
-    }
-  ];
-  $scope.moneyOptions = [
-    {
-      value: '$0 to less than $25,000',
-      selected: false
-    },
-    {
-      value: '$25,000 to less than $50,000',
-      selected: false
-    },
-    {
-      value: '$50,000 to less than $75,000',
-      selected: false
-    },
-    {
-      value: '$75,000 to less than $100,000',
-      selected: false
-    },
-    {
-      value: '$100,000 to less than $125,000',
-      selected: false
-    },
-    {
-      value: '$125,000 to less than $150,000',
-      selected: false
-    },
-    {
-      value: '$150,000 or more',
-      selected: false
-    },
-  ];
   $scope.optionToggled = function(index) {
-    for(var i = 0; i < $scope.checkboxOptions.length; i++) {
+    for(var i = 0; i < $scope.finalResponses.question5.satisfiedOptions.length; i++) {
       if (index === i) continue;
-      $scope.checkboxOptions[i].selected = false;
+      $scope.finalResponses.question5.satisfiedOptions[i].selected = false;
     }
   };
   $scope.moneyToggled = function(index) {
-    for(var i = 0; i < $scope.moneyOptions.length; i++) {
+    for(var i = 0; i < $scope.finalResponses.question6.moneyOptions.length; i++) {
       if (index === i) continue;
-      $scope.moneyOptions[i].selected = false;
+      $scope.finalResponses.question6.moneyOptions[i].selected = false;
     }
   };
 
@@ -123,7 +139,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   // set in config
   $scope.role = "T";
   $scope.endownment = 300;
-  $scope.income = 900;
+  $scope.income = 0;
   $scope.percent = 0;
   $scope.transferred = 0;
   $scope.percentTransferred= 0;
@@ -396,6 +412,15 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       showpage: $scope.showpage
     });
   };
+  $scope.finishFinalQuestions = function() {
+    $scope.showpage.finalquestions++;
+    $scope.showpage.thanks = true;
+    // send answers back to server
+    rs.trigger("sendfinalanswers", {
+      finalResponses: $scope.finalResponses,
+      showpage: $scope.showpage
+    });
+  };
 
   function Point(x, y, radius) {
     this.x = x || 0;
@@ -625,6 +650,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     $scope.actualprice = value.actualprice;
   });
   rs.on("savefinalanswers", function(value) {
+    $scope.finalResponses = value.finalResponses;
+    $scope.showpage = value.showpage;
+  });
+  rs.on("sendfinalanswers", function(value) {
     $scope.finalResponses = value.finalResponses;
     $scope.showpage = value.showpage;
   });
