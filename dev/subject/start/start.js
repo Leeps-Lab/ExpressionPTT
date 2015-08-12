@@ -457,6 +457,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     this.ctx = canvas.getContext('2d');
     this.side = "right";
     this.direction = "up";
+    this.distance = null;
     this.goal = {
       x: null,
       y: null
@@ -483,13 +484,16 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   $scope.maxpoints = 0;
   LocatorState.prototype.update = function(guess) {
     console.log(this.goal);
-    var distance = Math.sqrt(square(this.goal.x - guess.x) + square(this.goal.y - guess.y));
+    this.distance = Math.sqrt(square(this.goal.x - guess.x) + square(this.goal.y - guess.y));
     // update locator position
-    this.pointvalue = $scope.maxpoints - distance * $scope.maxpoints / this.maxlength;
+    this.pointvalue = $scope.maxpoints - this.distance * $scope.maxpoints / this.maxlength;
     var linescale = this.pointvalue * this.linelength / $scope.maxpoints;
     this.point.update(linescale);
     $("#earned").text("Money earned for this task (cents) : " + parseFloat(this.pointvalue).toFixed(1));
     $("#points").text("Points earned : " + parseFloat(this.pointvalue).toFixed(1));
+
+    guess.x > this.goal.x ? this.side = "left" : this.side = "right";
+    guess.y > this.goal.y ? this.direction = "down" : this.direction = "up";
   };
 
   function square(x) {
