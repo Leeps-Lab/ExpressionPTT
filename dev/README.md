@@ -9,10 +9,5 @@
 ##Part 3
 
 ##Part 4
-* General css
-* center words
-* center input
-* upgrade buttons
-* border around numbers
 * validation
 
