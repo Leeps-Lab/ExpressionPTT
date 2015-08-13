@@ -118,8 +118,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     part2: false,
     part2ready: false,
     exampleTasks: false,
-    gametime: false,
+    practice1: false,
+    practice2: false,
     realTasks: false,
+    realTasksReady: false,
+    gametime: false,
     moneyReceived: false,
     part3: false,
     part3ready: false,
@@ -140,7 +143,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   // set in config
   $scope.role = "T";
   $scope.endownment = 300;
-  $scope.income = 900;
+  $scope.income = 0;
   $scope.percent = 0;
   $scope.transferred = 0;
   $scope.percentTransferred= 0;
@@ -201,6 +204,125 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       });
     });
   };
+  $scope.practiceGame1 = function() {
+    $scope.showpage.practice1 = true;
+    $scope.showpage.exampleTasks = false;
+
+    $scope.points = [];
+    $scope.plot = $.plot("#practice1",[{
+        data: $scope.points,
+        points: {show : true}
+      }], {
+        xaxis: {
+            ticks:10,
+            min:0,
+            max:100
+        },
+        yaxis: {
+            ticks:10,
+            min:0,
+            max:100
+        },
+        grid: {
+          clickable: true
+        }
+    });
+
+    $scope.locatorState =
+      new LocatorState(document.getElementById("practice1locator"),
+                       "#practice1points", true, 50);
+    $scope.locatorState.setGoal();
+    $scope.locatorState.draw();
+
+    $("#practice1").bind("plotclick", function(event, pos, item) {
+      $scope.points.pop();
+      $scope.points.push([pos.x, pos.y]);
+      console.log($scope.maxpoints);
+      $scope.plot.setData([{
+        data: $scope.points,
+        clickable: false,
+        points: {
+          show: true,
+          fill: true,
+          radius: 10,
+        }
+      }]);
+      $scope.plot.draw();
+      $scope.locatorState.update(pos);
+      $scope.locatorState.draw();
+      /*
+      if (item) {
+        highlight(item.series, item.datapoint);
+        console.log("You clicked a point!");
+      }
+      */
+    });
+  };
+  $scope.nextPractice = function() {
+    $scope.showpage.practice1 = false;
+    $scope.showpage.practice2 = true;
+
+    $scope.points = [];
+    $scope.plot = $.plot("#practice2",[{
+        data: $scope.points,
+        points: {show : true}
+      }], {
+        xaxis: {
+            ticks:10,
+            min:0,
+            max:100
+        },
+        yaxis: {
+            ticks:10,
+            min:0,
+            max:100
+        },
+        grid: {
+          clickable: true
+        }
+    });
+
+    $scope.locatorState =
+      new LocatorState(document.getElementById("practice2locator"),
+                       "#practice2points", true, 50);
+    $scope.locatorState.setGoal();
+    $scope.locatorState.draw();
+
+    $("#practice2").bind("plotclick", function(event, pos, item) {
+      $scope.points.pop();
+      $scope.points.push([pos.x, pos.y]);
+      console.log($scope.maxpoints);
+      $scope.plot.setData([{
+        data: $scope.points,
+        clickable: false,
+        points: {
+          show: true,
+          fill: true,
+          radius: 10,
+        }
+      }]);
+      $scope.plot.draw();
+      $scope.locatorState.update(pos);
+      $scope.locatorState.draw();
+      /*
+      if (item) {
+        highlight(item.series, item.datapoint);
+        console.log("You clicked a point!");
+      }
+      */
+    });
+  };
+  $scope.finalPractice = function() {
+    $scope.showpage.practice2 = false;
+    $scope.showpage.realTasks = true;
+
+    rs.synchronizationBarrier('realTasks').then(function() {
+      $scope.showpage.realTasksReady = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
+  };
   $scope.showgame = function() {
     $scope.showpage.gametime = true;
     $scope.showpage.realTasks = false;
@@ -225,7 +347,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         }
     });
 
-    $scope.locatorState = new LocatorState(document.getElementById("locator"));
+    $scope.locatorState = new LocatorState(document.getElementById("locator"),
+                                          "#points", false);
     $scope.locatorState.setGoal();
     $scope.locatorState.draw();
 
@@ -245,12 +368,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       $scope.plot.draw();
       $scope.locatorState.update(pos);
       $scope.locatorState.draw();
-      /*
-      if (item) {
-        highlight(item.series, item.datapoint);
-        console.log("You clicked a point!");
-      }
-      */
     });
   };
   $scope.nexttask = function() {
@@ -473,8 +590,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     ctx.fill(path);
   };
 
-  function LocatorState(canvas) {
+  function LocatorState(canvas, pointsLocation, practice, maxpoints) {
     this.canvas = canvas;
+    this.pointsLocation = pointsLocation;
+    this.practice = practice;
     this.width = canvas.width;
     this.height = canvas.height;
     this.ctx = canvas.getContext('2d');
@@ -491,6 +610,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
 
     this.point = new Point(this.width / 2, this.height * 3 / 4, 20);
     $scope.maxpoints = Math.floor(Math.random() * 100) + 1;
+
+    if (this.practice) $scope.maxpoints = maxpoints;
   }
 
   LocatorState.prototype.getPointvalue = function() {
@@ -512,8 +633,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     this.pointvalue = $scope.maxpoints - this.distance * $scope.maxpoints / this.maxlength;
     var linescale = this.pointvalue * this.linelength / $scope.maxpoints;
     this.point.update(linescale);
-    $("#earned").text("Money earned for this task (cents) : " + parseFloat(this.pointvalue).toFixed(1));
-    $("#points").text("Points earned : " + parseFloat(this.pointvalue).toFixed(1));
+    if (!this.practice)
+      $("#earned").text("Money earned for this task (cents) : " + parseFloat(this.pointvalue).toFixed(1));
+    $(this.pointsLocation).text("Points earned : " + parseFloat(this.pointvalue).toFixed(1));
 
     guess.x > this.goal.x ? this.side = "left" : this.side = "right";
     guess.y > this.goal.y ? this.direction = "down" : this.direction = "up";

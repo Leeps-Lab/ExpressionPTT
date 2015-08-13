@@ -3,7 +3,6 @@
 * validation
 
 ##Part 2
-* Practice rounds (ask if necessary)
 * Timer
 
 ##Part 3
