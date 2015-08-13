@@ -3,7 +3,6 @@
 * validation
 
 ##Part 2
-* Timer
 
 ##Part 3
 

@@ -594,7 +594,7 @@
   <!-- practice one -->
   <div class="container" ng-show="showpage.practice1">
     <div class="row">
-      <h3 class="text-center">PRACTICE SCREEN 1</h3>
+      <h3 class="text-center">PRACTICE SCREEN {{practiceRound}}</h3>
     </div>
     <div class="row">
       <h3 class="text-center">Assigned time can be exceeded and points earned here will not count.<br>
@@ -616,8 +616,8 @@
       <div class="col-md-3">
         <!-- points earned -->
         <div class="row">
-          <div class="col-md-9" style="border-style:solid;border-width:1px">
-            <h3 id="practice1timer" class="text-center">Remaining time : 35</h3>
+          <div class="col-md-9" style="border-style:solid; border-width: 1px">
+            <h3 id="practice1timer" class="text-center">Time Remaining : {{time}}</h3>
           </div>
           <div class="col-md-9" style="border-style:solid; border-width: 1px">
             <h3 id="practice1points" class="text-center">Points earned : 0.0</h3>
@@ -638,58 +638,13 @@
         in a new location just release the <em>left-click</em> of the mouse.
       </p>
     </div>
-    <div class="row">
-      <div class="col-md-2 col-md-offset-5">
+    <div class="row" ng-show="practiceRound === 1">
+      <div class="text-center">
         <button type="button" class="btn btn-success" ng-click="nextPractice()">Go To Next Task</button>
       </div>
     </div>
-  </div>
-  <!-- practice two -->
-  <div class="container" ng-show="showpage.practice2">
-    <div class="row">
-      <h3 class="text-center">PRACTICE SCREEN 2</h3>
-    </div>
-    <div class="row">
-      <h3 class="text-center">Assigned time can be exceeded and points earned here will not count.<br>
-        The current task can earn you a maximim of 50 points.
-      </h3>
-    </div>
-    <div class="row">
-      <p class="col-md-10 col-md-offset-1">Task: Use the <em>left-click</em> of the mouse to <em>drag and drop</em>
-         the maroon square (in the left graph) and search for the location that gives you the highest
-         score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
-         The assigned time is 35 seconds.
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-7">
-      <!-- Game -->
-        <div id="practice2" style="width:600px;height:300px"></div>
-      </div>
-      <div class="col-md-3">
-        <!-- points earned -->
-        <div class="row">
-          <div class="col-md-9" style="border-style:solid; border-width: 1px">
-            <h3 id="practice2points" class="text-center">Points earned : 0.0</h3>
-          </div>
-        </div>
-        <!-- locator -->
-        <div class="row">
-          <div class="col-md-3">
-            <canvas id="practice2locator" style="width:200px;height:300px;
-              border-style:solid; border-width: 1px"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <p class="text-center">
-        To pick up the square use the <em>left-click</em> of the mouse. To drop the square
-        in a new location just release the <em>left-click</em> of the mouse.
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-2 col-md-offset-5">
+    <div class="row" ng-show="practiceRound === 2">
+      <div class="text-center">
         <button type="button" class="btn btn-success" ng-click="finalPractice()">
           Start Real Task
         </button>
@@ -739,6 +694,9 @@
         <!-- points earned -->
         <div class="row">
           <div class="col-md-9" style="border-style:solid; border-width: 1px">
+            <h3 id="timer" class="text-center">Time Remaining : {{time}}</h3>
+          </div>
+          <div class="col-md-9" style="border-style:solid; border-width: 1px">
             <h3 id="points" class="text-center">Points earned : 0.0</h3>
           </div>
         </div>
@@ -755,7 +713,7 @@
       <p id="earned" class="text-center">Money earned for this task (cents) : 0.0</p>
     </div>
     <div class="row">
-      <div class="col-md-2 col-md-offset-5">
+      <div class="text-center">
         <button id="nexttask" type="button" class="btn btn-success" ng-click="nexttask()">Go To Next Task</button>
       </div>
     </div>

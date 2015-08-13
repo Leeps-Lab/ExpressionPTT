@@ -1,4 +1,4 @@
-Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
+Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodSubject", function($rootScope, $scope, $timeout, rs) {
   $scope.initalResponses = {
     question1: {
       answer: ''
@@ -119,7 +119,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     part2ready: false,
     exampleTasks: false,
     practice1: false,
-    practice2: false,
     realTasks: false,
     realTasksReady: false,
     gametime: false,
@@ -154,6 +153,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   // variables for P
   $scope.bid = null;
   $scope.actualprice = 0;
+
+  // time variables
+  $scope.timelimit = 35;
+  $scope.time = 35;
+  $scope.practiceRound = 1;
 
   // partner variables
   $scope.partner = {
@@ -204,6 +208,18 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       });
     });
   };
+  $scope.practiceTimeout = function() {
+    $scope.time--;
+    if (!$scope.time < 1) $scope.mytimeout = $timeout($scope.practiceTimeout,1000);
+  };
+  $scope.onTimeout = function() {
+    $scope.time--;
+    if ($scope.time < 1) {
+      console.log("Times up");
+      $scope.nexttask();
+    }
+    else $scope.mytimeout = $timeout($scope.onTimeout,1000);
+  };
   $scope.practiceGame1 = function() {
     $scope.showpage.practice1 = true;
     $scope.showpage.exampleTasks = false;
@@ -250,70 +266,24 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       $scope.plot.draw();
       $scope.locatorState.update(pos);
       $scope.locatorState.draw();
-      /*
-      if (item) {
-        highlight(item.series, item.datapoint);
-        console.log("You clicked a point!");
-      }
-      */
     });
+
+    $scope.mytimeout = $timeout($scope.practiceTimeout,1000);
   };
   $scope.nextPractice = function() {
-    $scope.showpage.practice1 = false;
-    $scope.showpage.practice2 = true;
+    $scope.practiceRound++;
 
-    $scope.points = [];
-    $scope.plot = $.plot("#practice2",[{
-        data: $scope.points,
-        points: {show : true}
-      }], {
-        xaxis: {
-            ticks:10,
-            min:0,
-            max:100
-        },
-        yaxis: {
-            ticks:10,
-            min:0,
-            max:100
-        },
-        grid: {
-          clickable: true
-        }
-    });
-
-    $scope.locatorState =
-      new LocatorState(document.getElementById("practice2locator"),
-                       "#practice2points", true, 50);
+    $scope.points.pop();
+    $scope.plot.setData([$scope.points]);
+    $scope.plot.draw();
     $scope.locatorState.setGoal();
-    $scope.locatorState.draw();
 
-    $("#practice2").bind("plotclick", function(event, pos, item) {
-      $scope.points.pop();
-      $scope.points.push([pos.x, pos.y]);
-      console.log($scope.maxpoints);
-      $scope.plot.setData([{
-        data: $scope.points,
-        clickable: false,
-        points: {
-          show: true,
-          fill: true,
-          radius: 10,
-        }
-      }]);
-      $scope.plot.draw();
-      $scope.locatorState.update(pos);
-      $scope.locatorState.draw();
-      /*
-      if (item) {
-        highlight(item.series, item.datapoint);
-        console.log("You clicked a point!");
-      }
-      */
-    });
+    $timeout.cancel($scope.mytimeout);
+    $scope.time = $scope.timelimit;
+    $scope.mytimeout = $timeout($scope.practiceTimeout,1000);
   };
   $scope.finalPractice = function() {
-    $scope.showpage.practice2 = false;
+    $scope.showpage.practice1 = false;
     $scope.showpage.realTasks = true;
 
     rs.synchronizationBarrier('realTasks').then(function() {
@@ -369,6 +339,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       $scope.locatorState.update(pos);
       $scope.locatorState.draw();
     });
+
+    $timeout.cancel($scope.mytimeout);
+    $scope.time = $scope.timelimit;
+    $scope.mytimeout = $timeout($scope.onTimeout,1000);
   };
   $scope.nexttask = function() {
     $scope.income += $scope.locatorState.getPointvalue();
@@ -395,8 +369,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         $scope.showpage.gametime = false;
         $scope.showpage.moneyReceived = true;
         console.log("income : " + $scope.income);
-
-
       }
       // clear dot and set new goal
       else {
@@ -408,6 +380,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         $("#earned").text("Money earned for this task (cents) : " +
           parseFloat($scope.locatorState.pointvalue).toFixed(1));
         $("#points").text("Points earned : " + parseFloat($scope.locatorState.pointvalue).toFixed(1));
+
+        $timeout.cancel($scope.mytimeout);
+        $scope.time = $scope.timelimit;
+        $scope.mytimeout = $timeout($scope.onTimeout,1000);
       }
   };
   $scope.moneyShown = function() {
@@ -819,7 +795,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   });
 
   rs.on_load(function() {
-    console.log("hello experiment");
+    console.log("hello experiment " + rs);
     $scope.showpage.showStartExperiment = true;
     // set values from config file
     // role index endownment
