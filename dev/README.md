@@ -5,11 +5,8 @@
 ##Part 2
 * Practice rounds (ask if necessary)
 * Timer
-* Upgrade buttons
 
 ##Part 3
-* general css
-* Upgrade buttons
 
 ##Part 4
 * General css

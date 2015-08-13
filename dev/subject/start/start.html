@@ -563,11 +563,11 @@
   <!-- have a barrier here -->
   <div class="container" ng-show="showpage.part2">
     <div class="row">
-      <div class="col-mid-4 col-mid-offset-4">
+      <div class="text-center">
         <h3>Part 2</h3>
         <p ng-show="showpage.part2ready">To start click continue</p>
       </div>
-      <div class="col-md-2 col-md-offset-5" ng-show="showpage.part2ready">
+      <div class="text-center" ng-show="showpage.part2ready">
         <button type="button" class="btn btn-info" ng-click="showpage.part2 = false; showpage.exampleTasks = true">
           Continue
         </button>
@@ -577,12 +577,12 @@
   <!-- instructions -->
   <div class="container" ng-show="showpage.exampleTasks">
     <div class="row">
-      <div class="col-mid-4 col-mid-offset-4">
+      <div class="text-center">
         <h3>You will be asked to complete a sequence of tasks.<br>
           The first two tasks are practice screens.
         </h3>
       </div>
-      <div class="col-md-2 col-md-offset-5">
+      <div class="text-center">
         <button type="button" class="btn btn-info" ng-click="showpage.realTasks = true; showpage.exampleTasks = false;">
           Continue
         </button>
@@ -592,11 +592,15 @@
   <!-- real tasks -->
   <div class="container" ng-show="showpage.realTasks">
     <div class="row">
-      <div class="col-mid-4 col-mid-offset-4">
+      <div class="text-center">
         <h3>Practice screens are over.<br>
           The following tasks do count towards your income.
         </h3>
-        <input class="success" type="button" value="Continue" ng-click="showgame()" />
+        <div class="text-center">
+          <button type="button" class="btn btn-info" ng-click="showgame()">
+            Continue
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -655,7 +659,8 @@
         For this part of the experiment you have received ${{floatToMoney(endownment)}}
         of endownment and earned ${{floatToMoney(income)}} of task income.
       </h3>
-    </div><div class="row">
+    </div>
+    <div class="row">
       <div class="col-md-2 col-md-offset-5">
         <button type="button" class="btn btn-success" ng-click="moneyShown()">
           Continue
@@ -670,8 +675,14 @@
       <h3 class="text-center">Part 3</h3>
       <p class="text-center" ng-show="showpage.part3ready">To start click continue</p>
       <div class="col-mid-4 col-mid-offset-4">
-        <input class="success" type="button" value="Continue" ng-show="showpage.part3ready"
-          ng-click="showpage.roles = true; showpage.part3 = false;" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-show="showpage.part3ready"
+          ng-click="showpage.roles = true; showpage.part3 = false;">
+          Continue
+        </button>
       </div>
     </div>
   </div>
@@ -687,7 +698,13 @@
         ${{floatToMoney(partner.endownment)}} as endownment and earned
         ${{floatToMoney(partner.income)}} of income.
       </h2>
-      <input class="success" type="button" value="Continue" ng-click="createSliders();" />
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="createSliders();">
+          Continue
+        </button>
+      </div>
     </div>
   </div>
   <!-- slider -->
@@ -696,53 +713,59 @@
   <!-- T slider -->
   <div class="container" ng-show="showpage.slider && role === 'T'">
     <div class="row">
-      <h3>Being T, you are given the authority to transfer money from P's account to your own account.
+      <h3 class="text-center">
+        Being T, you are given the authority to transfer money from P's account to your own account.
         The maximum amount of money you can collect is what P has earned as income in Part 2
         (${{floatToMoney(partner.income)}}).
       </h3>
     </div>
     <div class="row">
-      <h3>What percentage of P's income do you want to transfer to your account?</h3>
-      <p>(Use the slider below to set this percentage)</p>
+      <h3 class="text-center">What percentage of P's income do you want to transfer to your account?</h3>
+      <p class="text-center">(Use the slider below to set this percentage)</p>
     </div>
-    <div class="row">
+    <div class="row text-center">
       <input id="tSlider" style="width:600px;" data-slider-id="tSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
         data-slider-value="0" />
         <p id="tPercentTransfered">Percentage transfered: {{percent}}</p>
     </div>
     <div class="row">
-      <h2 id="tMoneyTransferred">Money (in $) transferred to your account : {{transfered}}</h2>
-      <h2 id="tFinalEarnings">Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>
+      <h2 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h2>
+      <h2 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>
     </div>
     <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-          <input class="success" type="button" value="Send your Decision" ng-click="sendDecision()" />
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="sendDecision();">
+          Send Your Decision
+        </button>
       </div>
     </div>
   </div>
   <!-- P slider -->
   <div class="container" ng-show="showpage.slider && role === 'P'">
     <div class="row">
-      <h3>At this moment, your counterpart T is deciding what proportion of your income (${{floatToMoney(income)}})
+      <h3 class="text-center">
+        At this moment, your counterpart T is deciding what proportion of your income (${{floatToMoney(income)}})
         to transfer to his/her own account.
       </h3>
     </div>
     <div class="row">
-      <h3>What percentage of your income do you expect T will transfer to his/her own account?</h3>
-      <p>(Use the slider below to set this percentage)</p>
+      <h3 class="text-center">What percentage of your income do you expect T will transfer to his/her own account?</h3>
+      <p class="text-center">(Use the slider below to set this percentage)</p>
     </div>
-    <div class="row">
+    <div class="row text-center">
       <input id="pSlider" style="width:600px;" data-slider-id="pSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
         data-slider-value="0" />
       <p id="pPercentTransferred">Percentage transfered: {{percent}}</p>
     </div>
     <div class="row">
-      <h2 id="pMoneyTransferred">Amount (in $) expected to be transferred to T's account: {{transfered}}</h2>
-      <h2 id="pFinalEarnings">Your expected avaliable earnings (in $) are: {{totalincome}}</h2>
+      <h2 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h2>
+      <h2 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h2>
     </div>
     <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-          <input class="success" type="button" value="Send your Estimate" ng-click="sendEstimate()" />
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="sendEstimate();">
+          Send Your Estimate
+        </button>
       </div>
     </div>
   </div>
@@ -751,21 +774,25 @@
   <!-- P Willingnesspage-->
   <div class="container" ng-show="showpage.willingnesspage && role === 'P'">
     <div class="row">
-      <h3>Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
+      <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
         (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
-      <h3>Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
+      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
     </div>
-    <div class="row">
-      <h3>What is the maximum amount you would be willing to pay to write and send a message that your
+    <div class="row text-center">
+      <h3 class="text-center">What is the maximum amount you would be willing to pay to write and send a message that your
         counterpart T will read?</h3>
-      <p>(Express the amount in dollars and cents)</p>
+      <p class="text-center">(Express the amount in dollars and cents)</p>
       <input ng-model="bid" type="text" />
     </div>
-    <div class="row">
+    <div class="row text-center">
       <h3>The actual price of sending a message will be shown on the next screen.</h3>
     </div>
     <div class="row">
-      <input class="success" type="button" value="Send your Decision" ng-click="sendWillingness()" />
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="sendWillingness();">
+          Send Your Decision
+        </button>
+      </div>
     </div>
   </div>
   <!-- T Willingnesspage -->
@@ -777,13 +804,18 @@
 
   <!-- check price -->
   <div class="container" ng-show="showpage.checkprice && role === 'P'">
-    <div class="row">
+    <div class="row text-center">
       <h3>The actual price is ${{floatToMoney(actualprice)}}</h3>
       <h3>Your maximum willingness was ${{floatToMoney(bid)}}</h3>
       <h3>Therefore, you will be able to write a message to your counterpart</h3>
     </div>
     <div class="row">
-      <input class="success" type="button" value="Continue" ng-click="showpage.messagePage = true; showpage.checkprice = false;" />
+      <div class="text-center">
+        <button type="button" class="btn btn-info"
+          ng-click="showpage.messagePage = true; showpage.checkprice = false;">
+          Send Your Decision
+        </button>
+      </div>
     </div>
   </div>
   <!-- message box -->
@@ -791,7 +823,7 @@
   <!-- T message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'T'">
     <div class="row">
-      <p>Here is it the message from your counterpart :</p>
+      <p class="text-center">Here is it the message from your counterpart :</p>
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2"
@@ -801,7 +833,7 @@
           </div>
         </div>
     </div>
-    <div class="row">
+    <div class="row text-center">
         <button type="button" class="btn btn-info" ng-click="readMessage()">
           I have read the message
         </button>
@@ -835,7 +867,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2 col-md-offset-5">
+      <div class="text-center">
         <button type="button" class="btn btn-info"
           ng-click="sendMessage()">Continue</button>
       </div>
@@ -845,10 +877,10 @@
   <!-- read message -->
   <div class="container" ng-show="showpage.readMessage && role === 'P'">
     <div class="row">
-      <h3>Your Counterpart T has read the message</h3>
+      <h3 class="text-center">Your Counterpart T has read the message</h3>
     </div>
     <div class="row">
-      <div class="col-md-2 col-md-offset-5">
+      <div class="text-center">
         <button type="button" class="btn btn-info" ng-click="messageConfirm()">
           Continue
         </button>
@@ -860,7 +892,7 @@
   <!-- p show earnings-->
   <div class="container" ng-show="showpage.showEarnings && role === 'P'">
     <h3 class="text-center">
-      Earnings <h2>(in $)</h2>
+      Earnings <h2 class="text-center">(in $)</h2>
     </h3>
     <table class="table table-striped table-bordered">
       <tr>
@@ -894,7 +926,7 @@
         <td>{{floatToMoney(totalincome)}}</td>
       </tr>
     </table>
-    <div class="col-md-2 col-md-offset-5">
+    <div class="text-center">
       <button type="button" class="btn btn-info"
         ng-click="sawEarnings()">Continue</button>
     </div>
@@ -902,7 +934,7 @@
   <!-- T show earnings -->
   <div class="container" ng-show="showpage.showEarnings && role === 'T'">
     <h3 class="text-center">
-      Earnings <h2>(in $)</h2>
+      Earnings <h2 class="text-center">(in $)</h2>
     </h3>
     <table class="table table-striped table-bordered">
       <tr>
@@ -936,7 +968,7 @@
         <td>{{floatToMoney(partner.totalincome)}}</td>
       </tr>
     </table>
-    <div class="col-md-2 col-md-offset-5">
+    <div class="text-center">
       <button type="button" class="btn btn-info"
         ng-click="sawEarnings()">Continue</button>
     </div>
@@ -947,9 +979,13 @@
     <div class="row">
       <h3 class="text-center">Part 4</h3>
       <p class="text-center" ng-show="showpage.part4ready">To start click continue</p>
-      <div class="col-mid-4 col-mid-offset-4">
-        <input class="success" type="button" value="Continue" ng-show="showpage.part4ready"
-          ng-click="showpage.finalquestions = 1; showpage.part4 = false;" />
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-info" ng-show="showpage.part4ready"
+          ng-click="showpage.finalquestions = 1; showpage.part4 = false;">
+          Continue
+        </button>
       </div>
     </div>
   </div>
