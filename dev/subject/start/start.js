@@ -120,6 +120,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     exampleTasks: false,
     gametime: false,
     realTasks: false,
+    moneyReceived: false,
     part3: false,
     part3ready: false,
     roles: false,
@@ -130,7 +131,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     readMessage: false,
     showEarnings: false,
     part4: false,
-    part4ready: true,
+    part4ready: false,
     finalquestions: null,
     thanks: false
   };
@@ -139,7 +140,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   // set in config
   $scope.role = "T";
   $scope.endownment = 300;
-  $scope.income = 0;
+  $scope.income = 900;
   $scope.percent = 0;
   $scope.transferred = 0;
   $scope.percentTransferred= 0;
@@ -148,7 +149,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   $scope.messages = [];
 
   // variables for P
-  $scope.bid = 0;
+  $scope.bid = null;
   $scope.actualprice = 0;
 
   // partner variables
@@ -161,6 +162,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     transferred: '',
     percentTransferred: 0,
     moneytransferred: '',
+    actualprice: '',
     totalincome: ''
   };
 
@@ -274,18 +276,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
           totalincome: $scope.totalincome
         });
         $scope.showpage.gametime = false;
-        $scope.showpage.part3 = true;
+        $scope.showpage.moneyReceived = true;
         console.log("income : " + $scope.income);
 
-        //part 3
-        rs.synchronizationBarrier('part3').then(function() {
-          $scope.showpage.part3ready = true;
-          rs.trigger("afterbarrier", {
-            showpage: $scope.showpage
-          });
-        });
 
-        console.log("slider is up");
       }
       // clear dot and set new goal
       else {
@@ -299,11 +293,25 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         $("#points").text("Points earned : " + parseFloat($scope.locatorState.pointvalue).toFixed(1));
       }
   };
+  $scope.moneyShown = function() {
+    $scope.showpage.moneyReceived = false;
+    //part 3
+    $scope.showpage.part3 = true;
+    rs.synchronizationBarrier('part3').then(function() {
+      $scope.showpage.part3ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
+    console.log("slider is up");
+  };
   $scope.sendDecision = function() {
     $scope.showpage.slider = false;
     // send values
     $scope.percentTransferred = $scope.percent;
     $scope.moneytransferred = $scope.transferred;
+    $scope.partner.percenttransferred = $scope.percent;
+    $scope.partner.moneytransferred = $scope.transferred;
     $scope.totalincome = $scope.finalEarnings;
     console.log("sending payload, over.");
     rs.send("sendDecision", {
@@ -364,8 +372,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   $scope.sendWillingness = function() {
     $scope.showpage.willingnesspage = false;
     $scope.actualprice = Math.floor(Math.random() * ($scope.income - $scope.partner.moneytransferred));
+    $scope.bid *= 100;
 
     if ($scope.bid > $scope.actualprice) {
+      $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
       $scope.showpage.checkprice = true;
       // p gets to send message
       rs.trigger("saveWillingness", {
@@ -373,11 +383,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
         actualprice: $scope.actualprice
       });
     } else {
+      $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
       // p doesnt get to send message
       $scope.showpage.showEarnings = true;
     }
     rs.send("sendWillingness", {
-      bid: $scope.bid,
+      actualprice: $scope.actualprice,
+      totalincome: $scope.totalincome,
       message: $scope.bid > $scope.actualprice
     });
   };
@@ -404,6 +416,17 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     $scope.showpage.readMessage = false;
     $scope.showpage.showEarnings = true;
     rs.send("messageConfirm", {
+    });
+  };
+  $scope.sawEarnings = function() {
+    $scope.showpage.showEarnings = false;
+    $scope.showpage.part4 = true;
+
+    rs.synchronizationBarrier('part4').then(function() {
+      $scope.showpage.part4ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
     });
   };
   $scope.nextFinalQuestion = function() {
@@ -530,6 +553,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
     console.log("begin creation");
 
     if ($scope.role === "T") {
+      $scope.finalEarnings = $scope.income;
       $scope.percentSlider = $("#tSlider").slider({
         ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
         ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
@@ -537,7 +561,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       $scope.percentSlider.on("change", function(slideEvt) {
         console.log("T slider");
         $scope.percent = slideEvt.value.newValue;
-        $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent);
+        $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent + "%");
         $scope.transferred = $scope.partner.income * $scope.percent / 100;
         console.log("transferred : " + $scope.transferred);
         console.log($scope.partner.income);
@@ -554,7 +578,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
       $scope.percentSlider.on("change", function(slideEvt) {
         console.log("P slider");
         $scope.percent = slideEvt.value.newValue;
-        $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent);
+        $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent + "%");
         $scope.transferred = $scope.income * $scope.percent / 100;
         $("#pMoneyTransferred").text("Amount (in $) expected to be transferred to T's account : " + $scope.floatToMoney($scope.transferred));
         $scope.finalEarnings = $scope.income - $scope.transferred;
@@ -602,9 +626,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   rs.recv("sendWillingness", function(sender, value) {
     if (sender == parseInt($scope.partner.index)) {
       $scope.showpage.willingnesspage = false;
+      $scope.partner.totalincome = value.totalincome;
       if (value.message) {
         //$scope.showpage.messagePage = true;
-        $scope.partner.bid = value.bid;
+        $scope.partner.actualprice = value.actualprice;
       } else {
         $scope.showpage.showEarnings = true;
       }
@@ -660,6 +685,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", fun
   rs.on("saveWillingness", function(value) {
     $scope.bid = value.bid;
     $scope.actualprice = value.actualprice;
+    $scope.partner.actualprice = value.actualprice;
   });
   rs.on("savefinalanswers", function(value) {
     $scope.finalResponses = value.finalResponses;

@@ -1,9 +1,6 @@
 #The To-Do List
 ##Part 1
-* Fix css for questions
-* center words
-* center input
-* border around numbers
+* validation
 
 ##Part 2
 * Practice rounds (ask if necessary)
@@ -11,11 +8,14 @@
 * Upgrade buttons
 
 ##Part 3
-* Fix final earnings page
 * general css
-- Upgrade buttons
+* Upgrade buttons
 
 ##Part 4
 * General css
+* center words
+* center input
 * upgrade buttons
+* border around numbers
+* validation
 
