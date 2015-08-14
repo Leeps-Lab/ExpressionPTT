@@ -1,7 +1,7 @@
 Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodSubject", function($rootScope, $scope, $timeout, rs) {
   $scope.initalResponses = {
     question1: {
-      answer: ''
+      answer1: ''
     },
     question2: {
       answer1: '', answer2: '', answer3: ''
@@ -21,7 +21,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
   $scope.finalResponses = {
     question1: {
-      answer: ''
+      answer1: ''
     },
     question2: {
       answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: '', answer9: '', answer10: '', answer11: ''
@@ -110,6 +110,32 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       $scope.finalResponses.question6.moneyOptions[i].selected = false;
     }
   };
+  // checks if inputs are filled out
+  $scope.isValid = function(qNum,rNum,toggle,tNumber) {
+    console.log(toggle);
+    console.log(tNumber);
+    if (!qNum && !toggle) return true;
+    console.log("preparing ... ");
+    // checks input values
+    if (qNum) {
+      for (var i = 1; i <= rNum; i++) {
+        console.log("whats the password");
+        if (qNum["answer" + i] == "") {
+          console.log("you shall not pass");
+          return false;
+        }
+      }
+    }
+    // checks if a toggle is true
+    if (!toggle) return true;
+    for (var i = 1; i < tNumber; i++) {
+      console.log("check " + i);
+      if (toggle[i].selected === true) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   // all the variables for ng show
   $scope.showpage = {
@@ -180,37 +206,44 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
 
   // closes one question and shows the next
-  $scope.nextQuestion = function() {
-    $scope.showpage.initalquestions++;
-    // send responses in case of a refresh
-    rs.trigger("saveinitalanswers", {
-      initalResponses: $scope.initalResponses,
-      showpage: $scope.showpage
-    });
+  $scope.nextQuestion = function(qNum, rNum) {
+    console.log("isvalid");
+    if ($scope.isValid(qNum, rNum)) {
+      $scope.showpage.initalquestions++;
+      // send responses in case of a refresh
+      rs.trigger("saveinitalanswers", {
+        initalResponses: $scope.initalResponses,
+        showpage: $scope.showpage
+      });
+    }
   };
   // finishes questions onto money part
   // barrier : have all people ready for part 2
-  $scope.finishQuestions = function() {
-    $scope.showpage.initalquestions++;
-    $scope.showpage.part2 = true;
-    // send answers back to server
-    rs.trigger("sendinitalanswers", {
-      initalResponses: $scope.initalResponses,
-      showpage: $scope.showpage
-    });
-    // get ready for a barrier
-    console.log("ready for part 2?");
-    rs.synchronizationBarrier('part2').then(function() {
-      console.log("I was born ready");
-      $scope.showpage.part2ready = true;
-      rs.trigger("afterbarrier", {
+  $scope.finishQuestions = function(qNum,rNum) {
+    if ($scope.isValid(qNum, rNum)) {
+      $scope.showpage.initalquestions++;
+      $scope.showpage.part2 = true;
+      // send answers back to server
+      rs.trigger("sendinitalanswers", {
+        initalResponses: $scope.initalResponses,
         showpage: $scope.showpage
       });
-    });
+      // get ready for a barrier
+      console.log("ready for part 2?");
+      rs.synchronizationBarrier('part2').then(function() {
+        console.log("I was born ready");
+        $scope.showpage.part2ready = true;
+        rs.trigger("afterbarrier", {
+          showpage: $scope.showpage
+        });
+      });
+    }
   };
   $scope.practiceTimeout = function() {
     $scope.time--;
-    if (!$scope.time < 1) $scope.mytimeout = $timeout($scope.practiceTimeout,1000);
+    if ($scope.time < 1) {
+    } else
+      $scope.mytimeout = $timeout($scope.practiceTimeout,1000);
   };
   $scope.onTimeout = function() {
     $scope.time--;
@@ -350,41 +383,53 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $("#income").text("So far, your income is $" +
       $scope.floatToMoney($scope.income) + ".");
 
-      // reaches income goal
-      if ($scope.income > 10 * 100) {
-        console.log("sending payload, over.");
-        rs.send("sendIncome", {
-          income: $scope.income
-        });
-        rs.trigger("saveIncome", {
-          role: $scope.role,
-          endownment: $scope.endownment,
-          income: $scope.income,
-          percent: $scope.percent,
-          transferred: $scope.transferred,
-          percentTransferred: $scope.percentTransferred,
-          moneytransferred: $scope.moneytransferred,
-          totalincome: $scope.totalincome
-        });
-        $scope.showpage.gametime = false;
-        $scope.showpage.moneyReceived = true;
-        console.log("income : " + $scope.income);
-      }
-      // clear dot and set new goal
-      else {
-        $scope.points.pop();
-        $scope.plot.setData([$scope.points]);
-        $scope.plot.draw();
-        $scope.locatorState.setGoal();
-        $scope.locatorState.pointvalue = 0;
-        $("#earned").text("Money earned for this task (cents) : " +
-          parseFloat($scope.locatorState.pointvalue).toFixed(1));
-        $("#points").text("Points earned : " + parseFloat($scope.locatorState.pointvalue).toFixed(1));
+    // save income
+    rs.trigger("saveIncome", {
+      role: $scope.role,
+      endownment: $scope.endownment,
+      income: $scope.income,
+      percent: $scope.percent,
+      transferred: $scope.transferred,
+      percentTransferred: $scope.percentTransferred,
+      moneytransferred: $scope.moneytransferred,
+      totalincome: $scope.totalincome
+    });
 
-        $timeout.cancel($scope.mytimeout);
-        $scope.time = $scope.timelimit;
-        $scope.mytimeout = $timeout($scope.onTimeout,1000);
-      }
+    // reaches income goal
+    if ($scope.income > 10 * 100) {
+      console.log("sending payload, over.");
+      rs.send("sendIncome", {
+        income: $scope.income
+      });
+      rs.trigger("saveIncome", {
+        role: $scope.role,
+        endownment: $scope.endownment,
+        income: $scope.income,
+        percent: $scope.percent,
+        transferred: $scope.transferred,
+        percentTransferred: $scope.percentTransferred,
+        moneytransferred: $scope.moneytransferred,
+        totalincome: $scope.totalincome
+      });
+      $scope.showpage.gametime = false;
+      $scope.showpage.moneyReceived = true;
+      console.log("income : " + $scope.income);
+    }
+    // clear dot and set new goal
+    else {
+      $scope.points.pop();
+      $scope.plot.setData([$scope.points]);
+      $scope.plot.draw();
+      $scope.locatorState.setGoal();
+      $scope.locatorState.pointvalue = 0;
+      $("#earned").text("Money earned for this task (cents) : " +
+        parseFloat($scope.locatorState.pointvalue).toFixed(1));
+      $("#points").text("Points earned : " + parseFloat($scope.locatorState.pointvalue).toFixed(1));
+
+      $timeout.cancel($scope.mytimeout);
+      $scope.time = $scope.timelimit;
+      $scope.mytimeout = $timeout($scope.onTimeout,1000);
+    }
   };
   $scope.moneyShown = function() {
     $scope.showpage.moneyReceived = false;
@@ -463,9 +508,14 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     });
   };
   $scope.sendWillingness = function() {
-    $scope.showpage.willingnesspage = false;
     $scope.actualprice = Math.floor(Math.random() * ($scope.income - $scope.partner.moneytransferred));
     $scope.bid *= 100;
+    if ($scope.bid > $scope.income - $scope.partner.moneytransferred) {
+      alert("That amount is not allowed");
+      $scope.bid = $scope.bid / 100;
+      return;
+    }
+    $scope.showpage.willingnesspage = false;
 
     if ($scope.bid > $scope.actualprice) {
       $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
@@ -522,22 +572,26 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       });
     });
   };
-  $scope.nextFinalQuestion = function() {
-    $scope.showpage.finalquestions++;
-    // send responses in case of a refresh
-    rs.trigger("savefinalanswers", {
-      finalResponses: $scope.finalResponses,
-      showpage: $scope.showpage
-    });
+  $scope.nextFinalQuestion = function(qNum,rNum,toggle,tNumber) {
+    if ($scope.isValid(qNum,rNum,toggle,tNumber)) {
+      $scope.showpage.finalquestions++;
+      // send responses in case of a refresh
+      rs.trigger("savefinalanswers", {
+        finalResponses: $scope.finalResponses,
+        showpage: $scope.showpage
+      });
+    }
   };
-  $scope.finishFinalQuestions = function() {
-    $scope.showpage.finalquestions++;
-    $scope.showpage.thanks = true;
-    // send answers back to server
-    rs.trigger("sendfinalanswers", {
-      finalResponses: $scope.finalResponses,
-      showpage: $scope.showpage
-    });
+  $scope.finishFinalQuestions = function(qNum,rNum,toggle,tNumber) {
+    if ($scope.isValid(qNum,rNum,toggle,tNumber)) {
+      $scope.showpage.finalquestions++;
+      $scope.showpage.thanks = true;
+      // send answers back to server
+      rs.trigger("sendfinalanswers", {
+        finalResponses: $scope.finalResponses,
+        showpage: $scope.showpage
+      });
+    }
   };
 
   $scope.floatToMoney = function(number) {

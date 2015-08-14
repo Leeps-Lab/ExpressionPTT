@@ -50,7 +50,7 @@
         <p class="text-center">To start click continue</p>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question1,0)">Continue</button>
       </div>
     </div>
   </div>
@@ -94,11 +94,13 @@
         <br>
         <div class="row text-center">
           <input type="text"
-            ng-model="initalResponses.question1.answer" />
+            ng-model="initalResponses.question1.answer1" />
         </div>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question1,1)">
+          Continue
+        </button>
       </div>
     </div>
   </div>
@@ -152,7 +154,7 @@
         </div>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question2,3)">Continue</button>
       </div>
     </div>
   </div>
@@ -246,7 +248,7 @@
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question3,11)">Continue</button>
       </div>
     </div>
   </div>
@@ -305,7 +307,7 @@
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question4,6)">Continue</button>
       </div>
     </div>
   </div>
@@ -419,7 +421,7 @@
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question5,6)">Continue</button>
       </div>
     </div>
   </div>
@@ -555,7 +557,7 @@
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="finishQuestions()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="finishQuestions(initalResponses.question6,8)">Continue</button>
       </div>
     </div>
   </div>
@@ -1094,12 +1096,12 @@
           </div>
         </div>
         <div class="row text-center">
-          <input class="text" ng-model="finalResponses.question1.answer" />
+          <input class="text" ng-model="finalResponses.question1.answer1" />
         </div>
       </div>
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion()">Continue</button>
+          ng-click="nextFinalQuestion(finalResponses.question1,1)">Continue</button>
       </div>
     </div>
   </div>
@@ -1191,7 +1193,7 @@
         </div>
         <div class="col-md-2 col-md-offset-5">
           <button type="button" class="btn btn-info"
-            ng-click="nextFinalQuestion()">Continue</button>
+            ng-click="nextFinalQuestion(finalResponses.question2,11)">Continue</button>
         </div>
     </div>
   </div>
@@ -1302,7 +1304,7 @@
       </div>
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion()">Continue</button>
+          ng-click="nextFinalQuestion(finalResponses.question3,6)">Continue</button>
       </div>
     </div>
   </div>
@@ -1421,7 +1423,6 @@
           Emotional
         </div>
       </div>
-      <br>
       <div class="row">
         <div class="col-md-1 col-md-offset-4">
           Unconfident
@@ -1432,7 +1433,6 @@
         <div class="col-md-1">
           Confident
         </div>
-      </div>
       </div>
       <div class="row">
         <div class="col-md-1 col-md-offset-4">
@@ -1447,7 +1447,7 @@
       </div>
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion()">Continue</button>
+          ng-click="nextFinalQuestion(finalResponses.question4,9)">Continue</button>
       </div>
     </div>
   </div>
@@ -1465,7 +1465,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion()">Continue</button>
+          ng-click="nextFinalQuestion(null,0,finalResponses.question5.satisfiedOptions,7)">Continue</button>
       </div>
     </div>
   </div>
@@ -1498,7 +1498,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="finishFinalQuestions()">Continue</button>
+          ng-click="finishFinalQuestions(finalResponses.question6,1,finalResponses.question6.moneyOptions,7)">Continue</button>
       </div>
     </div>
     </div>
