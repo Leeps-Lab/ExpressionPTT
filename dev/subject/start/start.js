@@ -207,13 +207,19 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
   // closes one question and shows the next
   $scope.nextQuestion = function(qNum, rNum) {
-    console.log("isvalid");
     if ($scope.isValid(qNum, rNum)) {
       $scope.showpage.initalquestions++;
       // send responses in case of a refresh
       rs.trigger("saveinitalanswers", {
         initalResponses: $scope.initalResponses,
         showpage: $scope.showpage
+      });
+    } else {
+      sweetAlert({
+        title: "Incorrect",
+        text: "Please check all inputs are filled.",
+        type: "error",
+        allowOutsideClick: true
       });
     }
   };
@@ -236,6 +242,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
         rs.trigger("afterbarrier", {
           showpage: $scope.showpage
         });
+      });
+    } else {
+      sweetAlert({
+        title: "Incorrect",
+        text: "Please check all inputs are filled.",
+        type: "error",
+        allowOutsideClick: true
       });
     }
   };
@@ -511,7 +524,12 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.actualprice = Math.floor(Math.random() * ($scope.income - $scope.partner.moneytransferred));
     $scope.bid *= 100;
     if ($scope.bid > $scope.income - $scope.partner.moneytransferred) {
-      alert("That amount is not allowed");
+      sweetAlert({
+        title: "Unavaliable Value",
+        text: "Please check you can use that amount.",
+        type: "error",
+        allowOutsideClick: true
+      });
       $scope.bid = $scope.bid / 100;
       return;
     }
@@ -580,6 +598,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
         finalResponses: $scope.finalResponses,
         showpage: $scope.showpage
       });
+    } else {
+      sweetAlert({
+        title: "Incorrect",
+        text: "Please check all inputs are filled.",
+        type: "error",
+        allowOutsideClick: true
+      });
     }
   };
   $scope.finishFinalQuestions = function(qNum,rNum,toggle,tNumber) {
@@ -590,6 +615,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       rs.trigger("sendfinalanswers", {
         finalResponses: $scope.finalResponses,
         showpage: $scope.showpage
+      });
+    } else {
+      sweetAlert({
+        title: "Incorrect",
+        text: "Please check all inputs are filled.",
+        type: "error",
+        allowOutsideClick: true
       });
     }
   };
