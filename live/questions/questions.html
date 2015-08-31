@@ -1,0 +1,548 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+	  <title>Kristian's Questions</title>
+    <script type="text/javascript" src="libs/jquery.min.js"></script>
+    <script type="text/javascript" src="libs/flot/jquery.flot.min.js"></script>
+    <script type="text/javascript" src="libs/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="libs/bootstrap.min.css">
+    <script type="text/javascript" src="questions.js"></script>
+  </head>
+  <body>
+    <!-- start experiment -->
+    <div class="container" ng-show="showStartExperiment">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>To begin the experiment click Continue</h3>
+          <input class="success" type="button" value="Continue" ng-click="startExperiment()" />
+        </div>
+      </div>
+    </div>
+    <!-- start part 1 -->
+    <div class="container" ng-show="initalquestions === 0;">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Part 1</h3>
+          <p>To start click continue</p>
+          <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+        </div>
+      </div>
+    </div>
+    <!-- inital questions -->
+
+    <!-- question 1 -->
+    <div class="container" ng-show="initalquestions === 1">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Right now, how would you describe yourself?</h3>
+          <p>(Please enter the number that best applies to you at this moment)</p>
+          <div class="row">
+            <div class="col-md-1">
+              1:<br>Extremeley<br><strong>unhappy</strong>
+            </div>
+            <div class="col-md-1">
+              2:<br>Very unhappy
+            </div>
+            <div class="col-md-1">
+              3:<br>Unhappy
+            </div>
+            <div class="col-md-1">
+              4:<br>Somewhat happy
+            </div>
+            <div class="col-md-1">
+              5:<br>Neutral
+            </div>
+            <div class="col-md-1">
+              6:<br>Somewhat happy
+            </div>
+            <div class="col-md-1">
+              7:<br>Happy
+            </div>
+            <div class="col-md-1">
+              8:<br>Very happy
+            </div>
+            <div class="col-md-1">
+              9:<br>Extremeley<br><strong>happy</strong>
+            </div>
+          </div>
+          <input class="text" />
+          <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+        </div>
+      </div>
+    </div>
+    <!-- question 2 -->
+    <div class="container" ng-show="initalquestions === 2">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>For each question, give the number that best describes you:</h3>
+          <p>(Follow the scale below)</p>
+          <div class="row">
+            <div class="col-md-1">
+              1:<br>Extremeley<br><strong>unhappy</strong>
+            </div>
+            <div class="col-md-1">
+              2:<br>Very unhappy
+            </div>
+            <div class="col-md-1">
+              3:<br>Unhappy
+            </div>
+            <div class="col-md-1">
+              4:<br>Somewhat happy
+            </div>
+            <div class="col-md-1">
+              5:<br>Neutral
+            </div>
+            <div class="col-md-1">
+              6:<br>Somewhat happy
+            </div>
+            <div class="col-md-1">
+              7:<br>Happy
+            </div>
+            <div class="col-md-1">
+              8:<br>Very happy
+            </div>
+            <div class="col-md-1">
+              9:<br>Extremeley<br><strong>happy</strong>
+            </div>
+          </div>
+          <div class="row">
+            <p>Over the past week, what is the lowest level you experienced?</p>
+            <input class="text" />
+          </div>
+          <div class="row">
+            <p>Over the past week, what is the highest level you experienced?</p>
+            <input class="text" />
+          </div>
+          <div class="row">
+            <p>Overall (i.e. in general), how would you descibe youself?</p>
+            <input class="text" />
+          </div>
+          <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+        </div>
+      </div>
+    </div>
+    <!-- question 3 -->
+    <div class="container" ng-show="initalquestions === 3">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Please, give the number that best describes the emotions you experienced at this moment:</h3>
+          <p>(Follow the scale below)</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+          1<br>Emotion is not present at all
+        </div>
+        <div class="col-md-1">
+          2
+        </div>
+        <div class="col-md-1">
+          3
+        </div>
+        <div class="col-md-1">
+          4
+        </div>
+        <div class="col-md-1">
+          5
+        </div>
+        <div class="col-md-1">
+          6
+        </div>
+        <div class="col-md-1">
+          7<br>Emotions feels very intense
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Irritation
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Sadness
+          <input type="text" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Anger
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Happiness
+          <input type="text" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Contempt
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Fear
+          <input type="text" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Surprise
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Joy
+          <input type="text" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Envy
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Shame
+          <input type="text" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Jealousy
+          <input type="text" />
+        </div>
+      </div>
+      <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+    </div>
+    <!-- question 4 -->
+    <div class="container" ng-show="initalquestions === 4">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Please, give the number that best describes your agreement with the following statements:</h3>
+          <p>(Follow the scale below)</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+          1:<br>Strongly<strong>disagree</strong>
+        </div>
+        <div class="col-md-1">
+          2:<br>Moderately disagree
+        </div>
+        <div class="col-md-1">
+          3:<br>Slightly disagree
+        </div>
+        <div class="col-md-1">
+          4:<br>Slightly agree
+        </div>
+        <div class="col-md-1">
+          5:<br>Moderately agree
+        </div>
+        <div class="col-md-1">
+          6:<br>Strongly<strong>agree</strong>
+        </div>
+      </div>
+      <div class="row">
+        For me, life has been a continuous process of learning, changing and growth.
+        <input type="text" />
+      </div>
+      <div class="row">
+        Some people wader aimlessly through life, but I am not one of them.
+        <input type="text" />
+      </div>
+      <div class="row">
+        I judge myself by what I think is important, not by the values of what others think is important.
+        <input type="text" />
+      </div>
+      <div class="row">
+        I am quite good at managing the many responsibilities of my daily life,
+        <input type="text" />
+      </div>
+      <div class="row">
+        I have not experienced many warm and trusting relationships with others.
+        <input type="text" />
+      </div>
+      <div class="row">
+        In many ways, I feel disappointed about my achievements in life.
+        <input type="text" />
+      </div>
+      <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+    </div>
+    <!-- question 5 -->
+    <div class="container" ng-show="initalquestions === 5">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Below you are given pairs of opposite feelings. Use the following scale to inducate your current mood relative to these feelings</h3>
+          <p>(1: you are experiencing the feelings on the left side very strongly.<br>
+            9:you are experiencing the feelings on the right side very strongly.)
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+          1
+        </div>
+        <div class="col-md-1">
+          2
+        </div>
+        <div class="col-md-1">
+          3
+        </div>
+        <div class="col-md-1">
+          4
+        </div>
+        <div class="col-md-1">
+          5
+        </div>
+        <div class="col-md-1">
+          6
+        </div>
+        <div class="col-md-1">
+          7
+        </div>
+        <div class="col-md-1">
+          8
+        </div>
+        <div class="col-md-1">
+          9
+        </div>
+        <div class="row">
+          Neutral
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Bad mood
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Good mood
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Sad
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Happy
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Depressed
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Elated
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Gloomy
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Cheerful
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Displeased
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Pleased
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Sorrowful
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Joyful
+        </div>
+      </div>
+      <input class="success" type="button" value="Continue" ng-click="nextQuestion(initalquestions)" />
+    </div>
+    <!-- question 6 -->
+    <div class="container" ng-show="initalquestions === 6">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Below you are given pairs of opposite feelings. Use the following scale to inducate your current mood relative to these feelings</h3>
+          <p>(1: you are experiencing the feelings on the left side very strongly.<br>
+            9:you are experiencing the feelings on the right side very strongly.)
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+          1
+        </div>
+        <div class="col-md-1">
+          2
+        </div>
+        <div class="col-md-1">
+          3
+        </div>
+        <div class="col-md-1">
+          4
+        </div>
+        <div class="col-md-1">
+          5
+        </div>
+        <div class="col-md-1">
+          6
+        </div>
+        <div class="col-md-1">
+          7
+        </div>
+        <div class="col-md-1">
+          8
+        </div>
+        <div class="col-md-1">
+          9
+        </div>
+        <div class="row">
+          Neutral
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Nervous
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Calm
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Tense
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Relaxed
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Unconfortable
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Confortable
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Apathetic
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Caring
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Lethargic
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Energetic
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Unconfident
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Confident
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Unresponsive
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Emotional
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          Passive
+        </div>
+        <div class="col-md-3">
+          <input type="text" />
+        </div>
+        <div class="col-md-3">
+          Active
+        </div>
+      </div>
+      <input class="success" type="button" value="Continue" ng-click="finishQuestions()" />
+    </div>
+    <!-- start part 2 -->
+    <div class="container">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Part 2</h3>
+          <p>To start click continue</p>
+          <input class="success" type="button" value="Continue" />
+        </div>
+      </div>
+    </div>
+    <!-- instructions -->
+    <div class="container">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>You will be asked to complete a sequence of tasks.<br>
+            The first two tasks are practice screens.
+          </h3>
+          <input class="success" type="button" value="Continue" />
+        </div>
+      </div>
+    </div>
+    <!-- real tasks -->
+    <div class="container">
+      <div class="row">
+        <div class="col-mid-4 col-mid-offset-4">
+          <h3>Practive screens are over.<br>
+            The following tasks do count towards your income.
+          </h3>
+          <input class="success" type="button" value="Continue" />
+        </div>
+      </div>
+    </div>
+    
+    <!-- final questions -->
+    <div ng-repeat="">
+    </div>
+  </body>
+</html>

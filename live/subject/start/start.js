@@ -332,9 +332,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.showpage.practice1 = false;
     $scope.showpage.realTasks = true;
 
-    $scope.showpage.realTasksReady = true;
-    rs.trigger("afterbarrier", {
-      showpage: $scope.showpage
+    rs.synchronizationBarrier('realTasks').then(function() {
+      $scope.showpage.realTasksReady = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
     });
   };
   $scope.showgame = function() {
