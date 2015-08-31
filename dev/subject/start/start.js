@@ -111,7 +111,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     }
   };
   // checks if inputs are filled out
-  $scope.isValid = function(qNum,rNum,toggle,tNumber) {
+  $scope.isValid = function(qNum,rNum,mNum,toggle,tNumber) {
     console.log(toggle);
     console.log(tNumber);
     if (!qNum && !toggle) return true;
@@ -122,6 +122,31 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
         console.log("whats the password");
         if (qNum["answer" + i] == "") {
           console.log("you shall not pass");
+          sweetAlert({
+            title: "Incorrect",
+            text: "Please check all inputs are filled.",
+            type: "error",
+            allowOutsideClick: true
+          });
+          return false;
+        } else if (isNaN(qNum["answer" + i])) {
+          console.log("you didn't put a number");
+          sweetAlert({
+            title: "Incorrect",
+            text: "Please check all inputs are numbers.",
+            type: "error",
+            allowOutsideClick: true
+          });
+          return false;
+        } else if (mNum !== null && (parseInt(qNum["answer" + i]) < 1 ||
+          mNum < parseInt(qNum["answer" + i]))) {
+          console.log("not in range");
+          sweetAlert({
+            title: "Incorrect",
+            text: "Please check all inputs are in the correct range.",
+            type: "error",
+            allowOutsideClick: true
+          });
           return false;
         }
       }
@@ -206,27 +231,20 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
 
   // closes one question and shows the next
-  $scope.nextQuestion = function(qNum, rNum) {
-    if ($scope.isValid(qNum, rNum)) {
+  $scope.nextQuestion = function(qNum, rNum, mNum) {
+    if ($scope.isValid(qNum, rNum, mNum)) {
       $scope.showpage.initalquestions++;
       // send responses in case of a refresh
       rs.trigger("saveinitalanswers", {
         initalResponses: $scope.initalResponses,
         showpage: $scope.showpage
       });
-    } else {
-      sweetAlert({
-        title: "Incorrect",
-        text: "Please check all inputs are filled.",
-        type: "error",
-        allowOutsideClick: true
-      });
     }
   };
   // finishes questions onto money part
   // barrier : have all people ready for part 2
-  $scope.finishQuestions = function(qNum,rNum) {
-    if ($scope.isValid(qNum, rNum)) {
+  $scope.finishQuestions = function(qNum,rNum,mNum) {
+    if ($scope.isValid(qNum, rNum,mNum)) {
       $scope.showpage.initalquestions++;
       $scope.showpage.part2 = true;
       // send answers back to server
@@ -242,13 +260,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
         rs.trigger("afterbarrier", {
           showpage: $scope.showpage
         });
-      });
-    } else {
-      sweetAlert({
-        title: "Incorrect",
-        text: "Please check all inputs are filled.",
-        type: "error",
-        allowOutsideClick: true
       });
     }
   };
@@ -588,38 +599,24 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       });
     });
   };
-  $scope.nextFinalQuestion = function(qNum,rNum,toggle,tNumber) {
-    if ($scope.isValid(qNum,rNum,toggle,tNumber)) {
+  $scope.nextFinalQuestion = function(qNum,rNum,mNum,toggle,tNumber) {
+    if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
       $scope.showpage.finalquestions++;
       // send responses in case of a refresh
       rs.trigger("savefinalanswers", {
         finalResponses: $scope.finalResponses,
         showpage: $scope.showpage
       });
-    } else {
-      sweetAlert({
-        title: "Incorrect",
-        text: "Please check all inputs are filled.",
-        type: "error",
-        allowOutsideClick: true
-      });
     }
   };
-  $scope.finishFinalQuestions = function(qNum,rNum,toggle,tNumber) {
-    if ($scope.isValid(qNum,rNum,toggle,tNumber)) {
+  $scope.finishFinalQuestions = function(qNum,rNum,mNum,toggle,tNumber) {
+    if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
       $scope.showpage.finalquestions++;
       $scope.showpage.thanks = true;
       // send answers back to server
       rs.trigger("sendfinalanswers", {
         finalResponses: $scope.finalResponses,
         showpage: $scope.showpage
-      });
-    } else {
-      sweetAlert({
-        title: "Incorrect",
-        text: "Please check all inputs are filled.",
-        type: "error",
-        allowOutsideClick: true
       });
     }
   };

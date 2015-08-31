@@ -1,6 +1,5 @@
 #The To-Do List
 ##Part 1
-* 2
 
 ##Part 2
 
@@ -11,7 +10,6 @@
 * 9 ?
 
 ##Part 4
-* 2
 
 #Feedback
 1. Make sure entries in questionsaires are resticted to the set of valid
@@ -28,7 +26,7 @@
 
 #Plan
 1. done
-2. Add perameter to validation function with parseInt, add parameter for
+2. done, add parameter for
    debugging
 3. done
 4. done
