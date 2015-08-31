@@ -121,7 +121,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     if (qNum) {
       for (var i = 1; i <= rNum; i++) {
         console.log("whats the password");
-        if (qNum["answer" + i] == "") {
+        if (qNum["answer" + i] === "") {
           console.log("you shall not pass");
           sweetAlert({
             title: "Incorrect",
@@ -164,7 +164,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
 
   // saves which pages are open
-  $scope.saveState = fuction() {
+  $scope.saveState = function() {
     rs.trigger("afterbarrier", {
       showpage: $scope.showpage
     });
@@ -265,12 +265,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       });
       // get ready for a barrier
       console.log("ready for part 2?");
-      rs.synchronizationBarrier('part2').then(function() {
-        console.log("I was born ready");
-        $scope.showpage.part2ready = true;
-        rs.trigger("afterbarrier", {
-          showpage: $scope.showpage
-        });
+      rs.trigger("readypart2", {
       });
     }
   };
@@ -469,12 +464,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.showpage.moneyReceived = false;
     //part 3
     $scope.showpage.part3 = true;
-    rs.synchronizationBarrier('part3').then(function() {
-      $scope.showpage.part3ready = true;
-      rs.trigger("afterbarrier", {
-        showpage: $scope.showpage
-      });
-    });
+    $scope.saveState();
+    rs.trigger("readypart3", {});
     console.log("slider is up");
   };
   $scope.sendDecision = function() {
@@ -503,15 +494,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       moneytransferred: $scope.moneytransferred,
       totalincome: $scope.totalincome
     });
+    $scope.saveState();
 
     // barrier time
-    rs.synchronizationBarrier('transferProcess').then(function() {
-      $scope.showpage.willingnesspage = true;
-
-      rs.trigger("afterbarrier", {
-        showpage: $scope.showpage
-      });
-    });
+    rs.trigger("readytransferProcess", {});
   };
   $scope.sendEstimate = function() {
     $scope.showpage.slider = false;
@@ -532,14 +518,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       totalincome: $scope.totalincome
     });
 
+    $scope.saveState();
     // barrier time
-    rs.synchronizationBarrier('transferProcess').then(function() {
-      $scope.showpage.willingnesspage = true;
-
-      rs.trigger("afterbarrier", {
-        showpage: $scope.showpage
-      });
-    });
+    rs.trigger("readytransferProcess", {});
   };
   $scope.sendWillingness = function() {
     $scope.actualprice = Math.floor(Math.random() * ($scope.income - $scope.partner.moneytransferred));
@@ -607,12 +588,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.showpage.showEarnings = false;
     $scope.showpage.part4 = true;
 
-    rs.synchronizationBarrier('part4').then(function() {
-      $scope.showpage.part4ready = true;
-      rs.trigger("afterbarrier", {
-        showpage: $scope.showpage
-      });
-    });
+    $scope.saveState();
+    rs.trigger("readypart4", {});
   };
   $scope.nextFinalQuestion = function(qNum,rNum,mNum,toggle,tNumber) {
     if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
@@ -889,6 +866,40 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.finalResponses = value.finalResponses;
     $scope.showpage = value.showpage;
   });
+  // barriers
+  rs.on("readypart2", function(value) {
+    rs.synchronizationBarrier('part2').then(function() {
+      console.log("I was born ready");
+      $scope.showpage.part2ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
+  });
+  rs.on("readypart3", function(value) {
+    rs.synchronizationBarrier('part3').then(function() {
+      $scope.showpage.part3ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
+  });
+  rs.on("readytransferProcess", function(value) {
+    rs.synchronizationBarrier('transferProcess').then(function() {
+      $scope.showpage.willingnesspage = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
+  });
+  rs.on("readypart4", function(value) {
+    rs.synchronizationBarrier('part4').then(function() {
+      $scope.showpage.part4ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    });
+  })
 
   rs.on_load(function() {
     console.log("hello experiment " + rs);
@@ -901,7 +912,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
     // check if debug to skip validation
     if (parseInt(rs.config.debug) === 0) $scope.debug = false;
-    else $scope.debug = true;
+    else {
+      $scope.debug = true;
+      $scope.income = 900;
+    }
 
     // set partner values from config file
     // index role endownment
