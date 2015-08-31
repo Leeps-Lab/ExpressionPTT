@@ -112,7 +112,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
   // checks if inputs are filled out
   $scope.isValid = function(qNum,rNum,mNum,toggle,tNumber) {
-    if ($scope.debug === true) return true;
     console.log(toggle);
     console.log(tNumber);
     if (!qNum && !toggle) return true;
@@ -243,7 +242,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
   // closes one question and shows the next
   $scope.nextQuestion = function(qNum, rNum, mNum) {
-    if ($scope.isValid(qNum, rNum, mNum)) {
+    if ($scope.debug && rNum !== 0) $scope.finishQuestions(qNum,rNum,mNum);
+    else if ($scope.isValid(qNum, rNum, mNum)) {
       $scope.showpage.initalquestions++;
       // send responses in case of a refresh
       rs.trigger("saveinitalanswers", {
@@ -256,7 +256,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   // barrier : have all people ready for part 2
   $scope.finishQuestions = function(qNum,rNum,mNum) {
     if ($scope.isValid(qNum, rNum,mNum)) {
-      $scope.showpage.initalquestions++;
+      $scope.showpage.initalquestions = 7;
+
       $scope.showpage.part2 = true;
       // send answers back to server
       rs.trigger("sendinitalanswers", {
@@ -566,7 +567,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   $scope.sendMessage = function() {
     // send message to other person
     rs.send("sendMessage", {
-      messages: $scope.messages
+      messages: $scope.message
     });
     // navigate to correct page
     $scope.showpage.messagePage = false;
@@ -592,7 +593,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     rs.trigger("readypart4", {});
   };
   $scope.nextFinalQuestion = function(qNum,rNum,mNum,toggle,tNumber) {
-    if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
+    if ($scope.debug) $scope.finishFinalQuestions(qNum,rNum,mNum,toggle,tNumber);
+    else if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
       $scope.showpage.finalquestions++;
       // send responses in case of a refresh
       rs.trigger("savefinalanswers", {
@@ -603,7 +605,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
   $scope.finishFinalQuestions = function(qNum,rNum,mNum,toggle,tNumber) {
     if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
-      $scope.showpage.finalquestions++;
+      $scope.showpage.finalquestions = 7;
       $scope.showpage.thanks = true;
       // send answers back to server
       rs.trigger("sendfinalanswers", {

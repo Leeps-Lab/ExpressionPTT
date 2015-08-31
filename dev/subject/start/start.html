@@ -897,8 +897,8 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2"
           style="border-style:solid;border-width:2px;min-height:300px;">
-          <div ng-repeat="message in messages track by $index">
-            <p>{{message}}</p>
+          <div>
+            {{messages}}
           </div>
         </div>
     </div>
@@ -910,6 +910,7 @@
   </div>
   <!-- P message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'P'">
+    <!--
     <div class="row">
       <p class="text-center">
         After writing your message, please press the ENTER key to record the message.
@@ -933,6 +934,18 @@
       <div class="col-md-6 col-md-offset-3">
         <input type="text" style="width:585px;" ng-keypress="saveMessage($event)"
           ng-model="message" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-info"
+          ng-click="sendMessage();">Continue</button>
+      </div>
+    </div>
+    -->
+    <div class="row">
+      <div class="text-center">
+        <textarea style="min-height:300px;min-width:600px"ng-model="message"></textarea>
       </div>
     </div>
     <div class="row">

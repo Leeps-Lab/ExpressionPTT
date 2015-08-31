@@ -6,7 +6,6 @@
 ##Part 3
 * 5
 * 6
-* ~7
 * 9?
 
 ##Part 4
@@ -30,9 +29,9 @@
 3. done
 4. done
 5. fix slider
-6. ask for rephrasing of direction
-7. theoretically done. need to test
+6. need to fix output with line breaks.
+7. done
 8. done
-9. couldn't replicate
+9. done
 10. remind Kristian about data output
 
