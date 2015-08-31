@@ -163,6 +163,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     return false;
   };
 
+  // saves which pages are open
+  $scope.saveState = fuction() {
+    rs.trigger("afterbarrier", {
+      showpage: $scope.showpage
+    });
+  };
+
   // debug
   $scope.debug = false;
 
@@ -439,6 +446,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       });
       $scope.showpage.gametime = false;
       $scope.showpage.moneyReceived = true;
+      $scope.saveState();
       console.log("income : " + $scope.income);
     }
     // clear dot and set new goal
@@ -561,6 +569,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       // p doesnt get to send message
       $scope.showpage.showEarnings = true;
     }
+    $scope.saveState();
     rs.send("sendWillingness", {
       actualprice: $scope.actualprice,
       totalincome: $scope.totalincome,
@@ -580,6 +589,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     });
     // navigate to correct page
     $scope.showpage.messagePage = false;
+    $scope.saveState();
   };
   $scope.readMessage = function() {
     $scope.showpage.messagePage = false;
@@ -591,6 +601,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.showpage.showEarnings = true;
     rs.send("messageConfirm", {
     });
+    $scope.saveState();
   };
   $scope.sawEarnings = function() {
     $scope.showpage.showEarnings = false;

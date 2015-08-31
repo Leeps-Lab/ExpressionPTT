@@ -6,8 +6,8 @@
 ##Part 3
 * 5
 * 6
-* 7
-* 9 ?
+* ~7
+* 9?
 
 ##Part 4
 
@@ -26,13 +26,12 @@
 
 #Plan
 1. done
-2. done, add parameter for
-   debugging
+2. done
 3. done
 4. done
 5. fix slider
 6. ask for rephrasing of direction
-7. check screens, save position in questions each click
+7. theoretically done. need to test
 8. done
 9. couldn't replicate
 10. remind Kristian about data output

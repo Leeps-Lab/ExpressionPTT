@@ -38,7 +38,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="showpage.showStartExperiment = false; showpage.initalquestions = 0;">
+          ng-click="showpage.showStartExperiment = false; showpage.initalquestions = 0;saveState();">
           Continue
         </button>
       </div>
@@ -52,7 +52,9 @@
         <p class="text-center">To start click continue</p>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question1,0)">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question1,0);">
+          Continue
+        </button>
       </div>
     </div>
   </div>
@@ -572,7 +574,7 @@
         <p ng-show="showpage.part2ready">To start click continue</p>
       </div>
       <div class="text-center" ng-show="showpage.part2ready">
-        <button type="button" class="btn btn-info" ng-click="showpage.part2 = false; showpage.exampleTasks = true">
+        <button type="button" class="btn btn-info" ng-click="showpage.part2 = false; showpage.exampleTasks = true;saveState();">
           Continue
         </button>
       </div>
@@ -648,7 +650,7 @@
     </div>
     <div class="row" ng-show="practiceRound === 2">
       <div class="text-center">
-        <button type="button" class="btn btn-success" ng-click="finalPractice()">
+        <button type="button" class="btn btn-success" ng-click="finalPractice();saveState();">
           Start Real Task
         </button>
       </div>
@@ -750,7 +752,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-success" ng-show="showpage.part3ready"
-          ng-click="showpage.roles = true; showpage.part3 = false;">
+          ng-click="showpage.roles = true; showpage.part3 = false;saveState();">
           Continue
         </button>
       </div>
@@ -879,7 +881,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="showpage.messagePage = true; showpage.checkprice = false;">
+          ng-click="showpage.messagePage = true; showpage.checkprice = false;saveState();">
           Continue
         </button>
       </div>
@@ -901,7 +903,7 @@
         </div>
     </div>
     <div class="row text-center">
-        <button type="button" class="btn btn-info" ng-click="readMessage()">
+        <button type="button" class="btn btn-info" ng-click="readMessage();saveState();">
           I have read the message
         </button>
     </div>
@@ -936,7 +938,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="sendMessage()">Continue</button>
+          ng-click="sendMessage();">Continue</button>
       </div>
     </div>
   </div>
@@ -1050,7 +1052,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info" ng-show="showpage.part4ready"
-          ng-click="showpage.finalquestions = 1; showpage.part4 = false;">
+          ng-click="showpage.finalquestions = 1; showpage.part4 = false;saveState();">
           Continue
         </button>
       </div>
