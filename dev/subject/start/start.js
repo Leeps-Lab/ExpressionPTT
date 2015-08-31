@@ -112,6 +112,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
   // checks if inputs are filled out
   $scope.isValid = function(qNum,rNum,mNum,toggle,tNumber) {
+    if ($scope.debug === true) return true;
     console.log(toggle);
     console.log(tNumber);
     if (!qNum && !toggle) return true;
@@ -161,6 +162,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     }
     return false;
   };
+
+  // debug
+  $scope.debug = false;
 
   // all the variables for ng show
   $scope.showpage = {
@@ -883,6 +887,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.userIndex = parseInt(rs.user_id);
     $scope.role = rs.config.roles[$scope.userIndex - 1];
     $scope.endownment = rs.config.endownment;
+
+    // check if debug to skip validation
+    if (parseInt(rs.config.debug) === 0) $scope.debug = false;
+    else $scope.debug = true;
 
     // set partner values from config file
     // index role endownment
