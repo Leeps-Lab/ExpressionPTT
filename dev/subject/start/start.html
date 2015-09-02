@@ -569,12 +569,17 @@
   <!-- have a barrier here -->
   <div class="container" ng-show="showpage.part2">
     <div class="row">
+      <h1 class="text-center">Please Wait...</h1>
+    </div>
+  </div>
+  <div class="container" ng-show="showpage.part2ready">
+    <div class="row">
       <div class="text-center">
         <h3>Part 2</h3>
-        <p ng-show="showpage.part2ready">To start click continue</p>
+        <p>To start click continue</p>
       </div>
-      <div class="text-center" ng-show="showpage.part2ready">
-        <button type="button" class="btn btn-info" ng-click="showpage.part2 = false; showpage.exampleTasks = true;saveState();">
+      <div class="text-center">
+        <button type="button" class="btn btn-info" ng-click="showpage.part2ready = false; showpage.exampleTasks = true;saveState();">
           Continue
         </button>
       </div>
@@ -741,18 +746,23 @@
     </div>
   </div>
 
-  <!-- start part 3 -->
   <div class="container" ng-show="showpage.part3">
     <div class="row">
+      <h1 class="text-center">Please Wait...</h1>
+    </div>
+  </div>
+  <!-- start part 3 -->
+  <div class="container" ng-show="showpage.part3ready">
+    <div class="row">
       <h3 class="text-center">Part 3</h3>
-      <p class="text-center" ng-show="showpage.part3ready">To start click continue</p>
+      <p class="text-center">To start click continue</p>
       <div class="col-mid-4 col-mid-offset-4">
       </div>
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-success" ng-show="showpage.part3ready"
-          ng-click="showpage.roles = true; showpage.part3 = false;saveState();">
+        <button type="button" class="btn btn-success"
+          ng-click="part3ready();">
           Continue
         </button>
       </div>
@@ -839,6 +849,13 @@
           Send Your Estimate
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- waitpage -->
+  <div class="container" ng-show="showpage.waitpage">
+    <div class="row">
+      <h1 class="text-center">Please Wait...</h1>
     </div>
   </div>
 
@@ -948,10 +965,11 @@
         <textarea style="min-height:300px;min-width:600px"ng-model="message"></textarea>
       </div>
     </div>
+    <br>
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="sendMessage();">Continue</button>
+          ng-click="sendMessage();">Send Message</button>
       </div>
     </div>
   </div>
@@ -1060,11 +1078,11 @@
   <div class="container" ng-show="showpage.part4">
     <div class="row">
       <h3 class="text-center">Part 4</h3>
-      <p class="text-center" ng-show="showpage.part4ready">To start click continue</p>
+      <p class="text-center">To start click continue</p>
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-show="showpage.part4ready"
+        <button type="button" class="btn btn-info"
           ng-click="showpage.finalquestions = 1; showpage.part4 = false;saveState();">
           Continue
         </button>

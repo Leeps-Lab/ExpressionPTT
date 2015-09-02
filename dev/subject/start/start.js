@@ -123,8 +123,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
         if (qNum["answer" + i] === "") {
           console.log("you shall not pass");
           sweetAlert({
-            title: "Incorrect",
-            text: "Please check all inputs are filled.",
+            //title: "Sorry",
+            title: "This entry is not valid, please read instructions.",
             type: "error",
             allowOutsideClick: true
           });
@@ -132,8 +132,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
         } else if (isNaN(qNum["answer" + i])) {
           console.log("you didn't put a number");
           sweetAlert({
-            title: "Incorrect",
-            text: "Please check all inputs are numbers.",
+            //title: "Sorry",
+            title: "This entry is not valid, please read instructions.",
             type: "error",
             allowOutsideClick: true
           });
@@ -142,8 +142,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
           mNum < parseInt(qNum["answer" + i]))) {
           console.log("not in range");
           sweetAlert({
-            title: "Incorrect",
-            text: "Please check all inputs are in the correct range.",
+            //title: "Sorry",
+            title: "This entry is not valid, please read instructions.",
             type: "error",
             allowOutsideClick: true
           });
@@ -174,6 +174,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
   // all the variables for ng show
   $scope.showpage = {
+    waitpage: false,
+
     showStartExperiment: false,
     initalquestions: null,
     part2: false,
@@ -194,7 +196,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     readMessage: false,
     showEarnings: false,
     part4: false,
-    part4ready: false,
     finalquestions: null,
     thanks: false
   };
@@ -426,6 +427,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
     // reaches income goal
     if ($scope.income > 10 * 100) {
+      $timeout.cancel($scope.mytimeout);
       console.log("sending payload, over.");
       rs.send("sendIncome", {
         income: $scope.income
@@ -469,8 +471,15 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     rs.trigger("readypart3", {});
     console.log("slider is up");
   };
+  $scope.part3ready = function() {
+    $scope.showpage.roles = true;
+    $scope.showpage.part3ready = false;
+    $scope.saveState();
+  };
   $scope.sendDecision = function() {
     $scope.showpage.slider = false;
+    $scope.showpage.waitpage = true;
+    $scope.saveState();
     // send values
     $scope.percentTransferred = $scope.percent;
     $scope.moneytransferred = $scope.transferred;
@@ -495,7 +504,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       moneytransferred: $scope.moneytransferred,
       totalincome: $scope.totalincome
     });
-    $scope.saveState();
 
     // barrier time
     rs.trigger("readytransferProcess", {});
@@ -571,18 +579,18 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     });
     // navigate to correct page
     $scope.showpage.messagePage = false;
+    $scope.showpage.waitpage = true;
     $scope.saveState();
   };
   $scope.readMessage = function() {
     $scope.showpage.messagePage = false;
+    $scope.showpage.showEarnings = true;
     rs.send("readMessage", {
     });
   };
   $scope.messageConfirm = function() {
     $scope.showpage.readMessage = false;
     $scope.showpage.showEarnings = true;
-    rs.send("messageConfirm", {
-    });
     $scope.saveState();
   };
   $scope.sawEarnings = function() {
@@ -590,7 +598,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.showpage.part4 = true;
 
     $scope.saveState();
-    rs.trigger("readypart4", {});
   };
   $scope.nextFinalQuestion = function(qNum,rNum,mNum,toggle,tNumber) {
     if ($scope.debug) $scope.finishFinalQuestions(qNum,rNum,mNum,toggle,tNumber);
@@ -811,18 +818,14 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   rs.recv("sendMessage", function(sender, value) {
     if (sender == parseInt($scope.partner.index)) {
       $scope.messages = value.messages;
+      $scope.showpage.waitpage = false;
       $scope.showpage.messagePage = true;
     }
   });
   rs.recv("readMessage", function(sender, value) {
     if (sender == parseInt($scope.partner.index)) {
+      $scope.showpage.waitpage = false;
       $scope.showpage.readMessage = true;
-    }
-  });
-  rs.recv("messageConfirm", function(sender, value) {
-    console.log("got the message. it is confirmed");
-    if (sender == parseInt($scope.partner.index)) {
-      $scope.showpage.showEarnings = true;
     }
   });
 
@@ -872,6 +875,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   rs.on("readypart2", function(value) {
     rs.synchronizationBarrier('part2').then(function() {
       console.log("I was born ready");
+      $scope.showpage.part2 = false;
       $scope.showpage.part2ready = true;
       rs.trigger("afterbarrier", {
         showpage: $scope.showpage
@@ -880,6 +884,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   });
   rs.on("readypart3", function(value) {
     rs.synchronizationBarrier('part3').then(function() {
+      $scope.showpage.part3 = false;
       $scope.showpage.part3ready = true;
       rs.trigger("afterbarrier", {
         showpage: $scope.showpage
@@ -894,14 +899,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       });
     });
   });
-  rs.on("readypart4", function(value) {
-    rs.synchronizationBarrier('part4').then(function() {
-      $scope.showpage.part4ready = true;
-      rs.trigger("afterbarrier", {
-        showpage: $scope.showpage
-      });
-    });
-  })
 
   rs.on_load(function() {
     console.log("hello experiment " + rs);

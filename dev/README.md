@@ -4,22 +4,16 @@
 * 18
 
 ##Part 1
-* 17
 
 ##Part 2
-* 13
 * 14
 
 ##Part 3
 * 5
-* 7
-* 11
-* 12
 * 15
 * 16
 
 ##Part 4
-* 17
 
 ##After Experiment
 * 19
@@ -29,16 +23,18 @@
 7. Screens are shown after a certain time.
 
 #Plan
+##Quick Fixes
 5. fix slider
-7. see where showpage is saved and stored
-11. have 'global' screen that can just be referenced back to
-12. change text on button. needs part 11.
-13. wait screen. needs part 11.
+7. done
+11. done
+12. done
+13. done
+17. done
+##Changes
 14. Reformat the game. Add tooltips.
 15. find a way to parse the text area
 16. do css for show earnings screens. needs to be formatted better. more
 	propotional.
-17. change texts on sweet alerts to be kinder.
 18. config file : add scale and treatments (at least 1,2,3). number of people will need a
 	algorithm to find a way to sort all the people.
 19. ask logan how I would parse the information and how it is currently
