@@ -1,37 +1,64 @@
 #The To-Do List
 ##Part 1
+* 17
 
 ##Part 2
+* 13
+* 14
 
 ##Part 3
 * 5
-* 6
-* 9?
+* 7
+* 11
+* 12
+* 15
+* 16
 
 ##Part 4
+* 17
 
-#Feedback
-1. Make sure entries in questionsaires are resticted to the set of valid
-   answers
-2. Make sure subjects can't pass without answering the questions
-3. change message in part 2
-4. Part 2 : to start real tasks, subjects do not need to wait for others
+#Old Feedback
 5. The tick labels of part 3 are all collapsed in one point
-6. The message screen for our case is much simpler
-7. There is something weird in part 3 inital screens
-8. There is an extra screen I saw in part 3
-9. Message was not recored 
-10. Remind when on skype to discuss the data output
+7. Screens are shown after a certain time.
 
 #Plan
-1. done
-2. done
-3. done
-4. done
 5. fix slider
-6. need to fix output with line breaks.
-7. done
-8. done
-9. done
-10. remind Kristian about data output
+7. see where showpage is saved and stored
+
+#New Feedback
+11. Create waiting screens 'please wait'
+12. for message part : make button say 'Send Message' and separate it more,
+		further down. and please wait screen after the submition
+
+13. Part 2 : instead of waiting on the part 2 have screen say "please wait" and then
+go to the part 2 screen
+
+14. Part 3 : Have the game in a square shape cover more of the screen. New
+		format for page. Intructions are a tooltip. The things on the side are
+		clearer and the locator text is above the game. The locator has a
+		thicker line and a draw circle. Close is 0-20, Far is 21-100
+
+15. Line breaks should be respected. button further down. wait screen. no
+		wait for other person, should just go directly to pay off.
+
+16. Just leave it blank on show earnings instead of lines. narrower table
+		and same width for two last columns. go straight to part 4, no waiting
+		for people to see their earnings.
+
+17. Alert say 'This entry is not valid, please read instructions'
+
+#Config File Updates
+Add params :
+	number of people : number of participates
+	scale : income * scale, endownment * scale, avaliable points * scale
+	treatment : which one of the cases are being used
+
+Treatments :
+	1) Pay Message : as is
+	2) No Message : no references to messages
+	3) Free Message : no references to paying for the message
+	4) Separate readers : All messages go to a separate reader
+
+#Output Format
+Parse the output - ask Logan how to and where the parsing happens
 
