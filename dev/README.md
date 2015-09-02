@@ -1,4 +1,8 @@
 #The To-Do List
+
+##Before Experiment
+* 18
+
 ##Part 1
 * 17
 
@@ -17,6 +21,9 @@
 ##Part 4
 * 17
 
+##After Experiment
+* 19
+
 #Old Feedback
 5. The tick labels of part 3 are all collapsed in one point
 7. Screens are shown after a certain time.
@@ -24,6 +31,18 @@
 #Plan
 5. fix slider
 7. see where showpage is saved and stored
+11. have 'global' screen that can just be referenced back to
+12. change text on button. needs part 11.
+13. wait screen. needs part 11.
+14. Reformat the game. Add tooltips.
+15. find a way to parse the text area
+16. do css for show earnings screens. needs to be formatted better. more
+	propotional.
+17. change texts on sweet alerts to be kinder.
+18. config file : add scale and treatments (at least 1,2,3). number of people will need a
+	algorithm to find a way to sort all the people.
+19. ask logan how I would parse the information and how it is currently
+	outputed.
 
 #New Feedback
 11. Create waiting screens 'please wait'
@@ -47,7 +66,7 @@ go to the part 2 screen
 
 17. Alert say 'This entry is not valid, please read instructions'
 
-#Config File Updates
+##18. Config File Updates
 Add params :
 	number of people : number of participates
 	scale : income * scale, endownment * scale, avaliable points * scale
@@ -59,6 +78,6 @@ Treatments :
 	3) Free Message : no references to paying for the message
 	4) Separate readers : All messages go to a separate reader
 
-#Output Format
+##19. Output Format
 Parse the output - ask Logan how to and where the parsing happens
 
