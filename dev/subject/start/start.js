@@ -923,9 +923,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   rs.on("readytransferProcess", function(value) {
     rs.synchronizationBarrier('transferProcess').then(function() {
       if ($scope.nomessage) {
-        $scope.showpage.waitpage = false;
-        $scope.showpage.showEarnings = true;
-
+        if ($scope.role === "T") {
+        }
         if ($scope.role === "P") {
           $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
           $scope.bid = 0;
@@ -934,6 +933,24 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
             totalincome: $scope.totalincome,
             message: false
           });
+          $scope.showpage.waitpage = false;
+          $scope.showpage.showEarnings = true;
+          $scope.saveState();
+        }
+      } else if ($scope.freemessage) {
+        if ($scope.role === "T") {
+        }
+        if ($scope.role === "P") {
+          $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
+          $scope.bid = 0;
+          rs.send("sendWillingness", {
+            actualprice: $scope.actualprice,
+            totalincome: $scope.totalincome,
+            message: true
+          });
+          $scope.showpage.waitpage = false;
+          $scope.showpage.messagePage = true;
+          $scope.saveState();
         }
       } else {
         if ($scope.role === "P") {

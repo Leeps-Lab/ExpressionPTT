@@ -11,7 +11,6 @@
 ##Part 3
 * 5
 * 15
-* 16
 
 ##Part 4
 
@@ -34,10 +33,8 @@
 14. Reformat the game. Add tooltips.
 15. find a way to parse the text area
 16. done
-18. config file : treatments (at least 3). number of people will need a
-	algorithm to find a way to sort all the people.
-19. ask logan how I would parse the information and how it is currently
-	outputed.
+18. config file :  number of people will need a algorithm to find a way to sort all the people.
+19. create parser
 
 #New Feedback
 11. Create waiting screens 'please wait'

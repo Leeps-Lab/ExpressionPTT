@@ -1035,7 +1035,7 @@
           <td>+{{floatToMoney(partner.moneytransferred)}}</td>
           <td>-{{floatToMoney(partner.moneytransferred)}}</td>
         </tr>
-        <tr ng-show="! nomessage">
+        <tr ng-show="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
           <td>{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
@@ -1080,7 +1080,7 @@
           <td>+{{floatToMoney(partner.moneytransferred)}}</td>
           <td>-{{floatToMoney(partner.moneytransferred)}}</td>
         </tr>
-        <tr ng-show="! nomessage">
+        <tr ng-show="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
           <td>{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
