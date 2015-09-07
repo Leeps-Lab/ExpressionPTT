@@ -29,8 +29,8 @@
 12. done
 13. done
 17. done
-##Changes ( 1 / 5 )
-14. Reformat the game. Add tooltips.
+##Changes ( 2 / 5 )
+14. done
 15. find a way to parse the text area
 16. done
 18. config file :  number of people will need a algorithm to find a way to sort all the people.
