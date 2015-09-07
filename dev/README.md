@@ -23,19 +23,18 @@
 7. Screens are shown after a certain time.
 
 #Plan
-##Quick Fixes
+##Quick Fixes ( 5 / 6 )
 5. fix slider
 7. done
 11. done
 12. done
 13. done
 17. done
-##Changes
+##Changes ( 1 / 5 )
 14. Reformat the game. Add tooltips.
 15. find a way to parse the text area
-16. do css for show earnings screens. needs to be formatted better. more
-	propotional.
-18. config file : add scale and treatments (at least 1,2,3). number of people will need a
+16. done
+18. config file : treatments (at least 3). number of people will need a
 	algorithm to find a way to sort all the people.
 19. ask logan how I would parse the information and how it is currently
 	outputed.

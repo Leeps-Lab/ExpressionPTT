@@ -169,6 +169,14 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     });
   };
 
+  // config files
+  $scope.numberofpeople = null;
+  $scope.scale = 1;
+  $scope.incomegoal = 10;
+  $scope.treatement = 1;
+  $scope.nomessage = false;
+  $scope.freemessage = false;
+
   // debug
   $scope.debug = false;
 
@@ -360,6 +368,12 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     $scope.showpage.gametime = true;
     $scope.showpage.realTasks = false;
 
+    //start tooltip
+    $('[data-toggle="instructions"]').popover({
+      html: true,
+      trigger: 'focus hover'
+    });
+
     $scope.points = [];
     $scope.plot = $.plot("#placeholder",[{
         data: $scope.points,
@@ -382,6 +396,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
     $scope.locatorState = new LocatorState(document.getElementById("locator"),
                                           "#points", false);
+
     $scope.locatorState.setGoal();
     $scope.locatorState.draw();
 
@@ -409,7 +424,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
   $scope.nexttask = function() {
     $scope.income += $scope.locatorState.getPointvalue();
-    $scope.maxpoints = Math.floor(Math.random() * 100) + 1;
+    $scope.maxpoints = (Math.floor(Math.random() * 80) + 20) * $scope.scale;
     $("#income").text("So far, your income is $" +
       $scope.floatToMoney($scope.income) + ".");
 
@@ -426,7 +441,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     });
 
     // reaches income goal
-    if ($scope.income > 10 * 100) {
+    if ($scope.income > $scope.incomegoal * 100 * $scope.scale) {
       $timeout.cancel($scope.mytimeout);
       console.log("sending payload, over.");
       rs.send("sendIncome", {
@@ -453,10 +468,12 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
       $scope.plot.setData([$scope.points]);
       $scope.plot.draw();
       $scope.locatorState.setGoal();
+      $scope.locatorState.location = "Click";
+      $("#nearness").text($scope.locatorState.location);
       $scope.locatorState.pointvalue = 0;
       $("#earned").text("Money earned for this task (cents) : " +
         parseFloat($scope.locatorState.pointvalue).toFixed(1));
-      $("#points").text("Points earned : " + parseFloat($scope.locatorState.pointvalue).toFixed(1));
+      $("#points").text(parseFloat($scope.locatorState.pointvalue).toFixed(1));
 
       $timeout.cancel($scope.mytimeout);
       $scope.time = $scope.timelimit;
@@ -510,6 +527,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   };
   $scope.sendEstimate = function() {
     $scope.showpage.slider = false;
+    $scope.showpage.waitpage = true;
+    $scope.saveState();
     // send values
     console.log("sending payload, over.");
     rs.send("sendEstimate", {
@@ -640,12 +659,17 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
   Point.prototype.draw = function(ctx) {
     // draws triangle
+    /*
     var path = new Path2D();
     var l = this.radius * Math.sqrt(3) / 4;
     path.moveTo(this.x, this.y - this.value - l);
     path.lineTo(this.x - this.radius, this.y - this.value + l);
     path.lineTo(this.x + this.radius, this.y  - this.value + l);
     ctx.fill(path);
+    */
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2*Math.PI);
+    ctx.stroke();
   };
 
   function LocatorState(canvas, pointsLocation, practice, maxpoints) {
@@ -657,6 +681,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     this.ctx = canvas.getContext('2d');
     this.side = "right";
     this.direction = "up";
+    this.location = "Click";
     this.distance = null;
     this.goal = {
       x: null,
@@ -667,9 +692,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
     this.maxlength = Math.sqrt(square(100 - 0) + square(100 - 0));
 
     this.point = new Point(this.width / 2, this.height * 3 / 4, 20);
-    $scope.maxpoints = Math.floor(Math.random() * 100) + 1;
+    $scope.maxpoints = (Math.floor(Math.random() * 80) + 20) * $scope.scale;
 
-    if (this.practice) $scope.maxpoints = maxpoints;
+    if (this.practice) $scope.maxpoints = maxpoints * $scope.scale;
+
+    $(this.pointsLocation).text("0.0");
   }
 
   LocatorState.prototype.getPointvalue = function() {
@@ -685,15 +712,16 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
   $scope.maxpoints = 0;
   LocatorState.prototype.update = function(guess) {
-    console.log(this.goal);
+    if ($scope.debug) console.log(this.goal);
     this.distance = Math.sqrt(square(this.goal.x - guess.x) + square(this.goal.y - guess.y));
+    this.distance < 20 ? this.location = "Close!" : this.location = "Far!";
     // update locator position
     this.pointvalue = $scope.maxpoints - this.distance * $scope.maxpoints / this.maxlength;
     var linescale = this.pointvalue * this.linelength / $scope.maxpoints;
     this.point.update(linescale);
     if (!this.practice)
       $("#earned").text("Money earned for this task (cents) : " + parseFloat(this.pointvalue).toFixed(1));
-    $(this.pointsLocation).text("Points earned : " + parseFloat(this.pointvalue).toFixed(1));
+    $(this.pointsLocation).text(parseFloat(this.pointvalue).toFixed(1));
 
     guess.x > this.goal.x ? this.side = "left" : this.side = "right";
     guess.y > this.goal.y ? this.direction = "down" : this.direction = "up";
@@ -714,8 +742,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
 
     // draws text
     this.ctx.font = "20px Lucida Console";
-    this.ctx.fillText("Close!", this.width / 8, this.height * 2 / 11);
-    this.ctx.fillText("Go " + this.side + "-" + this.direction, this.width * 2 / 4, this.height * 2 / 11);
+    $("#nearness").text(this.location);
+    $("#location").text("Go " + this.side + "-" + this.direction);
     // draws line
     this.ctx.beginPath();
     this.ctx.moveTo(this.width / 2, this.height / 4);
@@ -811,6 +839,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
         //$scope.showpage.messagePage = true;
         $scope.partner.actualprice = value.actualprice;
       } else {
+        $scope.showpage.waitpage = false;
         $scope.showpage.showEarnings = true;
       }
     }
@@ -893,23 +922,78 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$timeout", "RedwoodS
   });
   rs.on("readytransferProcess", function(value) {
     rs.synchronizationBarrier('transferProcess').then(function() {
-      $scope.showpage.willingnesspage = true;
+      if ($scope.nomessage) {
+        $scope.showpage.waitpage = false;
+        $scope.showpage.showEarnings = true;
+
+        if ($scope.role === "P") {
+          $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
+          $scope.bid = 0;
+          rs.send("sendWillingness", {
+            actualprice: $scope.actualprice,
+            totalincome: $scope.totalincome,
+            message: false
+          });
+        }
+      } else {
+        if ($scope.role === "P") {
+          $scope.showpage.waitpage = false;
+          $scope.showpage.willingnesspage = true;
+        }
+      }
       rs.trigger("afterbarrier", {
         showpage: $scope.showpage
       });
     });
   });
 
+  $scope.treatementConfig = function() {
+    switch($scope.treatement) {
+      // as is
+      case 1:
+        console.log("welcome, nothing out of the ordinary is here");
+        break;
+      // no message :
+      // no references to messages
+      case 2:
+        console.log("carry on, nothing to see here");
+        $scope.nomessage = true;
+        break;
+      // free message :
+      // no references to paying for the message
+      case 3:
+        console.log("'cause I'm free as a message now baby");
+        $scope.freemessage = true;
+        break;
+      // reader :
+      // all messages go to an isolated reader(s)
+      case 4:
+        console.log("time for the reader");
+        // need to make algorithm for sorting peoples
+        break;
+      default:
+        console.log("check config file");
+        break;
+    }
+  };
+
   rs.on_load(function() {
     console.log("hello experiment " + rs);
+    // congif values
+    $scope.incomegoal = rs.config.incomegoal;
+    $scope.numberofpeople = rs.config.numberofpeople;
+    $scope.scale = rs.config.scale;
+    $scope.treatement = rs.config.treatement;
+    $scope.treatementConfig();
+
     $scope.showpage.showStartExperiment = true;
     // set values from config file
     // role index endownment
     $scope.userIndex = parseInt(rs.user_id);
     $scope.role = rs.config.roles[$scope.userIndex - 1];
-    $scope.endownment = rs.config.endownment;
+    $scope.endownment = rs.config.endownment * $scope.scale;
 
-    // check if debug to skip validation
+    // check if debug is up
     if (parseInt(rs.config.debug) === 0) $scope.debug = false;
     else {
       $scope.debug = true;
