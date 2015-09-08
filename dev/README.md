@@ -1,16 +1,14 @@
 #The To-Do List
 
 ##Before Experiment
-* 18
+* 18ish
 
 ##Part 1
 
 ##Part 2
-* 14
 
 ##Part 3
 * 5
-* 15
 
 ##Part 4
 
@@ -31,7 +29,7 @@
 17. done
 ##Changes ( 2 / 5 )
 14. done
-15. find a way to parse the text area
+15. done
 16. done
 18. config file :  number of people will need a algorithm to find a way to sort all the people.
 19. create parser
