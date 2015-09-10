@@ -1,4 +1,6 @@
-#2015 September 8
+<!---
+	2015 September 8
+-->
 
 #Important/Sidenotes
 * Parser
@@ -14,18 +16,10 @@
 ##Part 1
 
 ##Part 2
-* 21
-* 22
 * 23
-* 24
-* 25
 * 26
-* 27
-* 28
-* 29
 * 30
 * 31
-* 32
 * 33
 * 34
 
@@ -51,31 +45,31 @@
 19. Parse the output
 
 #Plan
-##Quick Fixes ( 0 / 22 )
-21.
-22.
-23.
-24.
-25.
-26.
-27.
-28.
-29.
-30.
-31.
-32.
-33.
-34.
-35.
-36.
-37.
-38.
-39.
-40.
-41.
-42.
-##Changes ( 0 / 1 )
-20. create script to generate the config file
+##Quick Fixes ( 1 / 22 )
+21. done
+22. done
+23. possibly more length
+24. done
+25. done
+26. 
+27. done
+28. done
+29. done
+30. doneish; get better color
+31. just need color for point
+32. done
+33. 
+34. 
+35. 
+36. 
+37. 
+38. 
+39. 
+40. 
+41. 
+42. 
+##Changes ( 1 / 1 )
+20. done
 
 #New Feedback
 20. make a script to create the configuration file, matches people

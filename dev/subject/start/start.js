@@ -219,6 +219,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   $scope.moneytransferred = 0;
   $scope.totalincome = 0;
   $scope.messages = "";
+  $scope.task = 1;
 
   // variables for P
   $scope.bid = null;
@@ -297,10 +298,20 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     $scope.showpage.practice1 = true;
     $scope.showpage.exampleTasks = false;
 
+    // popover
+    $('[data-toggle="instructions"]').popover({
+      html: true,
+      trigger: 'focus hover'
+    });
+
     $scope.points = [];
     $scope.plot = $.plot("#practice1",[{
         data: $scope.points,
-        points: {show : true}
+        points: {
+          show : true,
+          fill: true,
+          fillColor: 'gold'
+        }
       }], {
         xaxis: {
             ticks:10,
@@ -332,7 +343,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show: true,
           fill: true,
-          radius: 10,
+          fillColor: 'gold',
+          radius: 10
         }
       }]);
       $scope.plot.draw();
@@ -373,15 +385,20 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     $scope.showpage.realTasks = false;
 
     //start tooltip
+    /*
     $('[data-toggle="instructions"]').popover({
       html: true,
       trigger: 'focus hover'
     });
+    */
 
     $scope.points = [];
     $scope.plot = $.plot("#placeholder",[{
         data: $scope.points,
-        points: {show : true}
+        points: {
+          show : true,
+          fill: true
+        }
       }], {
         xaxis: {
             ticks:10,
@@ -468,6 +485,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     }
     // clear dot and set new goal
     else {
+      $scope.task++;
       $scope.points.pop();
       $scope.plot.setData([$scope.points]);
       $scope.plot.draw();
@@ -676,7 +694,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     */
     ctx.beginPath();
     ctx.arc(this.x, this.y - this.value, this.radius, 0, 2*Math.PI);
-    ctx.lineWidth = 1;
+    ctx.fillStyle = '#CC1600';
+    ctx.fill()
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = '#660B00';
     ctx.stroke();
   };
 
@@ -763,6 +784,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     this.ctx.moveTo(this.width / 2, this.height / 4);
     this.ctx.lineTo(this.width / 2, this.height / 4 + this.linelength);
     this.ctx.lineWidth = 6;
+    this.ctx.strokeStyle = '#660B00';
     this.ctx.stroke();
 
     // draws numbers
@@ -1038,7 +1060,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     // set values from config file
     // role index endownment
     $scope.userIndex = parseInt(rs.user_id);
-    $scope.role = rs.config.roles[$scope.userIndex - 1];
+    if (rs.config.roles[$scope.userIndex - 1] === 1) {
+      $scope.role = 'T';
+    } else if (rs.config.roles[$scope.userIndex - 1] === 2) {
+      $scope.role = 'P';
+    } else {
+      $scope.role = 'R';
+    }
     $scope.endownment = rs.config.endownment * $scope.scale;
 
     // check if debug is up
@@ -1051,7 +1079,13 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     // set partner values from config file
     // index role endownment
     $scope.partner.index = rs.config.pairs[$scope.userIndex - 1];
-    $scope.partner.role = rs.config.roles[$scope.partner.index - 1];
+    if (rs.config.roles[$scope.partner.index - 1] === 1) {
+      $scope.partner.role = 'T';
+    } else if (rs.config.roles[$scope.partner.index - 1] === 2) {
+      $scope.partner.role = 'P';
+    } else {
+      $scope.partner.role = 'R';
+    }
     $scope.partner.endownment = rs.config.endownment;
     console.log($scope.userIndex);
     console.log($scope.role);
