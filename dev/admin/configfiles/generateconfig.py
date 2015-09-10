@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import csv, sys
 from random import randint
+from os.path import isfile
 
 # avaliable treatments
 avaliableTreatments = ['1','2','3','4']
@@ -87,7 +88,6 @@ def generatepairs(t,n):
         # one reader
         reader = randint(1,n)
         people = replacePerson(people,-1,reader)
-        print people
     elif t == 4 and n > 9:
         # two readers
         reader = randint(1,n)
@@ -134,8 +134,6 @@ def generateroles(t,p):
     return roles
 
 roles = generateroles(treatment,pairs)
-print pairs
-print roles
 
 endownment = raw_input('What is the inital endownment?\n')
 while (not isInt(endownment)):
@@ -167,8 +165,32 @@ while (not isInt(scale)):
     scale = raw_input('What is the scale?\n')
 scale = int(scale)
 
-with open('config.csv', 'wb') as csvfile:
-    spamwriter = csv.writer(csvfile,quoting=csv.QUOTE_MINIMAL)
-    spamwriter.writerow(['period','pairs','endownment','incomegoal','roles','debug','numberofpeople','scale','treatement'])
-    spamwriter.writerow([period,pairs,endownment,incomegoal,roles,debug,numberofpeople,scale,treatment])
+filename = ''
+createfile = True
+if len(sys.argv) > 1:
+    filename = sys.argv[1]
+else:
+    filename = raw_input('please enter a filename\n')
+
+while isfile(filename + '.csv'):
+    createfile = False
+    response = raw_input('already a file. press "y" if you want to override.\n')
+    if response == 'y':
+        createfile = True
+        break
+    else:
+        response = raw_input('do you want to enter a new filename? enter "y" if yes\n')
+        if response == 'y':
+            createfile = True
+            filename = raw_input('please enter a filename\n')
+        else:
+            print 'file not created'
+            break
+
+if createfile:
+    with open(filename + '.csv', 'wb') as csvfile:
+        spamwriter = csv.writer(csvfile,quoting=csv.QUOTE_MINIMAL)
+        spamwriter.writerow(['period','pairs','endownment','incomegoal','roles','debug','numberofpeople','scale','treatement'])
+        spamwriter.writerow([period,pairs,endownment,incomegoal,roles,debug,numberofpeople,scale,treatment])
+    print 'file created'
 

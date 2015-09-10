@@ -310,8 +310,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show : true,
           fill: true,
-          fillColor: 'gold'
-        }
+          fillColor: '#FFCD72'
+        },
+        color: '#FFCF87'
       }], {
         xaxis: {
             ticks:10,
@@ -331,7 +332,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     $scope.locatorState = new LocatorState(document.getElementById("practicelocator"),
                                          "#pointspractice", true, "#nearnesspractice", "#locationpractice", 50);
     $scope.locatorState.setGoal();
-    $scope.locatorState.draw();
+    $scope.locatorState.reset();
 
     $("#practice1").bind("plotclick", function(event, pos, item) {
       $scope.points.pop();
@@ -343,9 +344,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show: true,
           fill: true,
-          fillColor: 'gold',
+          fillColor: '#FFCD72',
           radius: 10
-        }
+        },
+        color: '#FFCF87'
       }]);
       $scope.plot.draw();
       $scope.locatorState.update(pos);
@@ -385,12 +387,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     $scope.showpage.realTasks = false;
 
     //start tooltip
-    /*
     $('[data-toggle="instructions"]').popover({
       html: true,
       trigger: 'focus hover'
     });
-    */
 
     $scope.points = [];
     $scope.plot = $.plot("#placeholder",[{
@@ -419,7 +419,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
                                           "#points", false, "#nearness", "#location");
 
     $scope.locatorState.setGoal();
-    $scope.locatorState.draw();
+    $scope.locatorState.reset();
 
     $("#placeholder").bind("plotclick", function(event, pos, item) {
       $scope.points.pop();
@@ -490,13 +490,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       $scope.plot.setData([$scope.points]);
       $scope.plot.draw();
       $scope.locatorState.setGoal();
-      $scope.locatorState.location = "Click";
-      $($scope.locatorState.nearid).text($scope.locatorState.location);
-      $($scope.locatorState.locationid).text("Waiting");
-      $scope.locatorState.pointvalue = 0;
-      $("#points").text(parseFloat($scope.locatorState.pointvalue).toFixed(1));
       $scope.locatorState.point.update(0);
-      $scope.locatorState.draw();
+      $scope.locatorState.reset();
 
       $timeout.cancel($scope.mytimeout);
       $scope.time = $scope.timelimit;
@@ -577,6 +572,15 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     $scope.actualprice = Math.floor(Math.random() * ($scope.income - $scope.partner.moneytransferred));
     $scope.bid *= 100;
     if ($scope.bid > $scope.income - $scope.partner.moneytransferred) {
+      sweetAlert({
+        title: "Your willingness exeeds your avaliable earnings.",
+        text: "",
+        type: "error",
+        allowOutsideClick: true
+      });
+      $scope.bid = $scope.bid / 100;
+      return;
+    } else if ($scope.bid < 0 || isNaN($scope.bid)) {
       sweetAlert({
         title: "Unavaliable Value",
         text: "Please check you can use that amount.",
@@ -794,8 +798,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   };
 
   LocatorState.prototype.reset = function() {
-    $(this.nearid).text("Click!");
-    $(this.locationid).text("Waiting");
+    $(this.nearid).text("Click inside the square");
+    $(this.locationid).text("");
     $(this.pointsLocation).text("0.0");
 
     this.clear();

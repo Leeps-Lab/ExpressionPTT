@@ -630,7 +630,7 @@
             <h4 id="nearnesspractice" class="text-center">Click!</h4>
           </div>
           <div class="col-md-4">
-            <h4 id="locationpractice" class="text-center">Waiting</h4>
+            <h4 id="locationpractice" class="text-center"></h4>
           </div>
         </div>
         <!-- Game -->
@@ -851,8 +851,8 @@
         <p id="tPercentTransfered">Percentage transfered: {{percent}}</p>
     </div>
     <div class="row">
-      <h2 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h2>
-      <h2 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>
+      <h3 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h3>
+      <h3 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h3>
     </div>
     <div class="row">
       <div class="text-center">
@@ -880,8 +880,8 @@
       <p id="pPercentTransferred">Percentage transfered: {{percent}}</p>
     </div>
     <div class="row">
-      <h2 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h2>
-      <h2 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h2>
+      <h3 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h3>
+      <h3 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h3>
     </div>
     <div class="row">
       <div class="text-center">
@@ -949,7 +949,7 @@
   <!-- T message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'T'">
     <div class="row">
-      <p class="text-center">Here is it the message from your counterpart :</p>
+      <h2 class="text-center">Here is the message from your counterpart :</h2>
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2"
@@ -958,6 +958,7 @@
           </div>
         </div>
     </div>
+    <br>
     <div class="row text-center">
         <button type="button" class="btn btn-info" ng-click="readMessage();saveState();">
           I have read the message
@@ -966,39 +967,9 @@
   </div>
   <!-- P message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'P'">
-    <!--
     <div class="row">
-      <p class="text-center">
-        After writing your message, please press the ENTER key to record the message.
-      </p>
+      <h3 class="text-center">Write message in the box below and click on the button to send it:</h3>
     </div>
-    <div class="row">
-      <p class="text-center">
-        Once it is recorded, the message should appear in the upper part of the message box.
-        Only then press the SEND button.
-      </p>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2"
-          style="border-style:solid;border-width:2px;min-height:300px;">
-          <div ng-repeat="message in messages track by $index">
-            <p>{{message}}</p>
-          </div>
-        </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <input type="text" style="width:585px;" ng-keypress="saveMessage($event)"
-          ng-model="message" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <button type="button" class="btn btn-info"
-          ng-click="sendMessage();">Continue</button>
-      </div>
-    </div>
-    -->
     <div class="row">
       <div class="text-center">
         <textarea style="min-height:300px;min-width:600px"ng-model="message"></textarea>

@@ -18,20 +18,11 @@
 ##Part 2
 * 23
 * 26
-* 30
-* 31
-* 33
-* 34
 
 ##Part 3
 * 5
-* 35
 * 36
 * 37
-* 38
-* 39
-* 40
-* 41
 * 42
 
 ##Part 4
@@ -51,25 +42,27 @@
 23. possibly more length
 24. done
 25. done
-26. 
+26. don't know what 'right all center means' have a picture drawn as an
+	example. if possible
 27. done
 28. done
 29. done
-30. doneish; get better color
-31. just need color for point
+30. done
+31. done
 32. done
-33. 
-34. 
-35. 
-36. 
-37. 
-38. 
-39. 
-40. 
-41. 
-42. 
+33. done
+34. done
+35. done
+36. want to check on lab moniters
+37. want to check on lab moniters
+38. done
+39. done
+40. done
+41. done
+42. need to at least have the P wait because we need to know how much T
+	took from P's income. so either have only P wait or they both wait.
 ##Changes ( 1 / 1 )
-20. done
+20. somewhere add file name
 
 #New Feedback
 20. make a script to create the configuration file, matches people
