@@ -397,8 +397,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         data: $scope.points,
         points: {
           show : true,
-          fill: true
-        }
+          fill: true,
+          fillColor: '#FFCD72'
+        },
+        color: '#FFCF87'
       }], {
         xaxis: {
             ticks:10,
@@ -431,8 +433,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show: true,
           fill: true,
-          radius: 10,
-        }
+          fillColor: '#FFCD72',
+          radius: 10
+        },
+        color: '#FFCF87'
       }]);
       $scope.plot.draw();
       $scope.locatorState.update(pos);

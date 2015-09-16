@@ -698,8 +698,17 @@
   <!-- income earning -->
   <div class="container" ng-show="showpage.gametime">
     <div class="row">
-      <div class="text-center">
+      <div class="col-md-2 col-md-offset-5">
         <h2>Task {{task}}</h2>
+      </div>
+      <div class="col-md-1">
+        <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
+          data-content="Use the <em>left-click</em> of the mouse to <em>move</em>
+          the yellow circle (in the left graph) and search for the location that gives you the highest
+          score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
+          The assigned time is 35 seconds.">
+          ?
+        </button>
       </div>
     </div>
     <div class="row">
@@ -709,24 +718,15 @@
       <h3 class="text-center" id="currentTask">The current task can earn you a
         maximum of {{maxpoints}} points.
       </h3>
-      <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
-        data-content="Use the <em>left-click</em> of the mouse to <em>move</em>
-        the yellow circle (in the left graph) and search for the location that gives you the highest
-        score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
-        The assigned time is 35 seconds.">
-        ?
-      </button>
     </div>
     <div class="row">
       <div class="col-md-6">
         <div class="row">
           <div class="col-md-3 col-md-offset-3">
-            <h4 id="nearness" class="text-center"
-              style="border-style:solid;border-width:3px">Click!</h4>
+            <h4 id="nearness" class="text-center">Click!</h4>
           </div>
           <div class="col-md-4">
-            <h4 id="location" class="text-center"
-              style="border-style:solid;border-width:3px">Waiting</h4>
+            <h4 id="location" class="text-center"></h4>
           </div>
         </div>
         <!-- Game -->
@@ -738,33 +738,32 @@
         <!-- points earned -->
         <br><br>
         <div class="row">
-          <div class="col-md-9">
-            <h3 id="timer" class="text-center">TIME LEFT</h3>
+          <div class="col-md-5 col-md-offset-1">
+            <h3 id="timer">TIME LEFT</h3>
           </div>
-          <div class="col-md-3">
-            <h3 class="text-center" style="border-style:solid; border-width: 1px">{{time}}</h3>
+          <div class="col-md-2">
+            <h3 class="text-center">{{time}}</h3>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-8">
-            <h3 class="text-center">POINTS</h3>
+          <div class="col-md-5 col-md-offset-1">
+            <h3>POINTS</h3>
           </div>
-          <div class="col-md-4">
-            <h3 class="text-center" id="points" style="border-style:solid; border-width: 1px"></h3>
+          <div class="col-md-2">
+            <h3 class="text-center" id="points"></h3>
           </div>
         </div>
         <!-- locator -->
         <div class="row">
-          <div class="col-md-12 text-center">
-            <canvas id="locator" width="150px" height="300px"></canvas>
+          <div class="col-md-11 col-md-offset-1">
+            <canvas id="locator" width="150px" height="450px"></canvas>
           </div>
         </div>
-      </div>
-    </div>
-    <br><br>
-    <div class="row">
-      <div class="text-center">
-        <button id="nexttask" type="button" class="btn btn-success" ng-click="nexttask()">Go To Next Task</button>
+        <div class="row">
+          <div class="text-center">
+            <button id="nexttask" type="button" class="btn btn-success" ng-click="nexttask()">Go To Next Task</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>

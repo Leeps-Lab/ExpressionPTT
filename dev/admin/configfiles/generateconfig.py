@@ -167,6 +167,7 @@ scale = int(scale)
 
 filename = ''
 createfile = True
+fileoverride = False
 if len(sys.argv) > 1:
     filename = sys.argv[1]
 else:
@@ -177,6 +178,7 @@ while isfile(filename + '.csv'):
     response = raw_input('already a file. press "y" if you want to override.\n')
     if response == 'y':
         createfile = True
+        fileoverride = True
         break
     else:
         response = raw_input('do you want to enter a new filename? enter "y" if yes\n')
@@ -192,5 +194,8 @@ if createfile:
         spamwriter = csv.writer(csvfile,quoting=csv.QUOTE_MINIMAL)
         spamwriter.writerow(['period','pairs','endownment','incomegoal','roles','debug','numberofpeople','scale','treatement'])
         spamwriter.writerow([period,pairs,endownment,incomegoal,roles,debug,numberofpeople,scale,treatment])
-    print 'file created'
+    if fileoverride:
+        print 'file has been over written'
+    else:
+        print 'file created'
 
