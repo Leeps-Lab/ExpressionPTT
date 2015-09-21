@@ -703,7 +703,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     ctx.beginPath();
     ctx.arc(this.x, this.y - this.value, this.radius, 0, 2*Math.PI);
     ctx.fillStyle = '#CC1600';
-    ctx.fill()
+    ctx.fill();
     ctx.lineWidth = 2;
     ctx.strokeStyle = '#660B00';
     ctx.stroke();
@@ -732,10 +732,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       y: null
     };
     this.pointvalue = 0;
-    this.linelength = this.height / 2;
+    this.linelength = 3 * this.height / 4;
     this.maxlength = Math.sqrt(square(100 - 0) + square(100 - 0));
 
-    this.point = new Point(this.width / 2, this.height * 3 / 4, 20);
+    this.point = new Point(this.width / 2, this.height * 7 / 8, 15);
     $scope.maxpoints = (Math.floor(Math.random() * 80) + 20) * $scope.scale;
 
     if (this.practice) $scope.maxpoints = maxpoints * $scope.scale;
@@ -789,8 +789,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     $(this.locationid).text("Go " + this.side + "-" + this.direction);
     // draws line
     this.ctx.beginPath();
-    this.ctx.moveTo(this.width / 2, this.height / 4);
-    this.ctx.lineTo(this.width / 2, this.height / 4 + this.linelength);
+    this.ctx.moveTo(this.width / 2, this.height / 8);
+    this.ctx.lineTo(this.width / 2, this.height / 8 + this.linelength);
     this.ctx.lineWidth = 6;
     this.ctx.strokeStyle = '#660B00';
     this.ctx.stroke();
@@ -809,8 +809,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     this.clear();
     // draw line
     this.ctx.beginPath();
-    this.ctx.moveTo(this.width / 2, this.height / 4);
-    this.ctx.lineTo(this.width / 2, this.height / 4 + this.linelength);
+    this.ctx.moveTo(this.width / 2, this.height / 8);
+    this.ctx.lineTo(this.width / 2, this.height / 8 + this.linelength);
     this.ctx.lineWidth = 6;
     this.ctx.stroke();
     // draw point
@@ -825,7 +825,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       $scope.finalEarnings = $scope.income;
       $scope.percentSlider = $("#tSlider").slider({
         ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
+        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
+        value: 0,
+        ticks_snap_bounds: 1
       });
       $scope.percentSlider.on("change", function(slideEvt) {
         console.log("T slider");
@@ -842,7 +844,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     } else {
       $scope.percentSlider = $("#pSlider").slider({
         ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']
+        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
+        value: 0,
+        ticks_snap_bounds: 1
       });
       $scope.percentSlider.on("change", function(slideEvt) {
         console.log("P slider");
@@ -855,8 +859,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       });
     }
     console.log("sliders created");
+  };
+  $scope.showSliders = function() {
     $scope.showpage.roles = false;
     $scope.showpage.slider = true;
+    $scope.saveState();
   };
 
   // rs.recv
@@ -1098,6 +1105,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     console.log($scope.userIndex);
     console.log($scope.role);
     console.log($scope.partner);
+    $scope.createSliders();
 
     rs.synchronizationBarrier('initalQuestions').then(function() {
       $scope.questions = false;

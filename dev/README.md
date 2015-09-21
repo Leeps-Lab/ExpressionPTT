@@ -19,24 +19,31 @@
 ##Part 2
 * 23
 * 26
-* 43
-* 44
-* 45
-* 46
 
 ##Part 3
 * 5
 * 36
-* 37
 * 42
-* 47
 
 ##Part 4
 
 ##After Experiment
 * 19
 
-#Old Feedback ( 0 / 8 )
+#Old Plan
+##Quick Fixes ( 4 / 5 )
+5. working on it.
+23. done. ask if formatting is fine.
+26. done. ask if formatting is fine.
+36. done. ask if formatitng is fine.
+37. done. ask if formatting is fine
+##Changes ( 0 / 2 )
+18. add html pages and send messages to reader. program which messages
+	the reader recieves
+19. use the python to see if i need to change how the questions are
+	formatted and certain messages
+
+#Old Feedback ( 4 / 7 )
 5. The tick labels of part 3 are all collapsed in one point
 18. Treatment 4
 19. Parse the output
@@ -48,14 +55,14 @@
 	senddecision/sendestimate pages
 
 #Plan
-##Quick Fixes ( 0 / 5 )
-43.
-44.
-45.
-46.
-47.
+##Quick Fixes ( 5 / 5 )
+43. done. ask if he wants the popover to be down.
+44. done.
+45. done.
+46. done.
+47. done
 ##Changes ( 0 / 1 )
-42. 
+42. have looked, can't find it
 
 #New Feedback
 42. hotelling should have code to show how to randomly assign the

@@ -608,7 +608,7 @@
       <div class="col-md-4 col-md-offset-5">
         <h2 class="text-center">PRACTICE SCREEN {{practiceRound}}</h2>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-3">
         <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
           data-content="Use the <em>left-click</em> of the mouse to <em>move</em>
           the yellow circle (in the left graph) and search for the location that gives you the highest
@@ -623,6 +623,7 @@
         The current task can earn you a maximim of 50 points.
       </h3>
     </div>
+    <br><br>
     <div class="row">
       <div class="col-md-6">
         <div class="row">
@@ -638,19 +639,19 @@
           <div id="practice1" style="width:600px;height:600px"></div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <!-- points earned -->
         <br><br>
         <div class="row">
-          <div class="col-md-5 col-md-offset-1">
+          <div class="col-md-4 col-md-offset-3">
             <h3>TIME LEFT</h3>
           </div>
           <div class="col-md-2">
-            <h3 class="text-center">{{time}}</h3>
+            <h3>{{time}}</h3>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-5 col-md-offset-1">
+          <div class="col-md-4 col-md-offset-3">
             <h3>POINTS</h3>
           </div>
           <div class="col-md-2">
@@ -659,7 +660,7 @@
         </div>
         <!-- locator -->
         <div class="row">
-          <div class="col-md-11 col-md-offset-1">
+          <div class="col-md-11 col-md-offset-4">
             <canvas id="practicelocator" width="150px" height="450px"></canvas>
           </div>
         </div>
@@ -701,12 +702,12 @@
       <div class="col-md-2 col-md-offset-5">
         <h2>Task {{task}}</h2>
       </div>
-      <div class="col-md-1">
+      <div class="col-md-3">
         <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
           data-content="Use the <em>left-click</em> of the mouse to <em>move</em>
           the yellow circle (in the left graph) and search for the location that gives you the highest
           score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
-          The assigned time is 35 seconds.">
+          The assigned time is 35 seconds." data-placement="bottom">
           ?
         </button>
       </div>
@@ -719,6 +720,7 @@
         maximum of {{maxpoints}} points.
       </h3>
     </div>
+    <br><br>
     <div class="row">
       <div class="col-md-6">
         <div class="row">
@@ -734,11 +736,11 @@
           <div id="placeholder" style="width:600px;height:600px"></div>
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-6">
         <!-- points earned -->
         <br><br>
         <div class="row">
-          <div class="col-md-5 col-md-offset-1">
+          <div class="col-md-3 col-md-offset-4">
             <h3 id="timer">TIME LEFT</h3>
           </div>
           <div class="col-md-2">
@@ -746,16 +748,16 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-5 col-md-offset-1">
+          <div class="col-md-3 col-md-offset-4">
             <h3>POINTS</h3>
           </div>
           <div class="col-md-2">
-            <h3 class="text-center" id="points"></h3>
+            <h3 id="points"></h3>
           </div>
         </div>
         <!-- locator -->
         <div class="row">
-          <div class="col-md-11 col-md-offset-1">
+          <div class="col-md-11 col-md-offset-4">
             <canvas id="locator" width="150px" height="450px"></canvas>
           </div>
         </div>
@@ -822,7 +824,7 @@
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-success" ng-click="createSliders();">
+        <button type="button" class="btn btn-success" ng-click="showSliders();">
           Continue
         </button>
       </div>
@@ -833,6 +835,7 @@
 
   <!-- T slider -->
   <div class="container" ng-show="showpage.slider && role === 'T'">
+    <br>
     <div class="row">
       <h3 class="text-center">
         Being T, you are given the authority to transfer money from P's account to your own account.
@@ -840,15 +843,21 @@
         (${{floatToMoney(partner.income)}}).
       </h3>
     </div>
+    <br><br><br><br>
     <div class="row">
       <h3 class="text-center">What percentage of P's income do you want to transfer to your account?</h3>
-      <p class="text-center">(Use the slider below to set this percentage)</p>
+      <h4 class="text-center">(Use the slider below to set this percentage)</h4>
     </div>
     <div class="row text-center">
-      <input id="tSlider" style="width:600px;" data-slider-id="tSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
-        data-slider-value="0" />
-        <p id="tPercentTransfered">Percentage transfered: {{percent}}</p>
+      <div class="col-md-12">
+        <input id="tSlider" style="width:600px;" type="text" data-slider-ticks="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+          data-slider-ticks-labels="['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']"
+          data-slider-id="tSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1"
+          data-slider-value="0" value="0" data-slider-ticks-snap-bounds="1" />
+          <h4 id="tPercentTransfered">Percentage transfered: {{percent}}</h4>
+        </div>
     </div>
+    <br><br><br><br>
     <div class="row">
       <h3 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h3>
       <h3 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h3>
@@ -863,21 +872,28 @@
   </div>
   <!-- P slider -->
   <div class="container" ng-show="showpage.slider && role === 'P'">
+    <br>
     <div class="row">
       <h3 class="text-center">
         At this moment, your counterpart T is deciding what proportion of your income (${{floatToMoney(income)}})
         to transfer to his/her own account.
       </h3>
     </div>
+    <br><br><br><br>
     <div class="row">
       <h3 class="text-center">What percentage of your income do you expect T will transfer to his/her own account?</h3>
-      <p class="text-center">(Use the slider below to set this percentage)</p>
+      <h4 class="text-center">(Use the slider below to set this percentage)</h4>
     </div>
     <div class="row text-center">
-      <input id="pSlider" style="width:600px;" data-slider-id="pSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
-        data-slider-value="0" />
-      <p id="pPercentTransferred">Percentage transfered: {{percent}}</p>
+      <div class="col-md-12">
+        <input id="pSlider" type="text" style="width:600px;" data-slider-ticks="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
+          data-slider-ticks-labels="['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']"
+          data-slider-id="pSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1"
+          data-slider-value="0" value="0" data-slider-ticks-snap-bounds="1" />
+        <h4 id="pPercentTransferred">Percentage transfered: {{percent}}</h4>
+      </div>
     </div>
+    <br><br><br><br>
     <div class="row">
       <h3 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h3>
       <h3 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h3>
@@ -1013,28 +1029,28 @@
         </tr>
         <tr>
           <td>Endownment</td>
-          <td>{{floatToMoney(partner.endownment)}}</td>
-          <td>{{floatToMoney(endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.endownment)}}</td>
+          <td class="text-center">{{floatToMoney(endownment)}}</td>
         </tr>
         <tr>
           <td>Income</td>
-          <td>{{floatToMoney(partner.income)}}</td>
-          <td>{{floatToMoney(income)}}</td>
+          <td class="text-center">{{floatToMoney(partner.income)}}</td>
+          <td class="text-center">{{floatToMoney(income)}}</td>
         </tr>
         <tr>
           <td>Money<br>Transferred</td>
-          <td>+{{floatToMoney(partner.moneytransferred)}}</td>
-          <td>-{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">+{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">-{{floatToMoney(partner.moneytransferred)}}</td>
         </tr>
         <tr ng-show="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
-          <td>{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
+          <td class="text-center">{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
         </tr>
         <tr>
           <td>Total Earnings</td>
-          <td>{{floatToMoney(partner.totalincome)}}</td>
-          <td>{{floatToMoney(totalincome)}}</td>
+          <td class="text-center">{{floatToMoney(partner.totalincome)}}</td>
+          <td class="text-center">{{floatToMoney(totalincome)}}</td>
         </tr>
       </table>
     </div>
@@ -1058,28 +1074,28 @@
         </tr>
         <tr>
           <td>Endownment</td>
-          <td>{{floatToMoney(endownment)}}</td>
-          <td>{{floatToMoney(partner.endownment)}}</td>
+          <td class="text-center">{{floatToMoney(endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.endownment)}}</td>
         </tr>
         <tr>
           <td>Income</td>
-          <td>{{floatToMoney(income)}}</td>
-          <td>{{floatToMoney(partner.income)}}</td>
+          <td class="text-center">{{floatToMoney(income)}}</td>
+          <td class="text-center">{{floatToMoney(partner.income)}}</td>
         </tr>
         <tr>
           <td>Money<br>Transferred</td>
-          <td>+{{floatToMoney(partner.moneytransferred)}}</td>
-          <td>-{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">+{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">-{{floatToMoney(partner.moneytransferred)}}</td>
         </tr>
         <tr ng-show="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
-          <td>{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
+          <td class="text-center">{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
         </tr>
         <tr>
           <td>Total Earnings</td>
-          <td>{{floatToMoney(totalincome)}}</td>
-          <td>{{floatToMoney(partner.totalincome)}}</td>
+          <td class="text-center">{{floatToMoney(totalincome)}}</td>
+          <td class="text-center">{{floatToMoney(partner.totalincome)}}</td>
         </tr>
       </table>
     </div>
