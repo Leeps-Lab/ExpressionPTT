@@ -1,7 +1,11 @@
 <!---
-	2015 September 15
-	Next Meeting : Monday 21 @ 11am
+	2015 September 21 Monday
+	Next Meeting : next week
 -->
+
+#Reminders
+last thing to do when testing : practice refreshing and disconnecting
+from the internet
 
 #Important/Sidenotes
 * Parser
@@ -17,13 +21,9 @@
 ##Part 1
 
 ##Part 2
-* 23
-* 26
 
 ##Part 3
 * 5
-* 36
-* 42
 
 ##Part 4
 
@@ -31,45 +31,58 @@
 * 19
 
 #Old Plan
-##Quick Fixes ( 4 / 5 )
+##Quick Fixes ( 0 / 1 )
 5. working on it.
-23. done. ask if formatting is fine.
-26. done. ask if formatting is fine.
-36. done. ask if formatitng is fine.
-37. done. ask if formatting is fine
-##Changes ( 0 / 2 )
+##Changes ( 0 / 3 )
 18. add html pages and send messages to reader. program which messages
 	the reader recieves
 19. use the python to see if i need to change how the questions are
 	formatted and certain messages
+42. hotelling circle, on it
 
-#Old Feedback ( 4 / 7 )
+#Old Feedback ( 0 / 4 )
 5. The tick labels of part 3 are all collapsed in one point
 18. Treatment 4
 19. Parse the output
-23. make locator line go further (make the canvas longer)
-26. right side all center
-36. 10% of the page of the top/bottom as border
-37. have the slider stand out as the important part of the page
-42. no message : no waiting screen between the showearnings and
-	senddecision/sendestimate pages
-
-#Plan
-##Quick Fixes ( 5 / 5 )
-43. done. ask if he wants the popover to be down.
-44. done.
-45. done.
-46. done.
-47. done
-##Changes ( 0 / 1 )
-42. have looked, can't find it
-
-#New Feedback
 42. hotelling should have code to show how to randomly assign the
 	partners
-43. change tool tip, have it looker nicer on screen
-44. more space between the text and the game
-45. locator point a bit smaller
-46. right side should be more centered, add one or two col-md-offset
-47. show earnings should have centered text for t/p
+
+#Plan
+##Quick Fixes ( 0 / 0 )
+45. just one line for 'time left'
+46. no capitals for ['timeleft', 'value']
+48. text above slider should be in first third of page
+49. more space between the button and the text for the sliderpages
+50. more space between the two lines in the first part
+51. for messages, make boxes the same size
+52. have text sizes be the same for message page
+53. the endownment and totalincome are separate things. for show
+	earnings page.
+
+##Changes ( 0 / 0 )
+43. create the config file on the admin page, have boxes that contain
+	the fields. have a button to 'validate' the file
+44. take timestamps for each page
+47. try to have the income stay the same when refresh page; create flot
+	at the beginning
+
+#New Feedback
+43. create the config file on the admin page, have boxes that contain
+	the fields. have a button to 'validate' the file
+44. take timestamps for each page
+45. just one line for 'time left'
+46. no capitals for ['timeleft', 'value']
+47. try to have the income stay the same when refresh page; create flot
+	at the beginning
+48. text above slider should be in first third of page
+49. more space between the button and the text for the sliderpages
+50. more space between the two lines in the first part
+51. for messages, make boxes the same size
+52. have text sizes be the same for message page
+53. the endownment and totalincome are separate things. for show
+	earnings page.
+
+#for the future
+instructions before the part 1
+sometype of hardware that takes data from person's body
 
