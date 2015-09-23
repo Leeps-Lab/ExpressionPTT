@@ -644,7 +644,7 @@
         <br><br>
         <div class="row">
           <div class="col-md-4 col-md-offset-3">
-            <h3>TIME LEFT</h3>
+            <h3>Time Left</h3>
           </div>
           <div class="col-md-2">
             <h3>{{time}}</h3>
@@ -652,7 +652,7 @@
         </div>
         <div class="row">
           <div class="col-md-4 col-md-offset-3">
-            <h3>POINTS</h3>
+            <h3>Points</h3>
           </div>
           <div class="col-md-2">
             <h3 id="pointspractice"></h3>
@@ -740,16 +740,16 @@
         <!-- points earned -->
         <br><br>
         <div class="row">
-          <div class="col-md-3 col-md-offset-4">
-            <h3 id="timer">TIME LEFT</h3>
+          <div class="col-md-4 col-md-offset-3">
+            <h3 id="timer">Time Left</h3>
           </div>
           <div class="col-md-2">
-            <h3 class="text-center">{{time}}</h3>
+            <h3>{{time}}</h3>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-3 col-md-offset-4">
-            <h3>POINTS</h3>
+          <div class="col-md-4 col-md-offset-3">
+            <h3>Points</h3>
           </div>
           <div class="col-md-2">
             <h3 id="points"></h3>
@@ -837,17 +837,17 @@
   <div class="container" ng-show="showpage.slider && role === 'T'">
     <br>
     <div class="row">
-      <h3 class="text-center">
+      <h3 class="text-center" style="line-height:1.6;">
         Being T, you are given the authority to transfer money from P's account to your own account.
         The maximum amount of money you can collect is what P has earned as income in Part 2
         (${{floatToMoney(partner.income)}}).
       </h3>
     </div>
-    <br><br><br><br>
     <div class="row">
       <h3 class="text-center">What percentage of P's income do you want to transfer to your account?</h3>
       <h4 class="text-center">(Use the slider below to set this percentage)</h4>
     </div>
+    <br><br><br><br>
     <div class="row text-center">
       <div class="col-md-12">
         <input id="tSlider" style="width:600px;" type="text" data-slider-ticks="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
@@ -862,6 +862,7 @@
       <h3 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h3>
       <h3 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h3>
     </div>
+    <br>
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-success" ng-click="sendDecision();">
@@ -874,16 +875,16 @@
   <div class="container" ng-show="showpage.slider && role === 'P'">
     <br>
     <div class="row">
-      <h3 class="text-center">
+        <h3 class="text-center" style="line-height:1.6;">
         At this moment, your counterpart T is deciding what proportion of your income (${{floatToMoney(income)}})
         to transfer to his/her own account.
       </h3>
     </div>
-    <br><br><br><br>
     <div class="row">
       <h3 class="text-center">What percentage of your income do you expect T will transfer to his/her own account?</h3>
       <h4 class="text-center">(Use the slider below to set this percentage)</h4>
     </div>
+    <br><br><br><br>
     <div class="row text-center">
       <div class="col-md-12">
         <input id="pSlider" type="text" style="width:600px;" data-slider-ticks="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
@@ -898,6 +899,7 @@
       <h3 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h3>
       <h3 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h3>
     </div>
+    <br>
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-success" ng-click="sendEstimate();">
@@ -964,13 +966,13 @@
   <!-- T message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'T'">
     <div class="row">
-      <h2 class="text-center">Here is the message from your counterpart :</h2>
+      <h3 class="text-center">Here is the message from your counterpart :</h3>
     </div>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2"
-          style="border-style:solid;border-width:2px;min-height:300px;">
-          <div ng-bind-html="messages">
-          </div>
+        <div class="col-md-offset-3"
+          style="border-style:solid;border-width:2px;height:300px;width:600px;">
+          <h4><div ng-bind-html="messages">
+          </div></h4>
         </div>
     </div>
     <br>
@@ -987,7 +989,7 @@
     </div>
     <div class="row">
       <div class="text-center">
-        <textarea style="min-height:300px;min-width:600px"ng-model="message"></textarea>
+        <h4><textarea style="height:300px;width:600px"ng-model="message"></textarea></h4>
       </div>
     </div>
     <br>
@@ -1049,8 +1051,8 @@
         </tr>
         <tr>
           <td>Total Earnings</td>
-          <td class="text-center">{{floatToMoney(partner.totalincome)}}</td>
-          <td class="text-center">{{floatToMoney(totalincome)}}</td>
+          <td class="text-center">{{floatToMoney(partner.totalincome + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
         </tr>
       </table>
     </div>
@@ -1094,8 +1096,8 @@
         </tr>
         <tr>
           <td>Total Earnings</td>
-          <td class="text-center">{{floatToMoney(totalincome)}}</td>
-          <td class="text-center">{{floatToMoney(partner.totalincome)}}</td>
+          <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.totalincome + endownment)}}</td>
         </tr>
       </table>
     </div>

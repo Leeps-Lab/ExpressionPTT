@@ -17,6 +17,9 @@ from the internet
 ##Before Experiment
 * 18
 * 42
+* 43
+* 44
+* 47
 
 ##Part 1
 
@@ -48,18 +51,17 @@ from the internet
 	partners
 
 #Plan
-##Quick Fixes ( 0 / 0 )
-45. just one line for 'time left'
-46. no capitals for ['timeleft', 'value']
-48. text above slider should be in first third of page
-49. more space between the button and the text for the sliderpages
-50. more space between the two lines in the first part
-51. for messages, make boxes the same size
-52. have text sizes be the same for message page
-53. the endownment and totalincome are separate things. for show
-	earnings page.
+##Quick Fixes ( 8 / 8 )
+45. done.
+46. done.
+48. done.
+49. done. ask if it is fine
+50. done. ask if it is fine.
+51. done. same size, not in center. ask.
+52. done. have h3/h4. ask if fine
+53. done.
 
-##Changes ( 0 / 0 )
+##Changes ( 0 / 3 )
 43. create the config file on the admin page, have boxes that contain
 	the fields. have a button to 'validate' the file
 44. take timestamps for each page
