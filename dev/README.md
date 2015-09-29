@@ -16,8 +16,6 @@ from the internet
 
 ##Before Experiment
 * 18
-* 42
-* 43
 * 44
 * 47
 
@@ -36,14 +34,14 @@ from the internet
 #Old Plan
 ##Quick Fixes ( 0 / 1 )
 5. working on it.
-##Changes ( 0 / 3 )
+##Changes ( 1 / 3 )
 18. add html pages and send messages to reader. program which messages
 	the reader recieves
 19. use the python to see if i need to change how the questions are
 	formatted and certain messages
-42. hotelling circle, on it
+42. done.
 
-#Old Feedback ( 0 / 4 )
+#Old Feedback
 5. The tick labels of part 3 are all collapsed in one point
 18. Treatment 4
 19. Parse the output
@@ -61,9 +59,8 @@ from the internet
 52. done. have h3/h4. ask if fine
 53. done.
 
-##Changes ( 0 / 3 )
-43. create the config file on the admin page, have boxes that contain
-	the fields. have a button to 'validate' the file
+##Changes ( 1 / 3 )
+43. done.
 44. take timestamps for each page
 47. try to have the income stay the same when refresh page; create flot
 	at the beginning

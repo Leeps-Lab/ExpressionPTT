@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html ng-app="Redwood">
+  <head>
+		<title>ExpressionPTT Admin</title>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/angular/angular-1.2.16.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/sweet-alert.min.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodCore.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodHelpers.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodAdmin.js"></script>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/bootstrap-3.1.1.min.css"></link>
+    <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/sweet-alert.css">
+		<script type="text/javascript">
+			{{ js }}
+		</script>
+		<style type="text/css">
+			{{ css }}
+		</style>
+	</head>
+	<body ng-controller="AdminCtrl">
+    <div class="navbar navbar-fixed-top container">
+      <div class="navbar navbar-default" style="margin-bottom: 0;">
+        <div class="navbar-brand" href="#">Economics Experiment</div>
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a>Administrator</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-12">
+              <div id="router-status" class="alert alert-danger"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-body">
+                  <ul class="nav nav-pills nav-stacked">
+    								<li><a href="admin/payouts" target="_blank">View Payouts</a></li>
+    								<li><a id="archive" href="#">Archive Session</a></li>
+    								<li><a id="download" href="admin/download">Download Data</a></li>
+    							</ul>
+                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="row">
+						<div class="col-md-12">
+							<h4>Subjects</h4>
+							<table class="table table-bordered table-condensed table-striped">
+								<thead>
+								<tr><th>ID</th><th>Group</th><th>Period</th><th style="width: 150px;"></th></tr>
+								</thead>
+								<tbody id="subject-list">
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-8">
+							<button id="start-session" class="btn btn-success" disabled="disabled">Start Session</button>
+							<button id="refresh-subjects" class="btn btn-info" title="Attempt recover by refreshing all subject browsers">Recover Session</button>
+							<button id="reset-session" class="btn btn-danger">Reset Session</button>
+						</div>
+						<div class="col-md-4">
+							<div class="pull-right">
+								<button id="pause-session" class="btn btn-warning" disabled="disabled">Pause</button>
+								<button id="resume-session" class="btn btn-primary" disabled="disabled">Resume</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+      <hr>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="well">
+            <form class="form-horizontal">
+              <h3>Config File</h3>
+              <!-- number of people -->
+              <!--
+              <div class="form-group">
+                <label for="numberofpeople">Number of People</label>
+                <input type="integer" class="form-control" id="num" value="" placeholder="Number of People">
+              </div>
+              -->
+              <!-- treatment -->
+              <div class="form-group">
+                <label>Treatment</label>
+                <select class="form-control" id="treatment">
+                  <option>Normal</option>
+                  <option>No Message</option>
+                  <option>Free Message</option>
+                  <option>Readers</option>
+                </select>
+              </div>
+              <!-- endowment -->
+              <div class="form-group">
+                <label for="endowment">Endowment</label>
+                <input type="integer" class="form-control" id="endowment" value="3" placeholder="Endowment">
+              </div>
+              <!-- incomegoal -->
+              <div class="form-group">
+                <label for="incomegoal">Income Goal</label>
+                <input type="integer" class="form-control" id="incomegoal" value="10" placeholder="Income Goal" style="text-align:left;">
+              </div>
+              <!-- scale -->
+              <div class="form-group">
+                <label for="scale">Scale</label>
+                <input type="integer" class="form-control" id="scale" value="1" placeholder="Scale" style="text-align:left;">
+              </div>
+              <!-- debug -->
+              <div class="form-group">
+                <label>Debug</label>
+                <select class="form-control" id="debug">
+                  <option>False</option>
+                  <option>True</option>
+                </select>
+              </div>
+              <!-- validate -->
+              <div class="row">
+                <div class="text-center">
+                  <button type="submit" class="btn btn-default" id="set_config">Validate</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="well">
+            <div class="row">
+              <h4>Treatment : {{treatment}}</h4>
+            </div>
+            <div class="row">
+              <h4>Endowment</h4>
+            </div>
+            <div class="row">
+              <h4>Income Goal : {{incomegoal}}</h4>
+            </div>
+            <div class="row">
+              <h4>Scale : {{scale}}</h4>
+            </div>
+            <div class="row">
+              <h4>Debug : {{debug}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+			<div class="row">
+				<div class="col-md-12">
+					<h4>Configuration</h4>
+					<load-config></load-config>
+					<div style="overflow: auto;">
+						<table class="config table table-bordered table-striped table-condensed"></table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

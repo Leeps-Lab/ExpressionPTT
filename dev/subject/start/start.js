@@ -173,7 +173,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   $scope.numberofpeople = null;
   $scope.scale = 1;
   $scope.incomegoal = 10;
-  $scope.treatement = 1;
+  $scope.treatment = 1;
   $scope.nomessage = false;
   $scope.freemessage = false;
 
@@ -1032,8 +1032,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     });
   });
 
-  $scope.treatementConfig = function() {
-    switch($scope.treatement) {
+  $scope.treatmentConfig = function() {
+    switch($scope.treatment) {
       // as is
       case 1:
         console.log("welcome, nothing out of the ordinary is here");
@@ -1057,35 +1057,32 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         // need to make algorithm for sorting peoples
         break;
       default:
-        console.log("check config file");
+        console.log("error : check config");
         break;
     }
   };
 
   rs.on_load(function() {
-    console.log("hello experiment " + rs);
+    console.log("hello experiment");
+    console.log(rs);
     // congif values
-    $scope.incomegoal = rs.config.incomegoal;
-    $scope.numberofpeople = rs.config.numberofpeople;
-    $scope.scale = rs.config.scale;
-    $scope.treatement = rs.config.treatement;
-    $scope.treatementConfig();
+    $scope.userIndex = parseInt(rs.user_id);
+    var configfile = rs.subjects[$scope.userIndex - 1].data;
+    $scope.incomegoal = configfile.incomegoal[0];
+    $scope.scale = configfile.scale[0];
+    $scope.treatment = configfile.treatment[0];
+    $scope.treatmentConfig();
 
     $scope.showpage.showStartExperiment = true;
     // set values from config file
     // role index endownment
-    $scope.userIndex = parseInt(rs.user_id);
-    if (rs.config.roles[$scope.userIndex - 1] === 1) {
-      $scope.role = 'T';
-    } else if (rs.config.roles[$scope.userIndex - 1] === 2) {
-      $scope.role = 'P';
-    } else {
-      $scope.role = 'R';
-    }
-    $scope.endownment = rs.config.endownment * $scope.scale;
+    $scope.role = configfile.role[0];
+    $scope.endownment = configfile.endowment[0] * 100 * $scope.scale;
+    console.log(configfile);
+    console.log("endowment : " + $scope.incomegoal);
 
     // check if debug is up
-    if (parseInt(rs.config.debug) === 0) $scope.debug = false;
+    if (parseInt(configfile.debug[0]) === 0) $scope.debug = false;
     else {
       $scope.debug = true;
       $scope.income = 900;
@@ -1093,18 +1090,12 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
 
     // set partner values from config file
     // index role endownment
-    $scope.partner.index = rs.config.pairs[$scope.userIndex - 1];
-    if (rs.config.roles[$scope.partner.index - 1] === 1) {
-      $scope.partner.role = 'T';
-    } else if (rs.config.roles[$scope.partner.index - 1] === 2) {
-      $scope.partner.role = 'P';
-    } else {
-      $scope.partner.role = 'R';
-    }
-    $scope.partner.endownment = rs.config.endownment;
-    console.log($scope.userIndex);
-    console.log($scope.role);
-    console.log($scope.partner);
+    $scope.partner.index = configfile.pair[0];
+    $scope.partner.role = rs.subjects[$scope.partner.index - 1].data.role[0];
+    $scope.partner.endownment = configfile.endowment[0] * 100;
+    console.log("userId : " + $scope.userIndex);
+    console.log("role : " + $scope.role);
+    console.log("partner : " + $scope.partner);
     $scope.createSliders();
 
     rs.synchronizationBarrier('initalQuestions').then(function() {
