@@ -1109,7 +1109,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     console.log("endowment : " + $scope.incomegoal);
 
     // check if debug is up
-    if (parseInt(configfile.debug[0]) === 0) $scope.debug = false;
+    if (!configfile.debug[0]) $scope.debug = false;
     else {
       $scope.debug = true;
       $scope.income = 900;
