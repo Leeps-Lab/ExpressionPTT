@@ -177,6 +177,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   $scope.nomessage = false;
   $scope.freemessage = false;
 
+  // reader variables
+  $scope.allmessages = false;
+  $scope.readerMessages = [];
+
   // debug
   $scope.debug = false;
 
@@ -631,7 +635,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     });
     // navigate to correct page
     $scope.showpage.messagePage = false;
-    $scope.showpage.waitpage = true;
+    if ($scope.reader) {
+      $scope.showpage.showEarnings = true;
+    } else {
+      $scope.showpage.waitpage = true;
+    }
     $scope.saveState();
   };
   $scope.readMessage = function() {
@@ -865,6 +873,12 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     $scope.showpage.slider = true;
     $scope.saveState();
   };
+  $scope.noSliders = function() {
+    $scope.showpage.roles = false;
+    $scope.showpage.waitpage = true;
+    rs.trigger("readytransferProcess", {});
+    $scope.saveState();
+  };
 
   // rs.recv
   // sent from self to server and self
@@ -903,6 +917,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     if (sender == parseInt($scope.partner.index)) {
       $scope.showpage.willingnesspage = false;
       $scope.partner.totalincome = value.totalincome;
+      if ($scope.reader) {
+        if (value.message) $scope.partner.actualprice = value.actualprice;
+        $scope.showpage.waitpage = false;
+        $scope.showpage.showEarnings = true;
+      }
       if (value.message) {
         //$scope.showpage.messagePage = true;
         $scope.partner.actualprice = value.actualprice;
@@ -913,7 +932,14 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     }
   });
   rs.recv("sendMessage", function(sender, value) {
-    if (sender == parseInt($scope.partner.index)) {
+    if ($scope.reader && $scope.role === "R") {
+      $scope.readerMessages.push($sce.trustAsHtml(value.messages));
+      if ($scope.showpage.waitpage) {
+        $scope.showpage.waitpage = false;
+        $scope.showpage.messagePage = true;
+      }
+    }
+    if (sender == parseInt($scope.partner.index) && !$scope.reader) {
       $scope.messages = $sce.trustAsHtml(value.messages);
       $scope.showpage.waitpage = false;
       $scope.showpage.messagePage = true;
@@ -1055,6 +1081,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       case 4:
         console.log("time for the reader");
         // need to make algorithm for sorting peoples
+        $scope.reader = true;
         break;
       default:
         console.log("error : check config");
@@ -1090,13 +1117,15 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
 
     // set partner values from config file
     // index role endownment
-    $scope.partner.index = configfile.pair[0];
-    $scope.partner.role = rs.subjects[$scope.partner.index - 1].data.role[0];
-    $scope.partner.endownment = configfile.endowment[0] * 100;
-    console.log("userId : " + $scope.userIndex);
-    console.log("role : " + $scope.role);
-    console.log("partner : " + $scope.partner);
-    $scope.createSliders();
+    if ($scope.role !== 'R') {
+      $scope.partner.index = configfile.pair[0];
+      $scope.partner.role = rs.subjects[$scope.partner.index - 1].data.role[0];
+      $scope.partner.endownment = configfile.endowment[0] * 100;
+      console.log("userId : " + $scope.userIndex);
+      console.log("role : " + $scope.role);
+      console.log("partner : " + $scope.partner);
+      $scope.createSliders();
+    }
 
     rs.synchronizationBarrier('initalQuestions').then(function() {
       $scope.questions = false;

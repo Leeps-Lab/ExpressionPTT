@@ -15,7 +15,6 @@ from the internet
 #The To-Do List
 
 ##Before Experiment
-* 18
 * 44
 * 47
 
@@ -33,10 +32,9 @@ from the internet
 
 #Old Plan
 ##Quick Fixes ( 0 / 1 )
-5. working on it.
-##Changes ( 1 / 3 )
-18. add html pages and send messages to reader. program which messages
-	the reader recieves
+5. slider : working on it.
+##Changes ( 2 / 3 )
+18. done.
 19. use the python to see if i need to change how the questions are
 	formatted and certain messages
 42. done.
