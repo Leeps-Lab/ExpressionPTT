@@ -600,8 +600,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
 
     if ($scope.bid > $scope.actualprice) {
       $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
-      $scope.showpage.checkprice = true;
       // p gets to send message
+      $scope.ablesendmessage = true;
       rs.trigger("saveWillingness", {
         bid: $scope.bid,
         actualprice: $scope.actualprice
@@ -609,8 +609,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     } else {
       $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
       // p doesnt get to send message
-      $scope.showpage.showEarnings = true;
+      $scope.ablesendmessage = false;
     }
+    $scope.showpage.messagePage = true;
     $scope.saveState();
     rs.send("sendWillingness", {
       actualprice: $scope.actualprice,
@@ -626,18 +627,39 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     }
   };
   */
+  $scope.checkprice = function() {
+    if ($scope.ablesendmessage) {
+      $scope.showpage.waitpage = true;
+      $scope.showpage.checkprice = false;
+      $scope.saveState();
+
+      rs.send("sendMessage", {
+        messages : $scope.message.replace(/\n/g, '<br />'),
+        taken : $scope.partner.moneytransferred
+      });
+    } else {
+      $scope.showpage.showEarnings = true;
+      $scope.showpage.checkprice = false;
+      $scope.saveState();
+    }
+  }
   $scope.sendMessage = function() {
-    // send message to other person
-    rs.send("sendMessage", {
-      messages : $scope.message.replace(/\n/g, '<br />'),
-      taken : $scope.partner.moneytransferred
-    });
     // navigate to correct page
     $scope.showpage.messagePage = false;
     if ($scope.reader) {
+      rs.send("sendMessage", {
+        messages : $scope.message.replace(/\n/g, '<br />'),
+        taken : $scope.partner.moneytransferred
+      });
       $scope.showpage.showEarnings = true;
-    } else {
+    } else if ($scope.freemessage) {
+      rs.send("sendMessage", {
+        messages : $scope.message.replace(/\n/g, '<br />'),
+        taken : $scope.partner.moneytransferred
+      });
       $scope.showpage.waitpage = true;
+    } else {
+      $scope.showpage.checkprice = true;
     }
     $scope.saveState();
   };
@@ -916,12 +938,12 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     if (sender == parseInt($scope.partner.index)) {
       $scope.showpage.willingnesspage = false;
       $scope.partner.totalincome = value.totalincome;
+      console.log("got willingness, what's the next step?");
       if ($scope.reader) {
         if (value.message) $scope.partner.actualprice = value.actualprice;
         $scope.showpage.waitpage = false;
         $scope.showpage.showEarnings = true;
-      }
-      if (value.message) {
+      } else if (value.message) {
         //$scope.showpage.messagePage = true;
         $scope.partner.actualprice = value.actualprice;
       } else {
@@ -932,13 +954,19 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   });
   rs.recv("sendMessage", function(sender, value) {
     if ($scope.reader && $scope.role === "R") {
-      $scope.readerMessages.push({
-        text : $sce.trustAsHtml(value.messages),
-        taken : value.taken
-      });
-      if ($scope.showpage.waitpage) {
-        $scope.showpage.waitpage = false;
-        $scope.showpage.messagePage = true;
+      console.log(sender);
+      console.log($scope.readerlist);
+      // check if on readerlist
+      if ($scope.readerlist.indexOf(sender) !== -1) {
+        $scope.readerMessages.push({
+          text : $sce.trustAsHtml(value.messages),
+          taken : value.taken
+        });
+        $scope.readerlist.splice($scope.readerlist.indexOf(sender),1);
+        if ($scope.showpage.waitpage) {
+          $scope.showpage.waitpage = false;
+          $scope.showpage.messagePage = true;
+        }
       }
     }
     if (sender == parseInt($scope.partner.index) && !$scope.reader) {

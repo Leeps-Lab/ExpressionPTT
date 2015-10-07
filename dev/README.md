@@ -1,6 +1,6 @@
 <!---
 	2015 October 1 Thursday
-	Next Meeting : 2015 October 6, Tuesday @ 2:30
+	Next Meeting : 2015 October 7, Wednesday @ 2:30
 -->
 
 #Reminders
@@ -14,7 +14,6 @@ screens shouldn't sleep during experiments
 * slider
 
 #The To-Do List
-* 49
 
 ##Before Experiment
 * 44
@@ -28,8 +27,6 @@ screens shouldn't sleep during experiments
 * 5
 * 56
 * 52
-* 54
-* 55
 
 ##Part 4
 
@@ -47,10 +44,7 @@ screens shouldn't sleep during experiments
 
 #Old Feedback
 5. The tick labels of part 3 are all collapsed in one point
-18. Treatment 4
 19. Parse the output
-42. hotelling should have code to show how to randomly assign the
-	partners
 44. take timestamps for each page
 47. try to have the income stay the same when refresh page; create flot
 	at the beginning
@@ -65,10 +59,10 @@ screens shouldn't sleep during experiments
 56. cannot reproduce. try in the lab.
 57. done
 
-##Changes ( 0 / 3 )
-52. no barrier for taking money.
-54. add html
-55. change the order
+##Changes ( 2 / 3 )
+52. need to think how to do this.
+54. done.
+55. done.
 
 #New Feedback
 48. fix debug
