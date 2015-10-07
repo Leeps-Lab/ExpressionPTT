@@ -129,7 +129,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 				$scope.configsettings.endowment = Number($("#endowment").val());
 				$scope.configsettings.incomegoal = Number($("#incomegoal").val());
 				$scope.configsettings.scale = Number($("#scale").val());
-				$scope.configsettings.debug = Number($("#debug").val());
+				$scope.configsettings.debug = $("#debug").val();
 				//ra.trigger("do_roles");
 				ra.trigger("save_values", {
 					numberofpeople: $scope.configsettings.numberofpeople,
@@ -170,6 +170,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 				$scope.pairs = $scope.generatepairs($scope.configsettings.treatment,$scope.configsettings.numberofpeople);
 				$scope.roles = $scope.generateroles($scope.pairs);
 				$scope.setvalues($scope.pairs,$scope.roles);
+				if ($scope.configsettings.treatment === 4) $scope.setreaders($scope.pairs,$scope.roles);
 				$("#start-session").removeAttr("disabled");
 				console.log("roles : " + $scope.roles);
 				console.log("pairs : " + $scope.pairs);
@@ -238,6 +239,40 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 					location++;
 				}
 				return roles;
+			};
+			$scope.setreaders = function(p,r) {
+				var n = p.length + 1;
+				var reader;
+				var readerlist = [];
+				// easy way out
+				if (n <= 9) {
+					reader = r.indexOf("R");
+					for (var i = 0, l = ra.subjects.length; i < l; i++) {
+						if (ra.subjects[i].user_id === reader) continue;
+						if (r[ra.subjects[i].user_id - 1] === "P") {
+							readerlist.push(ra.subjects[i].user_id);
+						}
+					}
+					ra.set(ra.subjects[reader].user_id,"readerlist",readerlist);
+				}
+				// try harder
+				else {
+					var goal = Math.floor((n - 2) / 2);
+					console.log("number to reach : " + goal);
+					reader = r.indexOf("R");
+					for (var i = 0, l = ra.subjects.length; i < l; i++) {
+						if (ra.subjects[i].user_id === reader) continue;
+						if (r[ra.subjects[i].user_id - 1] === "P") {
+							readerlist.push(ra.subjects[i].user_id);
+							goal--;
+							if (goal <= 0) {
+								ra.set(ra.subjects[reader].user_id,"readerlist",readerlist);
+								reader = r.indexOf("R",reader+1);
+								goal = Math.ceil((n - 2) / 2);
+							}
+						}
+					}
+				}
 			};
 			$scope.setvalues = function(p,r) {
 				for (var i = 0, l = ra.subjects.length; i < l; i++) {
@@ -323,6 +358,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 
 	ra.on("start_session", function() {
 		ra.start_session();
+		$("#set_config").attr("disabled", "disabled");
 	});
 
 	ra.on("pause", function() {

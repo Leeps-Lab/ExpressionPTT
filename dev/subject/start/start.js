@@ -112,8 +112,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   };
   // checks if inputs are filled out
   $scope.isValid = function(qNum,rNum,mNum,toggle,tNumber) {
-    console.log(toggle);
-    console.log(tNumber);
     if (!qNum && !toggle) return true;
     console.log("preparing ... ");
     // checks input values
@@ -314,9 +312,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show : true,
           fill: true,
-          fillColor: '#FFCD72'
+          fillColor: '#DAA831'
         },
-        color: '#FFCF87'
+        color: '#FFCD72'
       }], {
         xaxis: {
             ticks:10,
@@ -348,10 +346,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show: true,
           fill: true,
-          fillColor: '#FFCD72',
+          fillColor: '#DAA831',
           radius: 10
         },
-        color: '#FFCF87'
+        color: '#FFCD72'
       }]);
       $scope.plot.draw();
       $scope.locatorState.update(pos);
@@ -402,9 +400,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show : true,
           fill: true,
-          fillColor: '#FFCD72'
+          fillColor: '#DAA831'
         },
-        color: '#FFCF87'
+        color: '#FFCD72'
       }], {
         xaxis: {
             ticks:10,
@@ -437,10 +435,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         points: {
           show: true,
           fill: true,
-          fillColor: '#FFCD72',
+          fillColor: '#DAA831',
           radius: 10
         },
-        color: '#FFCF87'
+        color: '#FFCD72'
       }]);
       $scope.plot.draw();
       $scope.locatorState.update(pos);
@@ -577,7 +575,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     rs.trigger("readytransferProcess", {});
   };
   $scope.sendWillingness = function() {
-    $scope.actualprice = Math.floor(Math.random() * ($scope.income - $scope.partner.moneytransferred));
+    $scope.actualprice = Math.floor(Math.random() * 300);
     $scope.bid *= 100;
     if ($scope.bid > $scope.income - $scope.partner.moneytransferred) {
       sweetAlert({
@@ -631,7 +629,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   $scope.sendMessage = function() {
     // send message to other person
     rs.send("sendMessage", {
-      messages: $scope.message.replace(/\n/g, '<br />')
+      messages : $scope.message.replace(/\n/g, '<br />'),
+      taken : $scope.partner.moneytransferred
     });
     // navigate to correct page
     $scope.showpage.messagePage = false;
@@ -933,7 +932,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   });
   rs.recv("sendMessage", function(sender, value) {
     if ($scope.reader && $scope.role === "R") {
-      $scope.readerMessages.push($sce.trustAsHtml(value.messages));
+      $scope.readerMessages.push({
+        text : $sce.trustAsHtml(value.messages),
+        taken : value.taken
+      });
       if ($scope.showpage.waitpage) {
         $scope.showpage.waitpage = false;
         $scope.showpage.messagePage = true;
@@ -1109,7 +1111,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     console.log("endowment : " + $scope.incomegoal);
 
     // check if debug is up
-    if (!configfile.debug[0]) $scope.debug = false;
+    if (configfile.debug[0] === "False") $scope.debug = false;
     else {
       $scope.debug = true;
       $scope.income = 900;
@@ -1125,6 +1127,9 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       console.log("role : " + $scope.role);
       console.log("partner : " + $scope.partner);
       $scope.createSliders();
+    } else {
+      $scope.readerlist = configfile.readerlist[0];
+      console.log($scope.readerlist);
     }
 
     rs.synchronizationBarrier('initalQuestions').then(function() {

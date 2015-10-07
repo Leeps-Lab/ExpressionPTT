@@ -14,6 +14,7 @@ screens shouldn't sleep during experiments
 * slider
 
 #The To-Do List
+* 49
 
 ##Before Experiment
 * 44
@@ -25,6 +26,10 @@ screens shouldn't sleep during experiments
 
 ##Part 3
 * 5
+* 56
+* 52
+* 54
+* 55
 
 ##Part 4
 
@@ -32,7 +37,7 @@ screens shouldn't sleep during experiments
 * 19
 
 #Old Plan
-##Quick Fixes ( 0 / 2 )
+##'Quick' Fixes ( 0 / 2 )
 5. slider : working on it.
 47. try refresh
 ##Changes ( 0 / 2 )
@@ -51,14 +56,14 @@ screens shouldn't sleep during experiments
 	at the beginning
 
 #Plan
-##Quick Fixes ( 0 / 7 )
-48. fix debug select
-49. split messages
-50. change the click length
-51. make dot darker
-53. change the values
-56. fix null 'if null, put 0'
-57. readers
+##Quick Fixes ( 6 / 7 )
+48. done.
+49. theorietically done. test in lab.
+50. done.
+51. done.
+53. done.
+56. cannot reproduce. try in the lab.
+57. done
 
 ##Changes ( 0 / 3 )
 52. no barrier for taking money.
