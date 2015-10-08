@@ -860,7 +860,7 @@
         <input id="tSlider" style="width:600px;" type="text" data-slider-ticks="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
           data-slider-ticks-labels="['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']"
           data-slider-id="tSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1"
-          data-slider-value="0" value="0" data-slider-ticks-snap-bounds="1" />
+          data-slider-value="50" value="50" data-slider-ticks-snap-bounds="1" />
           <h4 id="tPercentTransfered">Percentage transfered: {{percent}}</h4>
         </div>
     </div>
@@ -897,7 +897,7 @@
         <input id="pSlider" type="text" style="width:600px;" data-slider-ticks="[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]"
           data-slider-ticks-labels="['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100']"
           data-slider-id="pSlider" data-slider-min="0" data-slider-max="100" data-slider-step="1"
-          data-slider-value="0" value="0" data-slider-ticks-snap-bounds="1" />
+          data-slider-value="50" value="50" data-slider-ticks-snap-bounds="1" />
         <h4 id="pPercentTransferred">Percentage transfered: {{percent}}</h4>
       </div>
     </div>
@@ -920,6 +920,11 @@
   <div class="container" ng-show="showpage.waitpage">
     <div class="row">
       <h1 class="text-center">Please Wait...</h1>
+    </div>
+  </div>
+  <div class="container" ng-show="showpage.pwait">
+    <div class="row">
+      <h1 class="text-center">Your message has been sent to the reader.</h1>
     </div>
   </div>
 
@@ -1004,7 +1009,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="sendMessage();">Send Message</button>
+          ng-click="sendMessage();">Store Message</button>
       </div>
     </div>
   </div>
@@ -1016,10 +1021,14 @@
     <div class="row">
         <div class="col-md-offset-3 scollable"
           style="border-style:solid;border-width:2px;height:300px;width:600px;">
-          <div ng-repeat="message in readerMessages">
+          <div ng-repeat="message in readerMessages track by $index">
             <h4>
               (Money Taken : {{floatToMoney(message.taken)}})
-              <div ng-bind-html="message.text">
+              <div ng-bind-html="message.text"></div>
+              <div class="text-center">
+                <button type="button" class="btn btn-info" ng-click="rmessageConfirm(message.userid,$index)">
+                  Confirm
+                </button>
               </div>
               <hr>
             </h4>
@@ -1027,9 +1036,9 @@
         </div>
     </div>
     <br>
-    <div class="row text-center" ng-show="readerlist.length === 0">
-        <button type="button" class="btn btn-info" ng-click="showEarnings = true; saveState();">
-          I have read the message
+    <div class="row text-center" ng-show="readerlist.length === 0 && readerconfirm === 0">
+        <button type="button" class="btn btn-info" ng-click="showpage.showEarnings = true; showpage.messagePage = false; saveState();">
+          Continue
         </button>
     </div>
   </div>
@@ -1037,7 +1046,8 @@
   <!-- read message -->
   <div class="container" ng-show="showpage.readMessage && role === 'P'">
     <div class="row">
-      <h3 class="text-center">Your Counterpart T has read the message</h3>
+      <h3 class="text-center" ng-hide="reader">Your Counterpart T has read the message.</h3>
+      <h3 class="text-center" ng-show="reader">The reader has read your message.</h3>
     </div>
     <div class="row">
       <div class="text-center">
@@ -1130,7 +1140,7 @@
         <tr>
           <td>Total Earnings</td>
           <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
-          <td class="text-center">{{floatToMoney(partner.totalincome + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.income + endownment)}}</td>
         </tr>
       </table>
     </div>
@@ -1160,7 +1170,7 @@
           <td class="text-center">{{floatToMoney(income)}}</td>
         </tr>
           <td>Total Earnings</td>
-          <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(income + endownment)}}</td>
         </tr>
       </table>
     </div>

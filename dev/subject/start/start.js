@@ -178,6 +178,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   // reader variables
   $scope.allmessages = false;
   $scope.readerMessages = [];
+  $scope.readerlist = [];
+  $scope.readerconfirm = 0;
 
   // debug
   $scope.debug = false;
@@ -203,6 +205,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     willingnesspage: false,
     checkprice: false,
     messagePage: false,
+    pwait: false,
     readMessage: false,
     showEarnings: false,
     part4: false,
@@ -651,7 +654,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
         messages : $scope.message.replace(/\n/g, '<br />'),
         taken : $scope.partner.moneytransferred
       });
-      $scope.showpage.showEarnings = true;
+      $scope.showpage.pwait = true;
     } else if ($scope.freemessage) {
       rs.send("sendMessage", {
         messages : $scope.message.replace(/\n/g, '<br />'),
@@ -669,10 +672,22 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     rs.send("readMessage", {
     });
   };
+  $scope.readRMessage = function() {
+    $scope.showpage.showEarnings = true;
+    $scope.showpage.messagePage = true;
+    $scope.saveState();
+  };
   $scope.messageConfirm = function() {
     $scope.showpage.readMessage = false;
     $scope.showpage.showEarnings = true;
     $scope.saveState();
+  };
+  $scope.rmessageConfirm = function(userid,index) {
+    $scope.readerconfirm--;
+    $scope.readerMessages.splice(index,1);
+    rs.send("readRMessage", {
+      userid: userid
+    });
   };
   $scope.sawEarnings = function() {
     $scope.showpage.showEarnings = false;
@@ -897,6 +912,11 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   $scope.noSliders = function() {
     $scope.showpage.roles = false;
     $scope.showpage.waitpage = true;
+    if ($scope.role === "T") {
+      $("#tSlider").val(50);
+    } else if ($scope.role === "P") {
+      $("#pSlider").val(50);
+    }
     rs.trigger("readytransferProcess", {});
     $scope.saveState();
   };
@@ -960,8 +980,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       if ($scope.readerlist.indexOf(sender) !== -1) {
         $scope.readerMessages.push({
           text : $sce.trustAsHtml(value.messages),
-          taken : value.taken
+          taken : value.taken,
+          userid : sender
         });
+        $scope.readerconfirm++;
         $scope.readerlist.splice($scope.readerlist.indexOf(sender),1);
         if ($scope.showpage.waitpage) {
           $scope.showpage.waitpage = false;
@@ -978,6 +1000,15 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   rs.recv("readMessage", function(sender, value) {
     if (sender == parseInt($scope.partner.index)) {
       $scope.showpage.waitpage = false;
+      $scope.showpage.readMessage = true;
+    }
+  });
+  rs.recv("readRMessage", function(sender, value) {
+    console.log(value.userid);
+    console.log($scope.userIndex);
+    if (parseInt(value.userid) === $scope.userIndex) {
+      console.log("message recieved");
+      $scope.showpage.pwait = false;
       $scope.showpage.readMessage = true;
     }
   });
@@ -1157,7 +1188,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       $scope.createSliders();
     } else {
       $scope.readerlist = configfile.readerlist[0];
-      console.log($scope.readerlist);
     }
 
     rs.synchronizationBarrier('initalQuestions').then(function() {

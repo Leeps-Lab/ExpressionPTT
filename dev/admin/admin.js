@@ -7,6 +7,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 		scale: null,
 		debug: false
 	};
+	$scope.validate = true;
 
 	var Display = { //Display controller
 
@@ -175,6 +176,14 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 				console.log("roles : " + $scope.roles);
 				console.log("pairs : " + $scope.pairs);
 				console.log(ra);
+
+				// next well
+				$scope.validate = false;
+				$("#showtreatment").text($("#treatment").val());
+				$("#showendowment").text($scope.configsettings.endowment);
+				$("#showincomegoal").text($scope.configsettings.incomegoal);
+				$("#showscale").text($scope.configsettings.scale);
+				$("#showdebug").text($scope.configsettings.debug);
 			});
 			$scope.validNumberOfPeople = function(t,n) {
 				if (t === 4 && n <= 9 && n % 2 === 1) return true;

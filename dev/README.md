@@ -29,10 +29,6 @@ screens shouldn't sleep during experiments
 * 5
 * 56
 * 52
-* 59
-* 60
-* 61
-* 62
 
 ##Part 4
 
@@ -60,15 +56,17 @@ screens shouldn't sleep during experiments
 56. on show earnings it shows null if the value was 0
 
 #Plan
-##Quick Fixes ( 0 / 4 )
-59. make new button and function to get rid of them
-60. html
-61. html
-62. html
+##Quick Fixes ( 4 / 4 )
+59. done.
+60. done.
+61. done.
+62. done, I believe
 
 ##Changes ( 0 / 2 )
 58. figure out how to change pages without barriers
-63. create recv for admin for messages sent. organize messages.
+63. create recv for admin for messages sent. organize messages. ask
+	curtis/logan if there is an experiment that gets updated in real
+	time.
 
 #New Feedback
 58. between each pair, there should be the smallest wait possible (no
@@ -78,7 +76,7 @@ screens shouldn't sleep during experiments
 60. for reader treatment, have a 'your message has been read by the
 	reader' for p person.
 61. for reader treatment, have a page 'your message has been sent to the
-	reader
+	reader'
 62. change text on checkprice to 'your message has been stored'
 63. see data in real time on the admin page (easier to make a csv)
 
