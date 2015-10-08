@@ -1142,7 +1142,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     if (configfile.debug[0] === "False") $scope.debug = false;
     else {
       $scope.debug = true;
-      $scope.income = 900;
+      $scope.income = $scope.incomegoal * 100 + 1;
     }
 
     // set partner values from config file

@@ -1,6 +1,6 @@
 <!---
-	2015 October 1 Thursday
-	Next Meeting : 2015 October 7, Wednesday @ 2:30
+	2015 October 7 Thursday
+	Next Meeting : 2015 October 13, Tuesday @ 3:30
 -->
 
 #Reminders
@@ -18,6 +18,8 @@ screens shouldn't sleep during experiments
 ##Before Experiment
 * 44
 * 47
+* 58
+* 53
 
 ##Part 1
 
@@ -27,6 +29,10 @@ screens shouldn't sleep during experiments
 * 5
 * 56
 * 52
+* 59
+* 60
+* 61
+* 62
 
 ##Part 4
 
@@ -34,13 +40,15 @@ screens shouldn't sleep during experiments
 * 19
 
 #Old Plan
-##'Quick' Fixes ( 0 / 2 )
+##'Quick' Fixes ( 0 / 3 )
 5. slider : working on it.
 47. try refresh
-##Changes ( 0 / 2 )
+56. cannot reproduce. try in the lab.
+##Changes ( 0 / 3 )
 19. use the python to see if i need to change how the questions are
 	formatted and certain messages
 44. timestamps
+52. need to think how to do this. have two variables for each ngshow.
 
 #Old Feedback
 5. The tick labels of part 3 are all collapsed in one point
@@ -48,40 +56,34 @@ screens shouldn't sleep during experiments
 44. take timestamps for each page
 47. try to have the income stay the same when refresh page; create flot
 	at the beginning
+52. no barrier for taking money. just use trigger/send
+56. on show earnings it shows null if the value was 0
 
 #Plan
-##Quick Fixes ( 6 / 7 )
-48. done.
-49. theorietically done. test in lab.
-50. done.
-51. done.
-53. done.
-56. cannot reproduce. try in the lab.
-57. done
+##Quick Fixes ( 0 / 4 )
+59. make new button and function to get rid of them
+60. html
+61. html
+62. html
 
-##Changes ( 2 / 3 )
-52. need to think how to do this.
-54. done.
-55. done.
+##Changes ( 0 / 2 )
+58. figure out how to change pages without barriers
+63. create recv for admin for messages sent. organize messages.
 
 #New Feedback
-48. fix debug
-49. when two readers, split messages
-50. the click on the game should be one line, so it doesn't jump the
-	graph
-51. the flot yellow should be a tiny bit darker
-52. no barrier for taking money. just use trigger/send
-53. maxwillingness to pay should be $0 - $3
-54. if person lost willingness, it should pop up saying :
-	' your willingness was ____, actual price was ___. you lost'
-55. change order to wtp -> message -> showprice.
-	(before it was wtp -> showprice -> message)
-56. on show earnings it shows null if the value was 0
-57. for readers, messages should show up as :
-	(money taken : {{moneytaken}})
-	{{message}}
+58. between each pair, there should be the smallest wait possible (no
+	barriers)
+59. for the reader, have a separate confirm message button for each
+	person.
+60. for reader treatment, have a 'your message has been read by the
+	reader' for p person.
+61. for reader treatment, have a page 'your message has been sent to the
+	reader
+62. change text on checkprice to 'your message has been stored'
+63. see data in real time on the admin page (easier to make a csv)
 
 #for the future
 instructions before the part 1
 sometype of hardware that takes data from person's body
+different ways on how to choose the willingness
 

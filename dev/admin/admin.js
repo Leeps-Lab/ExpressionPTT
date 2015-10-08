@@ -257,7 +257,10 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 				}
 				// try harder
 				else {
-					var goal = Math.floor((n - 2) / 2);
+					// divide by 4
+					// 2 for half the people being p
+					// 2 to take control of half of the p
+					var goal = Math.floor((n - 2) / 4);
 					console.log("number to reach : " + goal);
 					reader = r.indexOf("R");
 					for (var i = 0, l = ra.subjects.length; i < l; i++) {
@@ -267,8 +270,9 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 							goal--;
 							if (goal <= 0) {
 								ra.set(ra.subjects[reader].user_id,"readerlist",readerlist);
+								readerlist = [];
 								reader = r.indexOf("R",reader+1);
-								goal = Math.ceil((n - 2) / 2);
+								goal = Math.ceil((n - 2) / 4);
 							}
 						}
 					}
