@@ -1,6 +1,6 @@
 <!---
-	2015 October 13 Tuesday
-	Next Meeting : 2015 October 15, Thursday @ 11
+	2015 October 7 Thursday
+	Next Meeting : 2015 October 13, Tuesday @ 3:30
 -->
 
 #Reminders
@@ -29,10 +29,6 @@ screens shouldn't sleep during experiments
 * 5
 * 56
 * 52
-* 64
-* 65
-* 66
-* 67
 
 ##Part 4
 
@@ -44,15 +40,11 @@ screens shouldn't sleep during experiments
 5. slider : working on it.
 47. try refresh
 56. cannot reproduce. try in the lab.
-##Changes ( 0 / 5 )
+##Changes ( 0 / 3 )
 19. use the python to see if i need to change how the questions are
 	formatted and certain messages
 44. timestamps
 52. need to think how to do this. have two variables for each ngshow.
-58. figure out how to change pages without barriers
-63. create recv for admin for messages sent. organize messages. ask
-	curtis/logan if there is an experiment that gets updated in real
-	time.
 
 #Old Feedback
 5. The tick labels of part 3 are all collapsed in one point
@@ -62,23 +54,30 @@ screens shouldn't sleep during experiments
 	at the beginning
 52. no barrier for taking money. just use trigger/send
 56. on show earnings it shows null if the value was 0
-58. between each pair, there should be the smallest wait possible (no
-	barriers)
-63. see data in real time on the admin page (easier to make a csv)
 
 #Plan
-##Quick Fixes ( 0 / 0 )
-##Changes ( 0 / 4 )
-64. prepare system
-65. enter system
-66. enter system
-67. enter system
+##Quick Fixes ( 4 / 4 )
+59. done.
+60. done.
+61. done.
+62. done, I believe
+##Changes ( 0 / 2 )
+58. figure out how to change pages without barriers
+63. create recv for admin for messages sent. organize messages. ask
+	curtis/logan if there is an experiment that gets updated in real
+	time.
 
 #New Feedback
-64. prepare for elicitation methods
-65. add BDM2 elicitation method
-66. add SOP elicitation method
-67. add BDM-WTA elicitation method
+58. between each pair, there should be the smallest wait possible (no
+	barriers)
+59. for the reader, have a separate confirm message button for each
+	person.
+60. for reader treatment, have a 'your message has been read by the
+	reader' for p person.
+61. for reader treatment, have a page 'your message has been sent to the
+	reader'
+62. change text on checkprice to 'your message has been stored'
+63. see data in real time on the admin page (easier to make a csv)
 
 #for the future
 instructions before the part 1

@@ -1018,8 +1018,10 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
 
   // saves answers and location on page
   rs.on("saveinitalanswers", function(value) {
+    console.log($scope.initalResponses);
     $scope.initalResponses = value.initalResponses;
     $scope.showpage = value.showpage;
+    console.log($scope.initalResponses);
   });
   // saves place and responces in experiment
   rs.on("sendinitalanswers", function(value) {

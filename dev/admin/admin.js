@@ -8,6 +8,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 		debug: false
 	};
 	$scope.validate = true;
+	$scope.subjects = [];
 
 	var Display = { //Display controller
 
@@ -102,6 +103,10 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 								$("<td>").text(0).after(
 									$("<td>").text(""))))));
 				}
+				//outputGroups
+				$scope.subjects.push({
+					userid: user
+				});
 			});
 
 			// here for the new stuff; for the config files
@@ -362,6 +367,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 	Display.initialize();
 
 	ra.on_load(function () {
+		console.log(ra);
 		resetGroups(); //Assign groups to users
 	});
 
@@ -380,6 +386,11 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 
 	ra.on("resume", function() {
 		ra.resume();
+	});
+
+	ra.recv("sendinitalanswers", function(sender, value) {
+		console.log(sender);
+		console.log(value);
 	});
 
 }]);
