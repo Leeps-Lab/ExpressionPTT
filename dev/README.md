@@ -22,6 +22,7 @@ screens shouldn't sleep during experiments
 * 53
 
 ##Part 1
+* 68
 
 ##Part 2
 
@@ -35,6 +36,7 @@ screens shouldn't sleep during experiments
 * 67
 
 ##Part 4
+* 68
 
 ##After Experiment
 * 19
@@ -68,17 +70,25 @@ screens shouldn't sleep during experiments
 
 #Plan
 ##Quick Fixes ( 0 / 0 )
+69. for treatment, change 'normal' to 'directed message'
 ##Changes ( 0 / 4 )
 64. prepare system
 65. enter system
 66. enter system
 67. enter system
+68. remove part 1 and part 4, create new page
 
 #New Feedback
 64. prepare for elicitation methods
 65. add BDM2 elicitation method
 66. add SOP elicitation method
 67. add BDM-WTA elicitation method
+68. create six sliders for the part 1 and part 4. for the emotions :
+	'angry', 'happy', 'sad', 'discust', 'fear', 'suprize' (Inside Out
+	Emotions)
+	vertical sliders. the number on the button. or below the slider
+	make the order of the emotions random
+69. for treatments, instead of 'normal' name it 'directed message'
 
 #for the future
 instructions before the part 1
