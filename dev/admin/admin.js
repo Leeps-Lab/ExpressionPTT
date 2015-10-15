@@ -116,7 +116,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 				var treatment = $("#treatment").val();
 				console.log("treatment : " + treatment);
 				switch(treatment) {
-		      case "Normal":
+		      case "Directed Message":
 		        $scope.configsettings.treatment = 1;
 		        break;
 		      case "No Message":

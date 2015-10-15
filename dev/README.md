@@ -22,12 +22,10 @@ screens shouldn't sleep during experiments
 * 53
 
 ##Part 1
-* 68
 
 ##Part 2
 
 ##Part 3
-* 5
 * 56
 * 52
 * 64
@@ -42,8 +40,8 @@ screens shouldn't sleep during experiments
 * 19
 
 #Old Plan
-##'Quick' Fixes ( 0 / 3 )
-5. slider : working on it.
+##'Quick' Fixes ( 1 / 3 )
+5. done. finally.
 47. try refresh
 56. cannot reproduce. try in the lab.
 ##Changes ( 0 / 5 )
@@ -69,14 +67,14 @@ screens shouldn't sleep during experiments
 63. see data in real time on the admin page (easier to make a csv)
 
 #Plan
-##Quick Fixes ( 0 / 0 )
-69. for treatment, change 'normal' to 'directed message'
-##Changes ( 0 / 4 )
+##Quick Fixes ( 1 / 1 )
+69. done.
+##Changes ( 1 / 4 )
 64. prepare system
 65. enter system
 66. enter system
 67. enter system
-68. remove part 1 and part 4, create new page
+68. done. need to copy for part4.
 
 #New Feedback
 64. prepare for elicitation methods

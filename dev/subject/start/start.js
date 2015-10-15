@@ -1,23 +1,11 @@
 Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "RedwoodSubject", function($rootScope, $scope, $sce, $timeout, rs) {
   $scope.initalResponses = {
-    question1: {
-      answer1: ''
-    },
-    question2: {
-      answer1: '', answer2: '', answer3: ''
-    },
-    question3: {
-      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: '', answer9: '', answer10: '', answer11: ''
-    },
-    question4: {
-      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: ''
-    },
-    question5: {
-      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: ''
-    },
-    question6: {
-      answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: ''
-    }
+    happiness : '',
+    sadness : '',
+    fear : '',
+    anger : '',
+    surprise : '',
+    disgust : ''
   };
   $scope.finalResponses = {
     question1: {
@@ -189,7 +177,8 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     waitpage: false,
 
     showStartExperiment: false,
-    initalquestions: null,
+    part1: false,
+    initalquestions: false,
     part2: false,
     part2ready: false,
     exampleTasks: false,
@@ -252,26 +241,14 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   // starts showing the questions
   $scope.startExperiment = function() {
     $scope.showpage.showStartExperiment = false;
-    $scope.showpage.initalquestions = 0;
+    $scope.showpage.initalquestions = true;
   };
 
-  // closes one question and shows the next
-  $scope.nextQuestion = function(qNum, rNum, mNum) {
-    if ($scope.debug && rNum !== 0) $scope.finishQuestions(qNum,rNum,mNum);
-    else if ($scope.isValid(qNum, rNum, mNum)) {
-      $scope.showpage.initalquestions++;
-      // send responses in case of a refresh
-      rs.trigger("saveinitalanswers", {
-        initalResponses: $scope.initalResponses,
-        showpage: $scope.showpage
-      });
-    }
-  };
   // finishes questions onto money part
   // barrier : have all people ready for part 2
-  $scope.finishQuestions = function(qNum,rNum,mNum) {
-    if ($scope.isValid(qNum, rNum,mNum)) {
-      $scope.showpage.initalquestions = 7;
+  $scope.finishQuestions = function() {
+    //if ($scope.isValid(qNum, rNum,mNum)) {
+      $scope.showpage.initalquestions = false;
 
       $scope.showpage.part2 = true;
       // send answers back to server
@@ -283,7 +260,7 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
       console.log("ready for part 2?");
       rs.trigger("readypart2", {
       });
-    }
+    //}
   };
   $scope.practiceTimeout = function() {
     $scope.time--;
@@ -861,45 +838,115 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
     this.point.reset(this.ctx);
   };
 
-  // creates the respective sliders for the percentage page
+  // creates all sliders used
   $scope.createSliders = function() {
     console.log("begin creation");
 
+    // create sliders for the initalquestions
+    $("#happiness").slider({
+      orientation: "vertical",
+      range: "min",
+      min : 0,
+      max : 10,
+      step: 1,
+      value : 0,
+      slide: function(event, ui) {
+          $scope.initalResponses.happiness = ui.value;
+          $("#initalhappiness").text(ui.value);
+      }
+    });
+    $("#sadness").slider({
+      orientation: "vertical",
+      range: "min",
+      min : 0,
+      max : 10,
+      value : 0,
+      slide: function(event, ui) {
+          $scope.initalResponses.sadness = ui.value;
+          $("#initalsadness").text(ui.value);
+      }
+    });
+    $("#fear").slider({
+      orientation: "vertical",
+      range: "min",
+      min : 0,
+      max : 10,
+      value : 0,
+      slide: function(event, ui) {
+          $scope.initalResponses.fear = ui.value;
+          $("#initalfear").text(ui.value);
+      }
+    });
+    $("#anger").slider({
+      orientation: "vertical",
+      range: "min",
+      min : 0,
+      max : 10,
+      value : 0,
+      slide: function(event, ui) {
+          $scope.initalResponses.anger = ui.value;
+          $("#initalanger").text(ui.value);
+      }
+    });
+    $("#surprise").slider({
+      orientation: "vertical",
+      range: "min",
+      min : 0,
+      max : 10,
+      value : 0,
+      slide: function(event, ui) {
+          $scope.initalResponses.surprise = ui.value;
+          $("#initalsurprise").text(ui.value);
+      }
+    });
+    $("#disgust").slider({
+      orientation: "vertical",
+      range: "min",
+      min : 0,
+      max : 10,
+      value : 0,
+      slide: function(event, ui) {
+          $scope.initalResponses.disgust = ui.value;
+          $("#initaldisgust").text(ui.value);
+      }
+    });
+
+    // create sliders for core interaction
     if ($scope.role === "T") {
-      $scope.finalEarnings = $scope.income;
-      $scope.percentSlider = $("#tSlider").slider({
-        ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
+      $scope.percentSlider = $("#tSlider").labeledslider({
+        min: 0,
+        max: 100,
+        tickArray: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
         value: 0,
-        ticks_snap_bounds: 1
-      });
-      $scope.percentSlider.on("change", function(slideEvt) {
-        console.log("T slider");
-        $scope.percent = slideEvt.value.newValue;
-        $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent + "%");
-        $scope.transferred = $scope.partner.income * $scope.percent / 100;
-        console.log("transferred : " + $scope.transferred);
-        console.log($scope.partner.income);
-        console.log($scope.percent);
-        $("#tMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.floatToMoney($scope.transferred));
-        $scope.finalEarnings = $scope.income + $scope.transferred;
-        $("#tFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.floatToMoney($scope.finalEarnings));
+        range: 'min',
+        slide: function(event, ui) {
+          console.log("T slider");
+          $scope.percent = ui.value;
+          $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent + "%");
+          $scope.transferred = $scope.partner.income * $scope.percent / 100;
+          console.log("transferred : " + $scope.transferred);
+          console.log($scope.partner.income);
+          console.log($scope.percent);
+          $("#tMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.floatToMoney($scope.transferred));
+          $scope.finalEarnings = $scope.income + $scope.transferred;
+          $("#tFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.floatToMoney($scope.finalEarnings));
+        }
       });
     } else {
-      $scope.percentSlider = $("#pSlider").slider({
-        ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
-        ticks_labels: ['0', '10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
+      $scope.percentSlider = $("#pSlider").labeledslider({
+        max: 100,
+        tickArray: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
         value: 0,
-        ticks_snap_bounds: 1
-      });
-      $scope.percentSlider.on("change", function(slideEvt) {
-        console.log("P slider");
-        $scope.percent = slideEvt.value.newValue;
-        $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent + "%");
-        $scope.transferred = $scope.income * $scope.percent / 100;
-        $("#pMoneyTransferred").text("Amount (in $) expected to be transferred to T's account : " + $scope.floatToMoney($scope.transferred));
-        $scope.finalEarnings = $scope.income - $scope.transferred;
-        $("#pFinalEarnings").text("Your expected avaliable earnings (in $) are : " + $scope.floatToMoney($scope.finalEarnings));
+        range: 'min',
+        slide: function(event, ui) {
+          console.log("P slider");
+          $scope.percent = ui.value;
+          $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent + "%");
+          $scope.transferred = $scope.income * $scope.percent / 100;
+          $("#pMoneyTransferred").text("Amount (in $) expected to be transferred to T's account : " + $scope.floatToMoney($scope.transferred));
+          $scope.finalEarnings = $scope.income - $scope.transferred;
+          $("#pFinalEarnings").text("Your expected avaliable earnings (in $) are : " + $scope.floatToMoney($scope.finalEarnings));
+        }
       });
     }
     console.log("sliders created");
@@ -1017,12 +1064,6 @@ Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "
   // sent from others to server and everyone
 
   // saves answers and location on page
-  rs.on("saveinitalanswers", function(value) {
-    console.log($scope.initalResponses);
-    $scope.initalResponses = value.initalResponses;
-    $scope.showpage = value.showpage;
-    console.log($scope.initalResponses);
-  });
   // saves place and responces in experiment
   rs.on("sendinitalanswers", function(value) {
     $scope.initalResponses = value.initalResponses;
