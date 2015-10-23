@@ -1,7 +1,8 @@
-Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($rootScope, $scope, ra) {
+Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", function($rootScope, $scope, ra, $sce) {
 	$scope.configsettings = {
 		numberofpeople: null,
-		treatment: 1,
+		treatment: 'Directed Message',
+		method : '',
 		endowment: null,
 		incomegoal: null,
 		scale: null,
@@ -9,6 +10,11 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 	};
 	$scope.validate = true;
 	$scope.subjects = [];
+	$scope.html = '<td>render me please</td><td>2</td>';
+	$scope.trustedHtml = $sce.trustAsHtml($scope.html);
+
+	$scope.directedmessage = ['BDM1', 'BDM2', 'SOP', 'BDMWTA'];
+	$scope.readers = ['BDM1', 'BDM2', 'SOP', 'BDMWTA'];
 
 	var Display = { //Display controller
 
@@ -105,8 +111,10 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 				}
 				//outputGroups
 				$scope.subjects.push({
-					userid: user
+					userid: user,
+					name : 'test'
 				});
+				console.log($scope.subjects);
 			});
 
 			// here for the new stuff; for the config files
@@ -388,9 +396,36 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", function($root
 		ra.resume();
 	});
 
+	$scope.createPart1 = function() {
+		$("#subjects-part1").empty();
+		for(var i = 0, l = ra.subjects.length; i < l; i++) {
+			$("#subjects-part1").append($("<tr>").addClass("subject-" + ra.subjects[i].user_id).append(
+				$("<td>").text(ra.subjects[i].user_id).after(
+					$("<td>").text(0).after(
+						$("<td>").text(0).after(
+							$("<td>").text(""))))));
+		}
+	};
+
+	$scope.click = function(value) {
+		console.log(value)
+	};
+
 	ra.recv("sendinitalanswers", function(sender, value) {
-		console.log(sender);
-		console.log(value);
+		// stores information
+		var location = $.map($scope.subjects, function(obj, index) {
+			if (obj.userid === sender) {
+				return index;
+			}
+		});
+		$scope.subjects[location[0]].happiness = value.initalResponses.happiness;
+		$scope.subjects[location[0]].sadness = value.initalResponses.sadness;
+		$scope.subjects[location[0]].fear = value.initalResponses.fear;
+		$scope.subjects[location[0]].anger = value.initalResponses.anger;
+		$scope.subjects[location[0]].surprise = value.initalResponses.surprise;
+		$scope.subjects[location[0]].disgust = value.initalResponses.disgust;
+		// shows the information on the admin page
+		$scope.createPart1();
 	});
 
 }]);
