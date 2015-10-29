@@ -13,8 +13,36 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	$scope.subjects = [];
 
 	$scope.methods = {
-		'Directed Message' : ['BDM1', 'BDM2', 'SOP', 'BDMWTA'],
-		'Readers' : ['BDM1', 'BDM2', 'SOP', 'BDMWTA']
+		'Directed Message' : [{
+			name : 'BDM1',
+			id : '0'
+		},{
+			name : 'BDM2',
+			id : '1'
+		},{
+			name : 'SOP',
+			id : '2'
+		},{
+			name : 'BDMWTA',
+			id : '3'
+		}],
+		'Readers' : [{
+			name : 'BDM1',
+			id : '0'
+		},{
+			name : 'BDM2',
+			id : '1'
+		},{
+			name : 'SOP',
+			id : '2'
+		},{
+			name : 'BDMWTA',
+			id : '3'
+		}],
+		'selectedOption': {
+			id: '0',
+			name : 'BDM'
+		}
 	};
 
 	var Display = { //Display controller
@@ -123,9 +151,8 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				console.log("lets try");
 				$scope.configsettings.numberofpeople = ra.subjects.length;
 				var treatment = $("#treatment").val();
-				console.log("method from method : " + $scope.configsettings.method);
-				$scope.configsettings.method = $("#method").val();
-				console.log("method from id : " + $("#method").val());
+				$scope.configsettings.method = $scope.methods.selectedOption.name;
+				$scope.configsettings.sopValue = Number($("#sopValue").val());
 				switch(treatment) {
 		      case "Directed Message":
 		        $scope.configsettings.treatmentvalue = 1;
@@ -152,6 +179,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 					numberofpeople: $scope.configsettings.numberofpeople,
 					treatment: $scope.configsettings.treatmentvalue,
 					method: $scope.configsettings.method,
+					sopValue: $scope.configsettings.sopValue,
 					endowment: $scope.configsettings.endowment,
 					incomegoal: $scope.configsettings.incomegoal,
 					scale: $scope.configsettings.scale,
@@ -198,6 +226,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				$scope.validate = false;
 				$("#showtreatment").text($("#treatment").val());
 				$("#showmethod").text($scope.configsettings.method);
+				$("#showsopValue").text($scope.configsettings.sopValue);
 				$("#showendowment").text($scope.configsettings.endowment);
 				$("#showincomegoal").text($scope.configsettings.incomegoal);
 				$("#showscale").text($scope.configsettings.scale);
@@ -311,6 +340,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 					ra.set(ra.subjects[i].user_id,"role",r[i]);
 					ra.set(ra.subjects[i].user_id,"treatment",$scope.configsettings.treatmentvalue);
 					ra.set(ra.subjects[i].user_id,"method",$scope.configsettings.method);
+					ra.set(ra.subjects[i].user_id,"sopValue",$scope.configsettings.sopValue);
 					ra.set(ra.subjects[i].user_id,"endowment",$scope.configsettings.endowment);
 					ra.set(ra.subjects[i].user_id,"incomegoal",$scope.configsettings.incomegoal);
 					ra.set(ra.subjects[i].user_id,"scale",$scope.configsettings.scale);

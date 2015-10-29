@@ -40,19 +40,16 @@ screens shouldn't sleep during experiments
 * 19
 
 #Old Plan
-##'Quick' Fixes ( 1 / 3 )
+##'Quick' Fixes ( 2 / 3 )
 5. done. finally.
 47. try refresh
-56. cannot reproduce. try in the lab.
-##Changes ( 0 / 5 )
-19. use the python to see if i need to change how the questions are
-	formatted and certain messages
+56. done. cannot reproduce. try in the lab.
+##Changes ( 3 / 5 )
+19. done. output is going to get off of the admin page
 44. timestamps
-52. need to think how to do this. have two variables for each ngshow.
-58. figure out how to change pages without barriers
-63. create recv for admin for messages sent. organize messages. ask
-	curtis/logan if there is an experiment that gets updated in real
-	time.
+52. done.
+58. done.
+63. catch the correct messages needed for the values.
 
 #Old Feedback
 5. The tick labels of part 3 are all collapsed in one point

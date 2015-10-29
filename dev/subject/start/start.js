@@ -220,6 +220,18 @@
       finalquestions: null,
       thanks: false
     };
+    $scope.barrier = {
+      subject : {
+        readyPart2: false,
+        readyPart3: false,
+        transferProcess: false
+      },
+      partner : {
+        readyPart2: false,
+        readyPart3: false,
+        transferProcess: false
+      }
+    };
 
     // user variables
     // set in config
@@ -277,7 +289,7 @@
         });
         // get ready for a barrier
         console.log("ready for part 2?");
-        rs.trigger("readypart2", {
+        rs.trigger("readypart2self", {
         });
       //}
     };
@@ -508,7 +520,7 @@
       //part 3
       $scope.showpage.part3 = true;
       $scope.saveState();
-      rs.trigger("readypart3", {});
+      rs.trigger("readypart3self", {});
       console.log("slider is up");
     };
     $scope.part3ready = function() {
@@ -546,7 +558,7 @@
       });
 
       // barrier time
-      rs.trigger("readytransferProcess", {});
+      rs.trigger("readyTransferProcessSelf", {});
     };
     $scope.sendEstimate = function() {
       $scope.showpage.slider = false;
@@ -571,7 +583,7 @@
 
       $scope.saveState();
       // barrier time
-      rs.trigger("readytransferProcess", {});
+      rs.trigger("readyTransferProcessSelf", {});
     };
     $scope.sendWillingness = function(responce) {
       console.log("my responce is " + responce);
@@ -1010,7 +1022,7 @@
       } else if ($scope.role === "P") {
         $("#pSlider").val(50);
       }
-      rs.trigger("readytransferProcess", {});
+      rs.trigger("readyTransferProcessSelf", {});
       $scope.saveState();
     };
 
@@ -1145,68 +1157,109 @@
       $scope.showpage = value.showpage;
     });
     // barriers
-    rs.on("readypart2", function(value) {
-      rs.synchronizationBarrier('part2').then(function() {
-        console.log("I was born ready");
-        $scope.showpage.part2 = false;
-        $scope.showpage.part2ready = true;
-        rs.trigger("afterbarrier", {
-          showpage: $scope.showpage
-        });
+    rs.on("readypart2self", function(value) {
+      $scope.barrier.subject.readyPart2 = true;
+      rs.send("readypart2send", {
       });
+      if ($scope.barrier.subject.readyPart2 && $scope.barrier.partner.readyPart2) {
+        $scope.part2barrier();
+      }
     });
-    rs.on("readypart3", function(value) {
-      rs.synchronizationBarrier('part3').then(function() {
-        $scope.showpage.part3 = false;
-        $scope.showpage.part3ready = true;
-        rs.trigger("afterbarrier", {
-          showpage: $scope.showpage
-        });
-      });
-    });
-    rs.on("readytransferProcess", function(value) {
-      rs.synchronizationBarrier('transferProcess').then(function() {
-        if ($scope.nomessage) {
-          if ($scope.role === "T") {
-          }
-          if ($scope.role === "P") {
-            $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
-            $scope.bid = 0;
-            rs.send("sendWillingness", {
-              actualprice: $scope.actualprice,
-              totalincome: $scope.totalincome,
-              message: false
-            });
-            $scope.showpage.waitpage = false;
-            $scope.showpage.showEarnings = true;
-            $scope.saveState();
-          }
-        } else if ($scope.freemessage) {
-          if ($scope.role === "T") {
-          }
-          if ($scope.role === "P") {
-            $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
-            $scope.bid = 0;
-            rs.send("sendWillingness", {
-              actualprice: $scope.actualprice,
-              totalincome: $scope.totalincome,
-              message: true
-            });
-            $scope.showpage.waitpage = false;
-            $scope.showpage.messagePage = true;
-            $scope.saveState();
-          }
-        } else {
-          if ($scope.role === "P") {
-            $scope.showpage.waitpage = false;
-            $scope.showpage.willingnesspage = true;
-          }
+    rs.recv("readypart2send", function(sender, value) {
+      if (sender == parseInt($scope.partner.index)) {
+        $scope.barrier.partner.readyPart2 = true;
+        if ($scope.barrier.subject.readyPart2 && $scope.barrier.partner.readyPart2) {
+          $scope.part2barrier();
         }
-        rs.trigger("afterbarrier", {
-          showpage: $scope.showpage
-        });
-      });
+      }
     });
+    $scope.part2barrier = function() {
+      $scope.showpage.part2 = false;
+      $scope.showpage.part2ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    };
+    rs.on("readypart3self", function(value) {
+      $scope.barrier.subject.readyPart3 = true;
+      rs.send("readypart3send", {
+      });
+      if ($scope.barrier.subject.readyPart3 && $scope.barrier.partner.readyPart3) {
+        $scope.part3barrier();
+      }
+    });
+    rs.recv("readypart3send", function(sender, value) {
+      if (sender == parseInt($scope.partner.index)) {
+        $scope.barrier.partner.readyPart3 = true;
+        if ($scope.barrier.subject.readyPart3 && $scope.barrier.partner.readyPart3) {
+          $scope.part3barrier();
+        }
+      }
+    });
+    $scope.part3barrier = function() {
+      $scope.showpage.part3 = false;
+      $scope.showpage.part3ready = true;
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    };
+    rs.on("readyTransferProcessSelf", function(value) {
+      $scope.barrier.subject.transferProcess = true;
+      rs.send("readyTransferProcessSend", {
+      });
+      if ($scope.barrier.subject.transferProcess && $scope.barrier.partner.transferProcess) {
+        $scope.transferprocessbarrier();
+      }
+    });
+    rs.recv("readyTransferProcessSend", function(sender, value) {
+      if (sender == parseInt($scope.partner.index)) {
+        $scope.barrier.partner.transferProcess = true;
+        if ($scope.barrier.subject.transferProcess && $scope.barrier.partner.transferProcess) {
+          $scope.transferprocessbarrier();
+        }
+      }
+    })
+    $scope.transferprocessbarrier = function() {
+      if ($scope.nomessage) {
+        if ($scope.role === "T") {
+        }
+        if ($scope.role === "P") {
+          $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
+          $scope.bid = 0;
+          rs.send("sendWillingness", {
+            actualprice: $scope.actualprice,
+            totalincome: $scope.totalincome,
+            message: false
+          });
+          $scope.showpage.waitpage = false;
+          $scope.showpage.showEarnings = true;
+          $scope.saveState();
+        }
+      } else if ($scope.freemessage) {
+        if ($scope.role === "T") {
+        }
+        if ($scope.role === "P") {
+          $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
+          $scope.bid = 0;
+          rs.send("sendWillingness", {
+            actualprice: $scope.actualprice,
+            totalincome: $scope.totalincome,
+            message: true
+          });
+          $scope.showpage.waitpage = false;
+          $scope.showpage.messagePage = true;
+          $scope.saveState();
+        }
+      } else {
+        if ($scope.role === "P") {
+          $scope.showpage.waitpage = false;
+          $scope.showpage.willingnesspage = true;
+        }
+      }
+      rs.trigger("afterbarrier", {
+        showpage: $scope.showpage
+      });
+    };
 
     $scope.treatmentConfig = function() {
       switch($scope.treatment) {
@@ -1249,8 +1302,8 @@
       $scope.scale = configfile.scale[0];
       $scope.treatment = configfile.treatment[0];
       $scope.treatmentConfig();
-      $scope.method = "BDMWTA";
-      $scope.sopValue = 299;
+      $scope.method = configfile.method[0];
+      $scope.sopValue = configfile.sopValue[0] * 100;
       console.log("method is : " + $scope.method);
 
       $scope.showpage.showStartExperiment = true;

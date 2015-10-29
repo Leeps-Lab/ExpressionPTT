@@ -99,15 +99,13 @@
               <!-- methods -->
               <div class="form-group" ng-show="configsettings.treatment === 'Directed Message' || configsettings.treatment === 'Readers'">
                 <label>Elicitation Method</label>
-                <select class="form-control" id="method" ng-model="configsettings.method">
-                  <option ng-repeat="value in methods[configsettings.treatment] track by $index"
-                    ng-bind="value">
-                  </option>
+                <select class="form-control" id="method" ng-model="methods.selectedOption"
+                  ng-options="method.name for method in methods[configsettings.treatment]">
                 </select>
               </div>
               <!-- Single Price Offer Value -->
-              <div class="form-group" ng-show="configsettings.method === 'SOP'">
-                <label for="Price">Price (in dollars)</label>
+              <div class="form-group" ng-show="methods.selectedOption.name === 'SOP'">
+                <label for="Price">SOP Value (in dollars)</label>
                 <input type="integer" class="form-control" id="sopValue" value="3" placeholder="SOP Value">
               </div>
               <!-- endowment -->
@@ -155,6 +153,10 @@
               <tr ng-show="configsettings.treatment === 'Directed Message' || configsettings.treatment === 'Readers'">
                 <td>Method</td>
                 <td id="showmethod"></td>
+              </tr>
+              <tr ng-show="methods.selectedOption.name === 'SOP'">
+                <td>SOP Value</td>
+                <td id="showsopValue"></td>
               </tr>
               <tr>
                 <td>Endowment</td>
