@@ -537,8 +537,12 @@
       $scope.moneytransferred = $scope.transferred;
       $scope.partner.percenttransferred = $scope.percent;
       $scope.partner.moneytransferred = $scope.transferred;
-      $scope.totalincome = $scope.finalEarnings;
+      $scope.totalincome = $scope.finalEarnings || $scope.income;
       console.log("sending payload, over.");
+      rs.trigger("admintakerate", {
+        takerate: $scope.percent,
+        finalearnings: $scope.floatToMoney($scope.totalincome)
+      });
       rs.send("sendDecision", {
         percent: $scope.percent,
         transferred: $scope.transferred,
@@ -566,6 +570,9 @@
       $scope.saveState();
       // send values
       console.log("sending payload, over.");
+      rs.trigger("adminetakerate", {
+        etakerate: $scope.percent
+      });
       rs.send("sendEstimate", {
         percent: $scope.percent,
         transferred: $scope.transferred
@@ -586,7 +593,6 @@
       rs.trigger("readyTransferProcessSelf", {});
     };
     $scope.sendWillingness = function(responce) {
-      console.log("my responce is " + responce);
       if ($scope.method === "BDM1" || $scope.method === "BDMWTA") {
         $scope.actualprice = Math.floor(Math.random() * 300);
         $scope.bid *= 100;
@@ -632,6 +638,11 @@
           bid: $scope.bid,
           actualprice: $scope.actualprice
         });
+        rs.trigger("adminwillingness", {
+          wtp: $scope.floatToMoney($scope.bid),
+          actualprice: $scope.floatToMoney($scope.actualprice),
+          finalearnings: $scope.floatToMoney($scope.totalincome)
+        });
       } else if ($scope.bid <= $scope.actualprice && $scope.method === "BDMWTA") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
         // p gets to send message
@@ -639,6 +650,11 @@
         rs.trigger("saveWillingness", {
           bid: $scope.bid,
           actualprice: $scope.actualprice
+        });
+        rs.trigger("adminwillingness", {
+          wtp: $scope.floatToMoney($scope.bid),
+          actualprice: $scope.floatToMoney($scope.actualprice),
+          finalearnings: $scope.floatToMoney($scope.totalincome)
         });
       } else if (responce === "yes") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
@@ -648,10 +664,20 @@
           bid: $scope.bid,
           actualprice: $scope.actualprice
         });
+        rs.trigger("adminwillingness", {
+          wtp: $scope.floatToMoney($scope.bid),
+          actualprice: $scope.floatToMoney($scope.actualprice),
+          finalearnings: $scope.floatToMoney($scope.totalincome)
+        });
       } else {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
         // p doesnt get to send message
         $scope.ablesendmessage = false;
+        rs.trigger("adminwillingness", {
+          wtp: $scope.floatToMoney($scope.bid),
+          actualprice: $scope.floatToMoney($scope.actualprice),
+          finalearnings: $scope.floatToMoney($scope.totalincome)
+        });
       }
       if (responce !== "no") {
         $scope.showpage.messagePage = true;
@@ -684,6 +710,9 @@
     $scope.sendMessage = function() {
       // navigate to correct page
       $scope.showpage.messagePage = false;
+      rs.trigger("adminmessage", {
+        message: $scope.message.replace(/\n/g, '<br />')
+      });
       if ($scope.reader) {
         rs.send("sendMessage", {
           messages : $scope.message.replace(/\n/g, '<br />'),
@@ -704,8 +733,7 @@
     $scope.readMessage = function() {
       $scope.showpage.messagePage = false;
       $scope.showpage.showEarnings = true;
-      rs.send("readMessage", {
-      });
+      rs.send("readMessage", {});
     };
     $scope.readRMessage = function() {
       $scope.showpage.showEarnings = true;
@@ -1304,15 +1332,14 @@
       $scope.treatmentConfig();
       $scope.method = configfile.method[0];
       $scope.sopValue = configfile.sopValue[0] * 100;
-      console.log("method is : " + $scope.method);
 
       $scope.showpage.showStartExperiment = true;
       // set values from config file
       // role index endownment
       $scope.role = configfile.role[0];
       $scope.endownment = configfile.endowment[0] * 100 * $scope.scale;
+      if ($scope.method === "BDMWTA") $scope.endownment = 0;
       console.log(configfile);
-      console.log("endowment : " + $scope.incomegoal);
 
       // check if debug is up
       if (configfile.debug[0] === "False") $scope.debug = false;
@@ -1335,6 +1362,10 @@
         $scope.readerlist = configfile.readerlist[0];
       }
 
+      rs.trigger("admininital", {
+        partnerId: $scope.partner.index,
+        role: $scope.role
+      });
       rs.synchronizationBarrier('initalQuestions').then(function() {
         $scope.questions = false;
         $scope.showGame = true;

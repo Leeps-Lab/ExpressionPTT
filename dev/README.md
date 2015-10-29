@@ -18,7 +18,6 @@ screens shouldn't sleep during experiments
 ##Before Experiment
 * 44
 * 47
-* 58
 * 53
 
 ##Part 1
@@ -26,18 +25,11 @@ screens shouldn't sleep during experiments
 ##Part 2
 
 ##Part 3
-* 56
-* 52
-* 64
-* 65
-* 66
-* 67
 
 ##Part 4
 * 68
 
 ##After Experiment
-* 19
 
 #Old Plan
 ##'Quick' Fixes ( 2 / 3 )

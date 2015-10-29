@@ -140,8 +140,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				}
 				//outputGroups
 				$scope.subjects.push({
-					userid: user,
-					name : 'test'
+					userid: user
 				});
 				console.log($scope.subjects);
 			});
@@ -432,17 +431,6 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		ra.resume();
 	});
 
-	$scope.createPart1 = function() {
-		$("#subjects-part1").empty();
-		for(var i = 0, l = ra.subjects.length; i < l; i++) {
-			$("#subjects-part1").append($("<tr>").addClass("subject-" + ra.subjects[i].user_id).append(
-				$("<td>").text(ra.subjects[i].user_id).after(
-					$("<td>").text(0).after(
-						$("<td>").text(0).after(
-							$("<td>").text(""))))));
-		}
-	};
-
 	$scope.click = function(value) {
 		console.log(value)
 	};
@@ -451,22 +439,59 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		console.log($scope.configsettings.method);
 	};
 
-	ra.recv("sendinitalanswers", function(sender, value) {
-		// stores information
+	var getlocation = function(sender) {
 		var location = $.map($scope.subjects, function(obj, index) {
 			if (obj.userid === sender) {
 				return index;
 			}
 		});
-		$scope.subjects[location[0]].happiness = value.initalResponses.happiness;
-		$scope.subjects[location[0]].sadness = value.initalResponses.sadness;
-		$scope.subjects[location[0]].fear = value.initalResponses.fear;
-		$scope.subjects[location[0]].anger = value.initalResponses.anger;
-		$scope.subjects[location[0]].surprise = value.initalResponses.surprise;
-		$scope.subjects[location[0]].disgust = value.initalResponses.disgust;
+		return location[0];
+	};
+	ra.recv("sendinitalanswers", function(sender, value) {
+		// stores information
+		var location = getlocation(sender);
+		$scope.subjects[location].happiness = value.initalResponses.happiness;
+		$scope.subjects[location].sadness = value.initalResponses.sadness;
+		$scope.subjects[location].fear = value.initalResponses.fear;
+		$scope.subjects[location].anger = value.initalResponses.anger;
+		$scope.subjects[location].surprise = value.initalResponses.surprise;
+		$scope.subjects[location].disgust = value.initalResponses.disgust;
 		// shows the information on the admin page
-		console.log($scope.subjects);
-		$scope.createPart1();
+	});
+	ra.recv("admininital", function(sender, value) {
+		// stores information
+		var location = getlocation(sender);
+		$scope.subjects[location].partnerId = value.partnerId;
+		$scope.subjects[location].role = value.role;
+	});
+	ra.recv("admintakerate", function(sender, value) {
+		// stores information
+		var location = getlocation(sender);
+		$scope.subjects[location].takerate = value.takerate;
+		$scope.subjects[location].finalearnings = value.finalearnings;
+		$scope.subjects[location].etakerate = '-----';
+		$scope.subjects[location].wtp = '-----';
+		$scope.subjects[location].actualprice = '-----';
+		$scope.subjects[location].message = '-----';
+	});
+	ra.recv("adminetakerate", function(sender, value) {
+		// stores information
+		var location = getlocation(sender);
+		$scope.subjects[location].etakerate = value.etakerate;
+		$scope.subjects[location].takerate = '-----';
+	});
+	ra.recv("adminwillingness", function(sender, value) {
+		// stores information
+		var location = getlocation(sender);
+		$scope.subjects[location].wtp = value.wtp;
+		$scope.subjects[location].actualprice = value.actualprice;
+		$scope.subjects[location].finalearnings = value.finalearnings;
+	});
+	ra.recv("adminmessage", function(sender, value) {
+		// stores information
+		console.log("got the message");
+		var location = getlocation(sender);
+		$scope.subjects[location].message = $sce.trustAsHtml(value.message);
 	});
 
 }]);
