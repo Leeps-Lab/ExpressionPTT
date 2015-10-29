@@ -97,22 +97,18 @@
                 </select>
               </div>
               <!-- methods -->
-              <div class="form-group" ng-show="configsettings.treatment === 'Directed Message'">
+              <div class="form-group" ng-show="configsettings.treatment === 'Directed Message' || configsettings.treatment === 'Readers'">
                 <label>Elicitation Method</label>
-                <select class="form-control">
-                  <option ng-repeat="methodmessage in directedmessage">{{methodmessage}}</option>
-                </select>
-              </div>
-              <div ng-repeat="num in ['10', '20', '30']">
-                <p>{{num}}</p>
-              </div>
-              <div class="form-group" ng-show="configsettings.treatment === 'Readers'">
-                <label>Elicitation Method</label>
-                <select class="form-control">
-                  <option ng-repeat="methodreader in readers">
-                    {{methodreader}}
+                <select class="form-control" id="method" ng-model="configsettings.method">
+                  <option ng-repeat="value in methods[configsettings.treatment] track by $index"
+                    ng-bind="value">
                   </option>
                 </select>
+              </div>
+              <!-- Single Price Offer Value -->
+              <div class="form-group" ng-show="configsettings.method === 'SOP'">
+                <label for="Price">Price (in dollars)</label>
+                <input type="integer" class="form-control" id="sopValue" value="3" placeholder="SOP Value">
               </div>
               <!-- endowment -->
               <div class="form-group">
@@ -156,6 +152,10 @@
                 <td>Treatment</td>
                 <td id="showtreatment"></td>
               </tr>
+              <tr ng-show="configsettings.treatment === 'Directed Message' || configsettings.treatment === 'Readers'">
+                <td>Method</td>
+                <td id="showmethod"></td>
+              </tr>
               <tr>
                 <td>Endowment</td>
                 <td id="showendowment"></td>
@@ -190,15 +190,77 @@
               <th>Disgust</th>
             </tr>
             <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <td>{{ subject.userid }}</td>
-              <td>{{ subject.name }}</td>
-              <td>{{ subject.happiness }}</td>
-              <td>{{ subject.sadness }}</td>
-              <td>{{ subject.fear }}</td>
-              <td>{{ subject.anger }}</td>
-              <td>{{ subject.disgust }}</td>
-              <!-- <td>{{ subject.surprise }}</td> -->
-              <td><button ng-click="click(subject)">value</button></td>
+              <td ng-bind="subject.userid"></td>
+              <td ng-bind="subject.happiness"></td>
+              <td ng-bind="subject.sadness"></td>
+              <td ng-bind="subject.fear"></td>
+              <td ng-bind="subject.anger"></td>
+              <td ng-bind="subject.disgust"></td>
+              <td ng-bind="subject.surprise"></td>
+            </tr>
+          </table>
+          <h3>Part 2</h3>
+          <table class="table table-striped table-hover table-condensed">
+            <tr>
+              <th>ID</th>
+              <th>T1-time</th>
+              <th>T1-points</th>
+              <th>T3-time</th>
+              <th>T30-points</th>
+              <th>Income</th>
+            </tr>
+            <tr ng-repeat="subject in subjects | orderBy : 'userid'">
+              <td ng-bind="subject.userid"></td>
+              <td ng-bind="subject.happiness"></td>
+              <td ng-bind="subject.sadness"></td>
+              <td ng-bind="subject.fear"></td>
+              <td ng-bind="subject.anger"></td>
+              <td ng-bind="subject.disgust"></td>
+              <td ng-bind="subject.surprise"></td>
+            </tr>
+          </table>
+          <h3>Part 3</h3>
+          <table class="table table-striped table-hover table-condensed">
+            <tr>
+              <th>ID</th>
+              <th>Pair-ID</th>
+              <th>Role</th>
+              <th>TakeRate</th>
+              <th>ETakeRate</th>
+              <th>WTP</th>
+              <th>RndPrice</th>
+              <th>Message</th>
+              <th>FinalEarnings</th>
+            </tr>
+            <tr ng-repeat="subject in subjects | orderBy : 'userid'">
+              <td ng-bind="subject.userid"></td>
+              <td ng-bind="subject.happiness"></td>
+              <td ng-bind="subject.sadness"></td>
+              <td ng-bind="subject.fear"></td>
+              <td ng-bind="subject.anger"></td>
+              <td ng-bind="subject.disgust"></td>
+              <td ng-bind="subject.surprise"></td>
+            </tr>
+          </table>
+          <h3>Part 4</h3>
+          <table class="table table-striped table-hover table-condensed">
+            <tr>
+              <th>ID</th>
+              <th>Happiness</th>
+              <th>Fear</th>
+              <th>Sadness</th>
+              <th>Anger</th>
+              <th>Surprise</th>
+              <th>Disgust</th>
+            </tr>
+            <tr ng-repeat="subject in subjects | orderBy : 'userid'">
+              <td ng-bind="subject.userid"></td>
+              <td ng-bind="subject.happiness"></td>
+              <td ng-bind="subject.sadness"></td>
+              <td ng-bind="subject.fear"></td>
+              <td ng-bind="subject.anger"></td>
+              <td ng-bind="subject.disgust"></td>
+              <td ng-bind="subject.surprise"></td>
             </tr>
           </table>
         </div>

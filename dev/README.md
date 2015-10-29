@@ -69,11 +69,11 @@ screens shouldn't sleep during experiments
 #Plan
 ##Quick Fixes ( 1 / 1 )
 69. done.
-##Changes ( 1 / 4 )
-64. prepare system
-65. enter system
-66. enter system
-67. enter system
+##Changes ( 5 / 5 )
+64. done.
+65. done.
+66. done.
+67. done. check with Kristian if logic is correct.
 68. done. need to copy for part4.
 
 #New Feedback

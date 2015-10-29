@@ -2,7 +2,8 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	$scope.configsettings = {
 		numberofpeople: null,
 		treatment: 'Directed Message',
-		method : '',
+		method : 'BDM1',
+		sopValue : '3',
 		endowment: null,
 		incomegoal: null,
 		scale: null,
@@ -10,11 +11,11 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	};
 	$scope.validate = true;
 	$scope.subjects = [];
-	$scope.html = '<td>render me please</td><td>2</td>';
-	$scope.trustedHtml = $sce.trustAsHtml($scope.html);
 
-	$scope.directedmessage = ['BDM1', 'BDM2', 'SOP', 'BDMWTA'];
-	$scope.readers = ['BDM1', 'BDM2', 'SOP', 'BDMWTA'];
+	$scope.methods = {
+		'Directed Message' : ['BDM1', 'BDM2', 'SOP', 'BDMWTA'],
+		'Readers' : ['BDM1', 'BDM2', 'SOP', 'BDMWTA']
+	};
 
 	var Display = { //Display controller
 
@@ -122,19 +123,21 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				console.log("lets try");
 				$scope.configsettings.numberofpeople = ra.subjects.length;
 				var treatment = $("#treatment").val();
-				console.log("treatment : " + treatment);
+				console.log("method from method : " + $scope.configsettings.method);
+				$scope.configsettings.method = $("#method").val();
+				console.log("method from id : " + $("#method").val());
 				switch(treatment) {
 		      case "Directed Message":
-		        $scope.configsettings.treatment = 1;
+		        $scope.configsettings.treatmentvalue = 1;
 		        break;
 		      case "No Message":
-		        $scope.configsettings.treatment = 2;
+		        $scope.configsettings.treatmentvalue = 2;
 		        break;
 		      case "Free Message":
-		        $scope.configsettings.treatment = 3;
+		        $scope.configsettings.treatmentvalue = 3;
 		        break;
 		      case "Readers":
-		        $scope.configsettings.treatment = 4;
+		        $scope.configsettings.treatmentvalue = 4;
 		        break;
 		      default:
 		        alert("somehow this is incorrect");
@@ -147,14 +150,15 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				//ra.trigger("do_roles");
 				ra.trigger("save_values", {
 					numberofpeople: $scope.configsettings.numberofpeople,
-					treatment: $scope.configsettings.treatment,
+					treatment: $scope.configsettings.treatmentvalue,
+					method: $scope.configsettings.method,
 					endowment: $scope.configsettings.endowment,
 					incomegoal: $scope.configsettings.incomegoal,
 					scale: $scope.configsettings.scale,
 					debug: $scope.configsettings.debug
 				});
-				if (!$scope.validNumberOfPeople($scope.configsettings.treatment,$scope.configsettings.numberofpeople)) {
-					if ($scope.configsettings.treatment !== 4) {
+				if (!$scope.validNumberOfPeople($scope.configsettings.treatmentvalue,$scope.configsettings.numberofpeople)) {
+					if ($scope.configsettings.treatmentvalue !== 4) {
 						sweetAlert({
 							title: "There has to be an even amount of subjects",
 							type: "error",
@@ -181,18 +185,19 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 						}
 					}
 				}
-				$scope.pairs = $scope.generatepairs($scope.configsettings.treatment,$scope.configsettings.numberofpeople);
+				$scope.pairs = $scope.generatepairs($scope.configsettings.treatmentvalue,$scope.configsettings.numberofpeople);
 				$scope.roles = $scope.generateroles($scope.pairs);
 				$scope.setvalues($scope.pairs,$scope.roles);
-				if ($scope.configsettings.treatment === 4) $scope.setreaders($scope.pairs,$scope.roles);
+				console.log($scope.configsettings);
+				if ($scope.configsettings.treatmentvalue === 4) $scope.setreaders($scope.pairs,$scope.roles);
 				$("#start-session").removeAttr("disabled");
 				console.log("roles : " + $scope.roles);
 				console.log("pairs : " + $scope.pairs);
-				console.log(ra);
 
 				// next well
 				$scope.validate = false;
 				$("#showtreatment").text($("#treatment").val());
+				$("#showmethod").text($scope.configsettings.method);
 				$("#showendowment").text($scope.configsettings.endowment);
 				$("#showincomegoal").text($scope.configsettings.incomegoal);
 				$("#showscale").text($scope.configsettings.scale);
@@ -304,7 +309,8 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				for (var i = 0, l = ra.subjects.length; i < l; i++) {
 					ra.set(ra.subjects[i].user_id,"pair",p[i]);
 					ra.set(ra.subjects[i].user_id,"role",r[i]);
-					ra.set(ra.subjects[i].user_id,"treatment",$scope.configsettings.treatment);
+					ra.set(ra.subjects[i].user_id,"treatment",$scope.configsettings.treatmentvalue);
+					ra.set(ra.subjects[i].user_id,"method",$scope.configsettings.method);
 					ra.set(ra.subjects[i].user_id,"endowment",$scope.configsettings.endowment);
 					ra.set(ra.subjects[i].user_id,"incomegoal",$scope.configsettings.incomegoal);
 					ra.set(ra.subjects[i].user_id,"scale",$scope.configsettings.scale);
@@ -313,7 +319,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 			};
 			ra.on("save_values", function(value) {
 				$scope.configsettings.numberofpeople = value.numberofpeople;
-				$scope.configsettings.treatment = value.treatment;
+				$scope.configsettings.treatmentvalue = value.treatment;
 				$scope.configsettings.endowment = value.endowment;
 				$scope.configsettings.incomegoal = value.incomegoal;
 				$scope.configsettings.scale = value.scale;
@@ -410,6 +416,10 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	$scope.click = function(value) {
 		console.log(value)
 	};
+	$scope.setmethodvalue = function(index) {
+		$scope.configsettings.method = $scope.methods[$scope.configsettings][index];
+		console.log($scope.configsettings.method);
+	};
 
 	ra.recv("sendinitalanswers", function(sender, value) {
 		// stores information
@@ -425,6 +435,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location[0]].surprise = value.initalResponses.surprise;
 		$scope.subjects[location[0]].disgust = value.initalResponses.disgust;
 		// shows the information on the admin page
+		console.log($scope.subjects);
 		$scope.createPart1();
 	});
 
