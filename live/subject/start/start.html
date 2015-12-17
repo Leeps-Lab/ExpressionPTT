@@ -6,7 +6,8 @@
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/jquery/jquery.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/flot/jquery.flot.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-3.1.1.min.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/bootstrap/bootstrap-slider.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/jquery/jquery.ui.labeledslider.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/sweet-alert.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/lib/angular/angular-1.2.16.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/redwoodCore.js"></script>
@@ -15,7 +16,8 @@
   <script type="text/javascript" src="{{ STATIC_URL }}framework/js/synchronizedStopWatch.js"></script>
 
   <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/bootstrap-3.1.1.min.css">
-  <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/bootstrap-slider.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/jquery.ui.labeledslider.css">
   <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}framework/css/sweet-alert.css">
 
 	<script type="text/javascript">
@@ -38,528 +40,86 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="showpage.showStartExperiment = false; showpage.initalquestions = 0;">
+          ng-click="showpage.showStartExperiment = false; showpage.part1 = true;saveState();">
           Continue
         </button>
       </div>
     </div>
   </div>
   <!-- start part 1 -->
-  <div class="container" ng-show="showpage.initalquestions === 0;">
+  <div class="container" ng-show="showpage.part1;">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
         <h3 class="text-center">Part 1</h3>
         <p class="text-center">To start click continue</p>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question1,0)">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="showpage.part1 = false; showpage.initalquestions = true; saveState();">
+          Continue
+        </button>
       </div>
     </div>
   </div>
   <!-- inital questions -->
 
   <!-- question 1 -->
-  <div class="container" ng-show="showpage.initalquestions === 1">
-    <div class="row">
-      <div class="text-center">
-        <h3 class="text-center">Right now, how would you describe yourself?</h3>
-        <p class="text-center">(Please enter the number that best applies to you at this moment)</p>
-        <div class="row text-center" style="border-style:solid;border-width:2px;">
-          <div class="col-md-1">
-            1:<br>Extremeley<br><strong>unhappy</strong>
-          </div>
-          <div class="col-md-1">
-            2:<br>Very unhappy
-          </div>
-          <div class="col-md-1">
-            3:<br>Unhappy
-          </div>
-          <div class="col-md-1">
-            4:<br>Somewhat happy
-          </div>
-          <div class="col-md-1">
-            5:<br>Neutral
-          </div>
-          <div class="col-md-1">
-            6:<br>Somewhat happy
-          </div>
-          <div class="col-md-1">
-            7:<br>Happy
-          </div>
-          <div class="col-md-1">
-            8:<br>Very happy
-          </div>
-          <div class="col-md-1">
-            9:<br>Extremeley<br><strong>happy</strong>
-          </div>
-        </div>
-        <br>
-        <div class="row text-center">
-          <input type="text"
-            ng-model="initalResponses.question1.answer1" />
-        </div>
-      </div>
-      <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question1,1)">
-          Continue
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- question 2 -->
-  <div class="container" ng-show="showpage.initalquestions === 2">
+  <div class="container" ng-show="showpage.initalquestions">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
-        <h3 class="text-center">For each question, give the number that best describes you:</h3>
-        <p class="text-center">(Follow the scale below)</p>
-        <div class="row" style="border-style:solid;border-width:2px;">
-          <div class="col-md-1">
-            1:<br>Extremeley<br><strong>unhappy</strong>
-          </div>
-          <div class="col-md-1">
-            2:<br>Very unhappy
-          </div>
-          <div class="col-md-1">
-            3:<br>Unhappy
-          </div>
-          <div class="col-md-1">
-            4:<br>Somewhat happy
-          </div>
-          <div class="col-md-1">
-            5:<br>Neutral
-          </div>
-          <div class="col-md-1">
-            6:<br>Somewhat happy
-          </div>
-          <div class="col-md-1">
-            7:<br>Happy
-          </div>
-          <div class="col-md-1">
-            8:<br>Very happy
-          </div>
-          <div class="col-md-1">
-            9:<br>Extremeley<br><strong>happy</strong>
-          </div>
-        </div>
-        <div class="row text-center">
-          <p>Over the past week, what is the lowest level you experienced?</p>
-          <input type="text"
-            ng-model="initalResponses.question2.answer1" />
-        </div>
-        <div class="row text-center">
-          <p>Over the past week, what is the highest level you experienced?</p>
-          <input type="text" ng-model="initalResponses.question2.answer2" />
-        </div>
-        <div class="row text-center">
-          <p>Overall (i.e. in general), how would you descibe youself?</p>
-          <input type="text" ng-model="initalResponses.question2.answer3" />
-        </div>
-      </div>
-      <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question2,3)">Continue</button>
-      </div>
-    </div>
-  </div>
-  <!-- question 3 -->
-  <div class="container" ng-show="showpage.initalquestions === 3">
-    <div class="row">
-      <div class="col-mid-4 col-mid-offset-4">
-        <h3 class="text-center">Please, give the number that best describes the emotions you experienced at this moment:</h3>
-        <p class="text-center">(Follow the scale below)</p>
-      </div>
-    </div>
-    <div class="row" style="border-style:solid;border-width:2px;">
-      <div class="col-md-1 col-md-offset-2">
-        1<br>Emotion is not present at all
-      </div>
-      <div class="col-md-1">
-        2
-      </div>
-      <div class="col-md-1">
-        3
-      </div>
-      <div class="col-md-1">
-        4
-      </div>
-      <div class="col-md-1">
-        5
-      </div>
-      <div class="col-md-1">
-        6
-      </div>
-      <div class="col-md-1">
-        7<br>Emotions feels very intense
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-2">
-        Irritation
-        <input type="text" ng-model="initalResponses.question3.answer1" />
-      </div>
-      <div class="col-md-4">
-        Sadness
-        <input type="text" ng-model="initalResponses.question3.answer2" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-2">
-        Anger
-        <input type="text" ng-model="initalResponses.question3.answer3" />
-      </div>
-      <div class="col-md-4">
-        Happiness
-        <input type="text" ng-model="initalResponses.question3.answer4" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-2">
-        Contempt
-        <input type="text" ng-model="initalResponses.question3.answer5" />
-      </div>
-      <div class="col-md-4">
-        Fear
-        <input type="text" ng-model="initalResponses.question3.answer6" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-2">
-        Surprise
-        <input type="text" ng-model="initalResponses.question3.answer7" />
-      </div>
-      <div class="col-md-4">
-        Joy
-        <input type="text" ng-model="initalResponses.question3.answer8" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-2">
-        Envy
-        <input type="text" ng-model="initalResponses.question3.answer9" />
-      </div>
-      <div class="col-md-4">
-        Shame
-        <input type="text" ng-model="initalResponses.question3.answer10" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-        Jealousy
-        <input type="text" ng-model="initalResponses.question3.answer11" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question3,11)">Continue</button>
-      </div>
-    </div>
-  </div>
-  <!-- question 4 -->
-  <div class="container" ng-show="showpage.initalquestions === 4">
-    <div class="row">
-      <div class="col-mid-4 col-mid-offset-4">
-        <h3 class="text-center">Please, give the number that best describes your agreement with the following statements:</h3>
-        <p class="text-center">(Follow the scale below)</p>
-      </div>
-    </div>
-    <div class="row" style="border-style:solid;border-width:2px;">
-      <div class="col-md-1 col-md-offset-3">
-        1:<br>Strongly<br><strong>disagree</strong>
-      </div>
-      <div class="col-md-1">
-        2:<br>Moderately disagree
-      </div>
-      <div class="col-md-1">
-        3:<br>Slightly disagree
-      </div>
-      <div class="col-md-1">
-        4:<br>Slightly agree
-      </div>
-      <div class="col-md-1">
-        5:<br>Moderately agree
-      </div>
-      <div class="col-md-1">
-        6:<br>Strongly<br><strong>agree</strong>
-      </div>
-    </div>
-    <br>
-    <div class="row text-center">
-      For me, life has been a continuous process of learning, changing and growth.
-      <input type="text" ng-model="initalResponses.question4.answer1" />
-    </div>
-    <div class="row text-center">
-      Some people wader aimlessly through life, but I am not one of them.
-      <input type="text" ng-model="initalResponses.question4.answer2" />
-    </div>
-    <div class="row text-center">
-      I judge myself by what I think is important, not by the values of what others think is important.
-      <input type="text" ng-model="initalResponses.question4.answer3" />
-    </div>
-    <div class="row text-center">
-      I am quite good at managing the many responsibilities of my daily life,
-      <input type="text" ng-model="initalResponses.question4.answer4" />
-    </div>
-    <div class="row text-center">
-      I have not experienced many warm and trusting relationships with others.
-      <input type="text" ng-model="initalResponses.question4.answer5" />
-    </div>
-    <div class="row text-center">
-      In many ways, I feel disappointed about my achievements in life.
-      <input type="text" ng-model="initalResponses.question4.answer6" />
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question4,6)">Continue</button>
-      </div>
-    </div>
-  </div>
-  <!-- question 5 -->
-  <div class="container" ng-show="showpage.initalquestions === 5">
-    <div class="row">
-      <div class="col-mid-4 col-mid-offset-4">
-        <h3 class="text-center">Below you are given pairs of opposite feelings. Use the following scale to<br>
-          inducate your current mood relative to these feelings.
+        <h3 class="text-center">Please use the sliders to indicate your current state:
         </h3>
-        <p class="text-center">(1: you are experiencing the feelings on the left side very strongly.<br>
-          9:you are experiencing the feelings on the right side very strongly.)
-        </p>
-      </div>
-    </div>
-    <div class="row" style="border-style:solid;border-width:2px;">
-      <div class="col-md-1 col-md-offset-2">
-        1
-      </div>
-      <div class="col-md-1">
-        2
-      </div>
-      <div class="col-md-1">
-        3
-      </div>
-      <div class="col-md-1">
-        4
-      </div>
-      <div class="col-md-1">
-        5<br>Neutral
-      </div>
-      <div class="col-md-1">
-        6
-      </div>
-      <div class="col-md-1">
-        7
-      </div>
-      <div class="col-md-1">
-        8
-      </div>
-      <div class="col-md-1">
-        9
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Bad mood
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question5.answer1" />
-      </div>
-      <div class="col-md-2">
-        Good mood
+        <h4 class="text-center">(1 : you are experiencing the feeling very strongly.<br>
+          10 : you are experiencing the feeling very strongly.)
+        </h4>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Sad
+      <div class="col-md-2">
+        <div class="text-center">
+          <div id="happiness" style="height: 300px;"></div>
+          <h4 id="initalhappiness" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Happiness</h4>
+        </div>
       </div>
       <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question5.answer2" />
-      </div>
-      <div class="col-md-1">
-        Happy
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Depressed
+        <div class="text-center">
+          <div id="sadness" style="height: 300px;"></div>
+          <h4 id="initalsadness" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Sadness</h4>
+        </div>
       </div>
       <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question5.answer3" />
-      </div>
-      <div class="col-md-1">
-        Elated
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Gloomy
+        <div class="text-center">
+          <div id="fear" style="height: 300px;"></div>
+          <h4 id="initalfear" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Fear</h4>
+        </div>
       </div>
       <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question5.answer4" />
-      </div>
-      <div class="col-md-1">
-        Cheerful
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Displeased
+        <div class="text-center">
+          <div id="anger" style="height: 300px;"></div>
+          <h4 id="initalanger" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Anger</h4>
+        </div>
       </div>
       <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question5.answer5" />
-      </div>
-      <div class="col-md-1">
-        Pleased
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Sorrowful
+        <div class="text-center">
+          <div id="surprise" style="height: 300px;"></div>
+          <h4 id="initalsurprise" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Surprise</h4>
+        </div>
       </div>
       <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question5.answer6" />
-      </div>
-      <div class="col-md-1">
-        Joyful
+        <div class="text-center">
+          <div id="disgust" style="height: 300px;"></div>
+          <h4 id="initaldisgust" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Disgust</h4>
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="nextQuestion(initalResponses.question5,6)">Continue</button>
-      </div>
-    </div>
-  </div>
-  <!-- question 6 -->
-  <div class="container" ng-show="showpage.initalquestions === 6">
-    <div class="row">
-      <div class="col-mid-4 col-mid-offset-4">
-        <h3 class="text-center">Below you are given pairs of opposite feelings. Use the following scale to<br>
-          inducate your current mood relative to these feelings
-        </h3>
-        <p class="text-center">(1: you are experiencing the feelings on the left side very strongly.<br>
-          9:you are experiencing the feelings on the right side very strongly.)
-        </p>
-      </div>
-    </div>
-    <div class="row" style="border-style:solid;border-width:2px;">
-      <div class="col-md-1 col-md-offset-2">
-        1
-      </div>
-      <div class="col-md-1">
-        2
-      </div>
-      <div class="col-md-1">
-        3
-      </div>
-      <div class="col-md-1">
-        4
-      </div>
-      <div class="col-md-1">
-        5<br>Neutral
-      </div>
-      <div class="col-md-1">
-        6
-      </div>
-      <div class="col-md-1">
-        7
-      </div>
-      <div class="col-md-1">
-        8
-      </div>
-      <div class="col-md-1">
-        9
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Nervous
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer1" />
-      </div>
-      <div class="col-md-1">
-        Calm
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Tense
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer2" />
-      </div>
-      <div class="col-md-1">
-        Relaxed
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Unconfortable
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer3" />
-      </div>
-      <div class="col-md-1">
-        Confortable
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Apathetic
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer4" />
-      </div>
-      <div class="col-md-1">
-        Caring
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Lethargic
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer5" />
-      </div>
-      <div class="col-md-1">
-        Energetic
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Unconfident
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer6" />
-      </div>
-      <div class="col-md-1">
-        Confident
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Unresponsive
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer7" />
-      </div>
-      <div class="col-md-1">
-        Emotional
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-1 col-md-offset-4">
-        Passive
-      </div>
-      <div class="col-md-2">
-        <input type="text" ng-model="initalResponses.question6.answer8" />
-      </div>
-      <div class="col-md-1">
-        Active
-      </div>
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="finishQuestions(initalResponses.question6,8)">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="finishQuestions()">Continue</button>
       </div>
     </div>
   </div>
@@ -567,12 +127,17 @@
   <!-- have a barrier here -->
   <div class="container" ng-show="showpage.part2">
     <div class="row">
+      <h1 class="text-center">Please Wait...</h1>
+    </div>
+  </div>
+  <div class="container" ng-show="showpage.part2ready">
+    <div class="row">
       <div class="text-center">
         <h3>Part 2</h3>
-        <p ng-show="showpage.part2ready">To start click continue</p>
+        <p>To start click continue</p>
       </div>
-      <div class="text-center" ng-show="showpage.part2ready">
-        <button type="button" class="btn btn-info" ng-click="showpage.part2 = false; showpage.exampleTasks = true">
+      <div class="text-center">
+        <button type="button" class="btn btn-info" ng-click="showpage.part2ready = false; showpage.exampleTasks = true;saveState();">
           Continue
         </button>
       </div>
@@ -598,60 +163,77 @@
   <!-- practice one -->
   <div class="container" ng-show="showpage.practice1">
     <div class="row">
-      <h3 class="text-center">PRACTICE SCREEN {{practiceRound}}</h3>
+      <div class="col-md-4 col-md-offset-5">
+        <h2 class="text-center">PRACTICE SCREEN {{practiceRound}}</h2>
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
+          data-content="Use the <em>left-click</em> of the mouse to <em>move</em>
+          the yellow circle (in the left graph) and search for the location that gives you the highest
+          score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
+          The assigned time is 35 seconds.">
+          ?
+        </button>
+      </div>
     </div>
-    <div class="row">
-      <h3 class="text-center">Assigned time can be exceeded and points earned here will not count.<br>
+    <div class="row text-center">
+      <h3>Assigned time can be exceeded and points earned here will not count.<br>
         The current task can earn you a maximim of 50 points.
       </h3>
     </div>
+    <br><br>
     <div class="row">
-      <p class="col-md-10 col-md-offset-1">Task: Use the <em>left-click</em> of the mouse to <em>drag and drop</em>
-         the maroon square (in the left graph) and search for the location that gives you the highest
-         score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
-         The assigned time is 35 seconds.
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-7">
-      <!-- Game -->
-        <div id="practice1" style="width:600px;height:300px"></div>
-      </div>
-      <div class="col-md-3">
-        <!-- points earned -->
+      <div class="col-md-6">
         <div class="row">
-          <div class="col-md-9" style="border-style:solid; border-width: 1px">
-            <h3 id="practice1timer" class="text-center">Time Remaining : {{time}}</h3>
+          <div class="col-md-5 col-md-offset-1 text-right">
+            <h4 id="nearnesspractice" class="text-center">Click!</h4>
           </div>
-          <div class="col-md-9" style="border-style:solid; border-width: 1px">
-            <h3 id="practice1points" class="text-center">Points earned : 0.0</h3>
+          <div class="col-md-4">
+            <h4 id="locationpractice" class="text-center"></h4>
+          </div>
+        </div>
+        <!-- Game -->
+        <div class="row">
+          <div id="practice1" style="width:600px;height:600px"></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- points earned -->
+        <br><br>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-3">
+            <h3>Time Left</h3>
+          </div>
+          <div class="col-md-2">
+            <h3>{{time}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-3">
+            <h3>Points</h3>
+          </div>
+          <div class="col-md-2">
+            <h3 id="pointspractice"></h3>
           </div>
         </div>
         <!-- locator -->
         <div class="row">
-          <div class="col-md-3">
-            <canvas id="practice1locator" style="width:200px;height:300px;
-              border-style:solid; border-width: 1px"></canvas>
+          <div class="col-md-11 col-md-offset-4">
+            <canvas id="practicelocator" width="150px" height="450px"></canvas>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <p class="text-center">
-        To pick up the square use the <em>left-click</em> of the mouse. To drop the square
-        in a new location just release the <em>left-click</em> of the mouse.
-      </p>
-    </div>
-    <div class="row" ng-show="practiceRound === 1">
-      <div class="text-center">
-        <button type="button" class="btn btn-success" ng-click="nextPractice()">Go To Next Task</button>
-      </div>
-    </div>
-    <div class="row" ng-show="practiceRound === 2">
-      <div class="text-center">
-        <button type="button" class="btn btn-success" ng-click="finalPractice()">
-          Start Real Task
-        </button>
+        <div class="row" ng-show="practiceRound === 1">
+          <div class="text-center">
+            <button type="button" class="btn btn-success" ng-click="nextPractice()">Go To Next Task</button>
+          </div>
+        </div>
+        <div class="row" ng-show="practiceRound === 2">
+          <div class="text-center">
+            <button type="button" class="btn btn-success" ng-click="finalPractice();saveState();">
+              Start Real Task
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -675,50 +257,73 @@
   <!-- income earning -->
   <div class="container" ng-show="showpage.gametime">
     <div class="row">
-      <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
+      <div class="col-md-2 col-md-offset-5">
+        <h2>Task {{task}}</h2>
+      </div>
+      <div class="col-md-3">
+        <button type="button" class="btn btn-success" data-toggle="instructions" title="Task"
+          data-content="Use the <em>left-click</em> of the mouse to <em>move</em>
+          the yellow circle (in the left graph) and search for the location that gives you the highest
+          score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
+          The assigned time is 35 seconds." data-placement="bottom">
+          ?
+        </button>
+      </div>
     </div>
     <div class="row">
+      <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
+    </div>
+    <div class="row text-center">
       <h3 class="text-center" id="currentTask">The current task can earn you a
         maximum of {{maxpoints}} points.
       </h3>
     </div>
+    <br><br>
     <div class="row">
-      <p class="col-md-10 col-md-offset-1">Task: Use the <em>left-click</em> of the mouse to <em>drag and drop</em>
-         the maroon square (in the left graph) and search for the location that gives you the highest
-         score in Points. The Points Indicator is on right (100 points = 1.00 dollar).
-         The assigned time is 35 seconds.
-      </p>
-    </div>
-    <div class="row">
-      <div class="col-md-7">
-      <!-- Game -->
-        <div id="placeholder" style="width:600px;height:300px"></div>
-      </div>
-      <div class="col-md-3">
-        <!-- points earned -->
+      <div class="col-md-6">
         <div class="row">
-          <div class="col-md-9" style="border-style:solid; border-width: 1px">
-            <h3 id="timer" class="text-center">Time Remaining : {{time}}</h3>
+          <div class="col-md-5 col-md-offset-1 text-right">
+            <h4 id="nearness" class="text-center">Click!</h4>
           </div>
-          <div class="col-md-9" style="border-style:solid; border-width: 1px">
-            <h3 id="points" class="text-center">Points earned : 0.0</h3>
+          <div class="col-md-4">
+            <h4 id="location" class="text-center"></h4>
+          </div>
+        </div>
+        <!-- Game -->
+        <div class="row">
+          <div id="placeholder" style="width:600px;height:600px"></div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- points earned -->
+        <br><br>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-3">
+            <h3 id="timer">Time Left</h3>
+          </div>
+          <div class="col-md-2">
+            <h3>{{time}}</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-md-offset-3">
+            <h3>Points</h3>
+          </div>
+          <div class="col-md-2">
+            <h3 id="points"></h3>
           </div>
         </div>
         <!-- locator -->
         <div class="row">
-          <div class="col-md-3">
-            <canvas id="locator" style="width:200px;height:300px;
-              border-style:solid; border-width: 1px"></canvas>
+          <div class="col-md-11 col-md-offset-4">
+            <canvas id="locator" width="150px" height="450px"></canvas>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="row">
-      <p id="earned" class="text-center">Money earned for this task (cents) : 0.0</p>
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <button id="nexttask" type="button" class="btn btn-success" ng-click="nexttask()">Go To Next Task</button>
+        <div class="row">
+          <div class="text-center">
+            <button id="nexttask" type="button" class="btn btn-success" ng-click="nexttask()">Go To Next Task</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -740,18 +345,23 @@
     </div>
   </div>
 
-  <!-- start part 3 -->
   <div class="container" ng-show="showpage.part3">
     <div class="row">
+      <h1 class="text-center">Please Wait...</h1>
+    </div>
+  </div>
+  <!-- start part 3 -->
+  <div class="container" ng-show="showpage.part3ready">
+    <div class="row">
       <h3 class="text-center">Part 3</h3>
-      <p class="text-center" ng-show="showpage.part3ready">To start click continue</p>
+      <p class="text-center">To start click continue</p>
       <div class="col-mid-4 col-mid-offset-4">
       </div>
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-success" ng-show="showpage.part3ready"
-          ng-click="showpage.roles = true; showpage.part3 = false;">
+        <button type="button" class="btn btn-success"
+          ng-click="part3ready();">
           Continue
         </button>
       </div>
@@ -765,14 +375,21 @@
       <h2 class="text-center">Your role is {{role}}</h2>
       <h2 class="text-center">In Part 2, you have recieved ${{floatToMoney(endownment)}} as
         endownment and earned ${{floatToMoney(income)}} of income.</h2>
-      <h2 class="text-center">Your counterpart, {{partner.role}}, has received
+      <h2 class="text-center" ng-hide="role === 'R'">Your counterpart, {{partner.role}}, has received
         ${{floatToMoney(partner.endownment)}} as endownment and earned
         ${{floatToMoney(partner.income)}} of income.
       </h2>
     </div>
-    <div class="row">
+    <div class="row" ng-hide="role === 'R'">
       <div class="text-center">
-        <button type="button" class="btn btn-success" ng-click="createSliders();">
+        <button type="button" class="btn btn-success" ng-click="showSliders();">
+          Continue
+        </button>
+      </div>
+    </div>
+    <div class="row" ng-show="role === 'R'">
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="noSliders();">
           Continue
         </button>
       </div>
@@ -783,8 +400,9 @@
 
   <!-- T slider -->
   <div class="container" ng-show="showpage.slider && role === 'T'">
+    <br>
     <div class="row">
-      <h3 class="text-center">
+      <h3 class="text-center" style="line-height:1.6;">
         Being T, you are given the authority to transfer money from P's account to your own account.
         The maximum amount of money you can collect is what P has earned as income in Part 2
         (${{floatToMoney(partner.income)}}).
@@ -792,17 +410,21 @@
     </div>
     <div class="row">
       <h3 class="text-center">What percentage of P's income do you want to transfer to your account?</h3>
-      <p class="text-center">(Use the slider below to set this percentage)</p>
+      <h4 class="text-center">(Use the slider below to set this percentage)</h4>
     </div>
+    <br><br><br><br>
     <div class="row text-center">
-      <input id="tSlider" style="width:600px;" data-slider-id="tSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
-        data-slider-value="0" />
-        <p id="tPercentTransfered">Percentage transfered: {{percent}}</p>
+      <div class="col-md-12">
+        <div id="tSlider" style="width:600px;"></div>
+        <h4 id="tPercentTransfered">Percentage transfered: {{percent}}</h4>
+      </div>
     </div>
+    <br><br><br><br>
     <div class="row">
-      <h2 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h2>
-      <h2 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h2>
+      <h3 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h3>
+      <h3 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h3>
     </div>
+    <br>
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-success" ng-click="sendDecision();">
@@ -813,25 +435,30 @@
   </div>
   <!-- P slider -->
   <div class="container" ng-show="showpage.slider && role === 'P'">
+    <br>
     <div class="row">
-      <h3 class="text-center">
+        <h3 class="text-center" style="line-height:1.6;">
         At this moment, your counterpart T is deciding what proportion of your income (${{floatToMoney(income)}})
         to transfer to his/her own account.
       </h3>
     </div>
     <div class="row">
       <h3 class="text-center">What percentage of your income do you expect T will transfer to his/her own account?</h3>
-      <p class="text-center">(Use the slider below to set this percentage)</p>
+      <h4 class="text-center">(Use the slider below to set this percentage)</h4>
     </div>
+    <br><br><br><br>
     <div class="row text-center">
-      <input id="pSlider" style="width:600px;" data-slider-id="pSlider" type="text" data-slider-min="0" data-slider-max="100" data-slider-step="1"
-        data-slider-value="0" />
-      <p id="pPercentTransferred">Percentage transfered: {{percent}}</p>
+      <div class="col-md-12">
+        <div id="pSlider" style="width:600px;"></div>
+        <h4 id="pPercentTransferred">Percentage transfered: {{percent}}</h4>
+      </div>
     </div>
+    <br><br><br><br>
     <div class="row">
-      <h2 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h2>
-      <h2 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h2>
+      <h3 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h3>
+      <h3 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h3>
     </div>
+    <br>
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-success" ng-click="sendEstimate();">
@@ -841,9 +468,22 @@
     </div>
   </div>
 
+  <!-- waitpage -->
+  <div class="container" ng-show="showpage.waitpage">
+    <div class="row">
+      <h1 class="text-center">Please Wait...</h1>
+    </div>
+  </div>
+  <div class="container" ng-show="showpage.pwait">
+    <div class="row">
+      <h1 class="text-center">Your message has been sent to the reader.</h1>
+    </div>
+  </div>
+
   <!-- bid -->
   <!-- P Willingnesspage-->
-  <div class="container" ng-show="showpage.willingnesspage && role === 'P'">
+  <!-- BDM1 -->
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDM1'">
     <div class="row">
       <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
         (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
@@ -866,24 +506,95 @@
       </div>
     </div>
   </div>
+  <!-- BDM2 -->
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDM2'">
+    <div class="row">
+      <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
+        (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
+      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
+    </div>
+    <div class="row">
+      <h3 class="text-center">What is the maximum amount you would be willing to pay to write and send a message that your
+        counterpart T will read?</h3>
+      <div class="col-md-offset-5 col-md-2" ng-repeat="price in bdm2values track by $index">
+        <input type="checkbox" ng-model="price.selected" ng-change="bdm2Toggle($index)">
+        ${{floatToMoney(price.value)}}
+      </div>
+    </div>
+    <div class="row text-center">
+      <h3>The actual price of sending a message will be shown on the next screen.</h3>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="sendWillingness();">
+          Send Your Decision
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- SOP -->
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'SOP'">
+    <div class="row">
+      <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
+        (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
+      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
+    </div>
+    <div class="row text-center">
+      <h3 class="text-center">Do you want to send your message for ${{floatToMoney(sopValue)}}</h3>
+      <p class="text-center">(Express the amount in dollars and cents)</p>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="sendWillingness('yes');">
+          Yes
+        </button>
+        <button type="button" class="btn btn-success" ng-click="sendWillingness('no');">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- BDMWTA -->
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDMWTA'">
+    <div class="row">
+      <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
+        (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
+      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
+    </div>
+    <div class="row text-center">
+      <h3 class="text-center">What is the minimum amount you would be willing to
+        accept to not write and send a message that your counterpart T will read?</h3>
+      <p class="text-center">(Express the amount in dollars and cents)</p>
+      <input ng-model="bid" type="text" />
+    </div>
+    <div class="row text-center">
+      <h3>The actual price of sending a message will be shown on the next screen.</h3>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="sendWillingness();">
+          Send Your Decision
+        </button>
+      </div>
+    </div>
+  </div>
   <!-- T Willingnesspage -->
   <div class="container" ng-show="showpage.willingnesspage && role === 'T'">
-    <div class="row">
-      <h3>Willingness page for T role</h3>
-    </div>
   </div>
 
   <!-- check price -->
   <div class="container" ng-show="showpage.checkprice && role === 'P'">
     <div class="row text-center">
       <h3>The actual price is ${{floatToMoney(actualprice)}}</h3>
-      <h3>Your maximum willingness was ${{floatToMoney(bid)}}</h3>
-      <h3>Therefore, you will be able to write a message to your counterpart</h3>
+      <h3 ng-hide="method === 'BDMWTA'">Your maximum willingness was ${{floatToMoney(bid)}}</h3>
+      <h3 ng-show="method === 'BDMWTA'">Your minimum willingness was ${{floatToMoney(bid)}}</h3>
+      <h3 ng-show="ablesendmessage">Therefore, the message has been sent to your counterpart.</h3>
+      <h3 ng-hide="ablesendmessage">Therefore, no message will be sent to your counterpart.</h3>
     </div>
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="showpage.messagePage = true; showpage.checkprice = false;">
+          ng-click="checkprice();">
           Continue
         </button>
       </div>
@@ -894,18 +605,18 @@
   <!-- T message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'T'">
     <div class="row">
-      <p class="text-center">Here is it the message from your counterpart :</p>
+      <h3 class="text-center">Here is the message from your counterpart :</h3>
     </div>
     <div class="row">
-        <div class="col-md-8 col-md-offset-2"
-          style="border-style:solid;border-width:2px;min-height:300px;">
-          <div ng-repeat="message in messages track by $index">
-            <p>{{message}}</p>
-          </div>
+        <div class="col-md-offset-3"
+          style="border-style:solid;border-width:2px;height:300px;width:600px;">
+          <h4><div ng-bind-html="messages">
+          </div></h4>
         </div>
     </div>
+    <br>
     <div class="row text-center">
-        <button type="button" class="btn btn-info" ng-click="readMessage()">
+        <button type="button" class="btn btn-info" ng-click="readMessage();saveState();">
           I have read the message
         </button>
     </div>
@@ -913,42 +624,56 @@
   <!-- P message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'P'">
     <div class="row">
-      <p class="text-center">
-        After writing your message, please press the ENTER key to record the message.
-      </p>
-    </div>
-    <div class="row">
-      <p class="text-center">
-        Once it is recorded, the message should appear in the upper part of the message box.
-        Only then press the SEND button.
-      </p>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2"
-          style="border-style:solid;border-width:2px;min-height:300px;">
-          <div ng-repeat="message in messages track by $index">
-            <p>{{message}}</p>
-          </div>
-        </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6 col-md-offset-3">
-        <input type="text" style="width:585px;" ng-keypress="saveMessage($event)"
-          ng-model="message" />
-      </div>
+      <h3 class="text-center">Write message in the box below and click on the button to send it:</h3>
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info"
-          ng-click="sendMessage()">Continue</button>
+        <h4><textarea style="height:300px;width:600px"ng-model="message"></textarea></h4>
       </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-info"
+          ng-click="sendMessage();">Store Message</button>
+      </div>
+    </div>
+  </div>
+  <!-- R message box -->
+  <div class="container" ng-show="showpage.messagePage && role === 'R'">
+    <div class="row">
+      <h3 class="text-center">Here are the messages :</h3>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-3 scollable"
+          style="border-style:solid;border-width:2px;height:300px;width:600px;">
+          <div ng-repeat="message in readerMessages track by $index">
+            <h4>
+              (Money Taken : {{floatToMoney(message.taken)}})
+              <div ng-bind-html="message.text"></div>
+              <div class="text-center">
+                <button type="button" class="btn btn-info" ng-click="rmessageConfirm(message.userid,$index)">
+                  Confirm
+                </button>
+              </div>
+              <hr>
+            </h4>
+          </div>
+        </div>
+    </div>
+    <br>
+    <div class="row text-center" ng-show="readerlist.length === 0 && readerconfirm === 0">
+        <button type="button" class="btn btn-info" ng-click="showpage.showEarnings = true; showpage.messagePage = false; saveState();">
+          Continue
+        </button>
     </div>
   </div>
 
   <!-- read message -->
   <div class="container" ng-show="showpage.readMessage && role === 'P'">
     <div class="row">
-      <h3 class="text-center">Your Counterpart T has read the message</h3>
+      <h3 class="text-center" ng-hide="reader">Your Counterpart T has read the message.</h3>
+      <h3 class="text-center" ng-show="reader">The reader has read your message.</h3>
     </div>
     <div class="row">
       <div class="text-center">
@@ -962,41 +687,44 @@
   <!-- show earnings -->
   <!-- p show earnings-->
   <div class="container" ng-show="showpage.showEarnings && role === 'P'">
-    <h3 class="text-center">
-      Earnings <h2 class="text-center">(in $)</h2>
-    </h3>
-    <table class="table table-striped table-bordered">
-      <tr>
-        <td></td>
-        <td>Role {{partner.role}}</td>
-        <td>Role {{role}} (You)</td>
-      </tr>
-      <tr>
-        <td>Endownment</td>
-        <td>{{floatToMoney(partner.endownment)}}</td>
-        <td>{{floatToMoney(endownment)}}</td>
-      </tr>
-      <tr>
-        <td>Income</td>
-        <td>{{floatToMoney(partner.income)}}</td>
-        <td>{{floatToMoney(income)}}</td>
-      </tr>
-      <tr>
-        <td>Money<br>Transferred</td>
-        <td>+{{floatToMoney(partner.moneytransferred)}}</td>
-        <td>-{{floatToMoney(partner.moneytransferred)}}</td>
-      </tr>
-      <tr>
-        <td>Message Price</td>
-        <td>----------</td>
-        <td>{{partner.actualprice ? floatToMoney(partner.actualprice) : '----------'}}</td>
-      </tr>
-      <tr>
-        <td>Total Earnings</td>
-        <td>{{floatToMoney(partner.totalincome)}}</td>
-        <td>{{floatToMoney(totalincome)}}</td>
-      </tr>
-    </table>
+    <h2 class="text-center">
+      Earnings <h3 class="text-center">(in $)</h3>
+    </h2>
+    <br>
+    <div class="row">
+      <table class="table table-striped table-bordered table-nonfluid" align="center">
+        <tr>
+          <td class="col-md-1"></td>
+          <td class="col-md-1">Role {{partner.role}}</td>
+          <td class="col-md-1">Role {{role}} (You)</td>
+        </tr>
+        <tr>
+          <td>Endownment</td>
+          <td class="text-center">{{floatToMoney(partner.endownment)}}</td>
+          <td class="text-center">{{floatToMoney(endownment)}}</td>
+        </tr>
+        <tr>
+          <td>Income</td>
+          <td class="text-center">{{floatToMoney(partner.income)}}</td>
+          <td class="text-center">{{floatToMoney(income)}}</td>
+        </tr>
+        <tr>
+          <td>Money<br>Transferred</td>
+          <td class="text-center">+{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">-{{floatToMoney(partner.moneytransferred)}}</td>
+        </tr>
+        <tr ng-show="! (nomessage || freemessage)">
+          <td>Message Price</td>
+          <td></td>
+          <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
+        </tr>
+        <tr>
+          <td>Total Earnings</td>
+          <td class="text-center">{{floatToMoney(partner.totalincome + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
+        </tr>
+      </table>
+    </div>
     <div class="text-center">
       <button type="button" class="btn btn-info"
         ng-click="sawEarnings()">Continue</button>
@@ -1004,41 +732,74 @@
   </div>
   <!-- T show earnings -->
   <div class="container" ng-show="showpage.showEarnings && role === 'T'">
-    <h3 class="text-center">
-      Earnings <h2 class="text-center">(in $)</h2>
-    </h3>
-    <table class="table table-striped table-bordered">
-      <tr>
-        <td></td>
-        <td>Role {{role}} (You)</td>
-        <td>Role {{partner.role}}</td>
-      </tr>
-      <tr>
-        <td>Endownment</td>
-        <td>{{floatToMoney(endownment)}}</td>
-        <td>{{floatToMoney(partner.endownment)}}</td>
-      </tr>
-      <tr>
-        <td>Income</td>
-        <td>{{floatToMoney(income)}}</td>
-        <td>{{floatToMoney(partner.income)}}</td>
-      </tr>
-      <tr>
-        <td>Money<br>Transferred</td>
-        <td>+{{floatToMoney(partner.moneytransferred)}}</td>
-        <td>-{{floatToMoney(partner.moneytransferred)}}</td>
-      </tr>
-      <tr>
-        <td>Message Price</td>
-        <td>----------</td>
-        <td>{{partner.actualprice ? floatToMoney(partner.actualprice) : '----------'}}</td>
-      </tr>
-      <tr>
-        <td>Total Earnings</td>
-        <td>{{floatToMoney(totalincome)}}</td>
-        <td>{{floatToMoney(partner.totalincome)}}</td>
-      </tr>
-    </table>
+    <h2 class="text-center">
+      Earnings <h3 class="text-center">(in $)</h3>
+    </h2>
+    <br>
+    <div class="row">
+      <table class="table table-striped table-bordered table-nonfluid" align="center">
+        <tr>
+          <td class="col-md-1"></td>
+          <td class="col-md-1">Role {{role}} (You)</td>
+          <td class="col-md-1">Role {{partner.role}}</td>
+        </tr>
+        <tr>
+          <td>Endownment</td>
+          <td class="text-center">{{floatToMoney(endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.endownment)}}</td>
+        </tr>
+        <tr>
+          <td>Income</td>
+          <td class="text-center">{{floatToMoney(income)}}</td>
+          <td class="text-center">{{floatToMoney(partner.income)}}</td>
+        </tr>
+        <tr>
+          <td>Money<br>Transferred</td>
+          <td class="text-center">+{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">-{{floatToMoney(partner.moneytransferred)}}</td>
+        </tr>
+        <tr ng-show="! (nomessage || freemessage)">
+          <td>Message Price</td>
+          <td></td>
+          <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
+        </tr>
+        <tr>
+          <td>Total Earnings</td>
+          <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.income + endownment)}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="text-center">
+      <button type="button" class="btn btn-info"
+        ng-click="sawEarnings()">Continue</button>
+    </div>
+  </div>
+  <!-- R show earnings -->
+  <div class="container" ng-show="showpage.showEarnings && role === 'R'">
+    <h2 class="text-center">
+      Earnings <h3 class="text-center">(in $)</h3>
+    </h2>
+    <br>
+    <div class="row">
+      <table class="table table-striped table-bordered table-nonfluid" align="center">
+        <tr>
+          <td class="col-md-1"></td>
+          <td class="col-md-1">Role {{role}} (You)</td>
+        </tr>
+        <tr>
+          <td>Endownment</td>
+          <td class="text-center">{{floatToMoney(endownment)}}</td>
+        </tr>
+        <tr>
+          <td>Income</td>
+          <td class="text-center">{{floatToMoney(income)}}</td>
+        </tr>
+          <td>Total Earnings</td>
+          <td class="text-center">{{floatToMoney(income + endownment)}}</td>
+        </tr>
+      </table>
+    </div>
     <div class="text-center">
       <button type="button" class="btn btn-info"
         ng-click="sawEarnings()">Continue</button>
@@ -1049,12 +810,12 @@
   <div class="container" ng-show="showpage.part4">
     <div class="row">
       <h3 class="text-center">Part 4</h3>
-      <p class="text-center" ng-show="showpage.part4ready">To start click continue</p>
+      <p class="text-center">To start click continue</p>
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-show="showpage.part4ready"
-          ng-click="showpage.finalquestions = 1; showpage.part4 = false;">
+        <button type="button" class="btn btn-info"
+          ng-click="showpage.finalquestions = 1; showpage.part4 = false;saveState();">
           Continue
         </button>
       </div>
@@ -1103,7 +864,7 @@
       </div>
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(finalResponses.question1,1)">Continue</button>
+          ng-click="nextFinalQuestion(finalResponses.question1,1,9)">Continue</button>
       </div>
     </div>
   </div>
@@ -1195,7 +956,7 @@
         </div>
         <div class="col-md-2 col-md-offset-5">
           <button type="button" class="btn btn-info"
-            ng-click="nextFinalQuestion(finalResponses.question2,11)">Continue</button>
+            ng-click="nextFinalQuestion(finalResponses.question2,11,7)">Continue</button>
         </div>
     </div>
   </div>
@@ -1306,7 +1067,7 @@
       </div>
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(finalResponses.question3,6)">Continue</button>
+          ng-click="nextFinalQuestion(finalResponses.question3,6,9)">Continue</button>
       </div>
     </div>
   </div>
@@ -1450,7 +1211,7 @@
       </div>
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(finalResponses.question4,9)">Continue</button>
+          ng-click="nextFinalQuestion(finalResponses.question4,9,9)">Continue</button>
       </div>
     </div>
   </div>
@@ -1468,7 +1229,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(null,0,finalResponses.question5.satisfiedOptions,7)">Continue</button>
+          ng-click="nextFinalQuestion(null,0,null,finalResponses.question5.satisfiedOptions,7)">Continue</button>
       </div>
     </div>
   </div>
@@ -1501,7 +1262,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="finishFinalQuestions(finalResponses.question6,1,finalResponses.question6.moneyOptions,7)">Continue</button>
+          ng-click="finishFinalQuestions(finalResponses.question6,1,null,finalResponses.question6.moneyOptions,7)">Continue</button>
       </div>
     </div>
     </div>

@@ -3,6 +3,9 @@
 	Next Meeting : 2015 October 15, Thursday @ 11
 -->
 
+just points they won per task on the screen. last five indivudual
+points, and the commulitive.
+
 #Reminders
 last thing to do when testing : practice refreshing and disconnecting
 from the internet
@@ -18,7 +21,6 @@ screens shouldn't sleep during experiments
 ##Before Experiment
 * 44
 * 47
-* 53
 
 ##Part 1
 
@@ -36,12 +38,12 @@ screens shouldn't sleep during experiments
 5. done. finally.
 47. try refresh
 56. done. cannot reproduce. try in the lab.
-##Changes ( 3 / 5 )
+##Changes ( 4 / 5 )
 19. done. output is going to get off of the admin page
 44. timestamps
 52. done.
 58. done.
-63. catch the correct messages needed for the values.
+63. done.
 
 #Old Feedback
 5. The tick labels of part 3 are all collapsed in one point
