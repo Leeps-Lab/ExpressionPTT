@@ -1,6 +1,5 @@
 <!---
-	2015 October 13 Tuesday
-	Next Meeting : 2015 October 15, Thursday @ 11
+	2015 November 6 Friday
 -->
 
 just points they won per task on the screen. last five indivudual
@@ -34,50 +33,61 @@ screens shouldn't sleep during experiments
 ##After Experiment
 
 #Old Plan
-##'Quick' Fixes ( 2 / 3 )
-5. done. finally.
+##'Quick' Fixes ( 0 / 1 )
 47. try refresh
-56. done. cannot reproduce. try in the lab.
-##Changes ( 4 / 5 )
-19. done. output is going to get off of the admin page
+##Changes ( 0 / 2 )
 44. timestamps
-52. done.
-58. done.
-63. done.
+68. add sliders to the end
 
 #Old Feedback
-5. The tick labels of part 3 are all collapsed in one point
-19. Parse the output
 44. take timestamps for each page
 47. try to have the income stay the same when refresh page; create flot
 	at the beginning
-52. no barrier for taking money. just use trigger/send
-56. on show earnings it shows null if the value was 0
-58. between each pair, there should be the smallest wait possible (no
-	barriers)
-63. see data in real time on the admin page (easier to make a csv)
-
-#Plan
-##Quick Fixes ( 1 / 1 )
-69. done.
-##Changes ( 5 / 5 )
-64. done.
-65. done.
-66. done.
-67. done. check with Kristian if logic is correct.
-68. done. need to copy for part4.
-
-#New Feedback
-64. prepare for elicitation methods
-65. add BDM2 elicitation method
-66. add SOP elicitation method
-67. add BDM-WTA elicitation method
 68. create six sliders for the part 1 and part 4. for the emotions :
 	'angry', 'happy', 'sad', 'discust', 'fear', 'suprize' (Inside Out
 	Emotions)
 	vertical sliders. the number on the button. or below the slider
 	make the order of the emotions random
-69. for treatments, instead of 'normal' name it 'directed message'
+
+#Plan
+##Quick Fixes ( 6 / 9 )
+70. done. check if working is fine.
+72. done.
+73. done. check if it displays properly.
+74. not sure what it is asking.
+75. not sure what is asking.
+76. not sure what is asking.
+78. done. check is wording is fine.
+79. done. check if displays correctly.
+81. done.
+
+##Changes ( 0 / 3 )
+71. 
+72. 
+77. make in player names 'variables'
+80. create option in config file
+
+#New Feedback
+70. part 1, it says 'very strongly' for both choices.
+71. empty sliders. start when they click on the slider. dot can be
+drapped. create validation.
+72. 'Practice Scrren 1' for title of practice scrren. No caps.
+73. popover : you can try as many points as you want.
+74. Part 3 : 'you received ...'
+75. include endownment in the wtp
+76. part 3 : correct : transferred not transfered
+			'The amount transferred to your account will be ${{money}}'
+			'Your final earnings will be ${{money}}'
+
+			'The amount transferred from your account would be
+			${{money}}'
+			'Your final earnings would be ${{money}}'
+77. change T P R
+           T R Reader
+78. 'write your message' on message screen.
+79. on actualpricescreen, '__no__ message is sent' bold or underscore
+80. embed video. disable pause and playback options.
+81. practice screen : 'the assigned time can be exceeded'
 
 #for the future
 instructions before the part 1

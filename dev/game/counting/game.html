@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+	   <title>Kristian's Game</title>
+     <script type="text/javascript" src="../libs/jquery.min.js"></script>
+     <script type="text/javascript" src="../libs/flot/jquery.flot.min.js"></script>
+     <script type="text/javascript" src="../libs/bootstrap.min.js"></script>
+     <link type="text/css" rel="stylesheet" href="../libs/bootstrap.min.css">
+     <link href='https://fonts.googleapis.com/css?family=PT+Mono' rel='stylesheet' type='text/css'>
+     <script type="text/javascript" src="game.js"></script>
+  </head>
+  <body>
+    <div class="container" id="ngshow">
+      <br><br>
+      <div class="row">
+        <h3 class="text-center" id="income">So far, your income is $0.00.</h3>
+      </div>
+      <br>
+      <div class="row">
+        <p id="searchfor" class="col-md-10 col-md-offset-1 text-center"></p>
+      </div>
+      <br>
+  		<div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          <h5 id="randomtext" style="font-family:'PT Mono';border-style:solid;border-width:1px;word-wrap:break-word;"></h5>
+        </div>
+  		</div>
+      <br><br>
+      <div class="row">
+        <div class="col-md-1 col-md-offset-5">
+          <label>Characters</label>
+          <input id="charNum" class="form-control" type="text" />
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+          <button onclick="checkCount()" type="button" class="btn btn-success">Check</button>
+        </div>
+      </div>
+      <div class="row">
+        <h3 id="status" class="text-center"></h3>
+      </div>
+    </div>
+  </body>
+</html>

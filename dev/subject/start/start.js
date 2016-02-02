@@ -937,8 +937,9 @@
         step: 1,
         value : 0,
         slide: function(event, ui) {
-            $scope.initalResponses.happiness = ui.value;
-            $("#initalhappiness").text(ui.value);
+          ui.handle.style.display = "inline";
+          $scope.initalResponses.happiness = ui.value;
+          $("#initalhappiness").text(ui.value);
         }
       });
       $("#sadness").slider({
@@ -948,8 +949,9 @@
         max : 10,
         value : 0,
         slide: function(event, ui) {
-            $scope.initalResponses.sadness = ui.value;
-            $("#initalsadness").text(ui.value);
+          ui.handle.style.display = "inline";
+          $scope.initalResponses.sadness = ui.value;
+          $("#initalsadness").text(ui.value);
         }
       });
       $("#fear").slider({
@@ -959,8 +961,9 @@
         max : 10,
         value : 0,
         slide: function(event, ui) {
-            $scope.initalResponses.fear = ui.value;
-            $("#initalfear").text(ui.value);
+          ui.handle.style.display = "inline";
+          $scope.initalResponses.fear = ui.value;
+          $("#initalfear").text(ui.value);
         }
       });
       $("#anger").slider({
@@ -970,8 +973,9 @@
         max : 10,
         value : 0,
         slide: function(event, ui) {
-            $scope.initalResponses.anger = ui.value;
-            $("#initalanger").text(ui.value);
+          ui.handle.style.display = "inline";
+          $scope.initalResponses.anger = ui.value;
+          $("#initalanger").text(ui.value);
         }
       });
       $("#surprise").slider({
@@ -981,8 +985,9 @@
         max : 10,
         value : 0,
         slide: function(event, ui) {
-            $scope.initalResponses.surprise = ui.value;
-            $("#initalsurprise").text(ui.value);
+          ui.handle.style.display = "inline";
+          $scope.initalResponses.surprise = ui.value;
+          $("#initalsurprise").text(ui.value);
         }
       });
       $("#disgust").slider({
@@ -992,11 +997,13 @@
         max : 10,
         value : 0,
         slide: function(event, ui) {
-            $scope.initalResponses.disgust = ui.value;
-            $("#initaldisgust").text(ui.value);
+          ui.handle.style.display = "inline";
+          $scope.initalResponses.disgust = ui.value;
+          $("#initaldisgust").text(ui.value);
         }
       });
-
+      $(".slider1.ui-state-default").hide();
+      document.getElementById("slider1").children[0].children[1].style.display = "none";
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
@@ -1006,6 +1013,7 @@
           value: 0,
           range: 'min',
           slide: function(event, ui) {
+            ui.handle.style.display = "inline";
             console.log("T slider");
             $scope.percent = ui.value;
             $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent + "%");
@@ -1025,6 +1033,7 @@
           value: 0,
           range: 'min',
           slide: function(event, ui) {
+            ui.handle.style.display = "inline";
             console.log("P slider");
             $scope.percent = ui.value;
             $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent + "%");
@@ -1035,7 +1044,9 @@
           }
         });
       }
-      console.log("sliders created");
+      $(".ui-state-default").hide();
+      $(".ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
+      console.log("sliders created, buttons hidden");
     };
     $scope.showSliders = function() {
       $scope.showpage.roles = false;
@@ -1322,7 +1333,6 @@
 
     rs.on_load(function() {
       console.log("hello experiment");
-      console.log(rs);
       // congif values
       $scope.userIndex = parseInt(rs.user_id);
       var configfile = rs.subjects[$scope.userIndex - 1].data;
@@ -1339,7 +1349,6 @@
       $scope.role = configfile.role[0];
       $scope.endownment = configfile.endowment[0] * 100 * $scope.scale;
       if ($scope.method === "BDMWTA") $scope.endownment = 0;
-      console.log(configfile);
 
       // check if debug is up
       if (configfile.debug[0] === "False") $scope.debug = false;
