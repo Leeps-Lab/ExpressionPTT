@@ -992,9 +992,10 @@
             $("#tMoneyTransferred").text("The amount tranferred to your account will be $" + $scope.floatToMoney($scope.transferred).toFixed(2) + ".");
             $scope.finalEarnings = $scope.income + $scope.transferred;
             $("#tFinalEarnings").text("Your final earnings will be $" + $scope.floatToMoney($scope.finalEarnings).toFixed(2) + ".");
+            rs.trigger("tickmark", {role: $scope.role, percent: ui.value, money: $scope.transferred});
           }
         });
-      } else {
+      } else if ($scope.role === "P"){
         $scope.percentSlider = $("#pSlider").labeledslider({
           max: 100,
           tickArray: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -1009,6 +1010,7 @@
             $("#pMoneyTransferred").text("The amount transferred from your account would be $" + $scope.floatToMoney($scope.transferred).toFixed(2) + ".");
             $scope.finalEarnings = $scope.income - $scope.transferred;
             $("#pFinalEarnings").text("Your final earnings would be $" + $scope.floatToMoney($scope.finalEarnings).toFixed(2) + ".");
+            rs.trigger("tickmark", {role: $scope.role, percent: ui.value, money: $scope.transferred});
           }
         });
       }

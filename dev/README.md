@@ -34,9 +34,9 @@ screens shouldn't sleep during experiments
 #Old Plan
 ##'Quick' Fixes ( 0 / 1 )
 47. try refresh
-##Changes ( 0 / 2 )
-44. timestamps
-68. add sliders to the end
+##Changes ( 2 / 2 )
+44. done.
+68. done.
 
 #Old Feedback
 44. take timestamps for each page
@@ -49,7 +49,7 @@ screens shouldn't sleep during experiments
 	make the order of the emotions random
 
 #Plan
-##Quick Fixes ( 6 / 9 )
+##Quick Fixes ( 7 / 9 )
 70. done. check if working is fine.
 72. done.
 73. done. check if it displays properly.
@@ -60,9 +60,8 @@ screens shouldn't sleep during experiments
 79. done. check if displays correctly.
 81. done.
 
-##Changes ( 0 / 3 )
-71. 
-72. 
+##Changes ( 1 / 3 )
+71. done
 77. make in player names 'variables'
 80. create option in config file
 
@@ -70,7 +69,7 @@ screens shouldn't sleep during experiments
 70. part 1, it says 'very strongly' for both choices.
 71. empty sliders. start when they click on the slider. dot can be
 drapped. create validation.
-72. 'Practice Screen 1' for title of practice scrren. No caps.
+72. 'Practice Scrren 1' for title of practice scrren. No caps.
 73. popover : you can try as many points as you want.
 74. Part 3 : 'you received ...'
 75. include endownment in the wtp
