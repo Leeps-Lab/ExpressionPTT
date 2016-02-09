@@ -24,6 +24,7 @@ var checkCount = function() {
   if ($("#randomtext").text().split(char).length-1 == $("#charNum").val()) {
     $("#status").text("Correct");
   } else {
+    
     $("#status").text("Incorrect");
   }
 };

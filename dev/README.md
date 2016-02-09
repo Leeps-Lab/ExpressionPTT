@@ -18,7 +18,6 @@ screens shouldn't sleep during experiments
 #The To-Do List
 
 ##Before Experiment
-* 44
 * 47
 
 ##Part 1
@@ -56,7 +55,7 @@ screens shouldn't sleep during experiments
 73. done. check if it displays properly.
 74. not sure what it is asking.
 75. not sure what is asking.
-76. not sure what is asking.
+76. done
 78. done. check is wording is fine.
 79. done. check if displays correctly.
 81. done.
@@ -71,7 +70,7 @@ screens shouldn't sleep during experiments
 70. part 1, it says 'very strongly' for both choices.
 71. empty sliders. start when they click on the slider. dot can be
 drapped. create validation.
-72. 'Practice Scrren 1' for title of practice scrren. No caps.
+72. 'Practice Screen 1' for title of practice scrren. No caps.
 73. popover : you can try as many points as you want.
 74. Part 3 : 'you received ...'
 75. include endownment in the wtp

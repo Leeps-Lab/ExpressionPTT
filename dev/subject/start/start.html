@@ -40,7 +40,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="showpage.showStartExperiment = false; showpage.part1 = true;saveState();">
+          ng-click="showpage.showStartExperiment = false; showpage.part1 = true; saveState();">
           Continue
         </button>
       </div>
@@ -61,8 +61,6 @@
     </div>
   </div>
   <!-- inital questions -->
-
-  <!-- question 1 -->
   <div class="container" ng-show="showpage.initalquestions">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
@@ -76,42 +74,42 @@
     <div class="row">
       <div class="col-md-2">
         <div class="text-center" id="slider1">
-          <div id="happiness" style="height: 300px;margin-left: 45%"></div>
+          <div id="ihappiness" style="height: 300px;margin-left: 45%"></div>
           <h4 id="initalhappiness" style="border-style:solid;border-width:2px;">0</h4>
           <h4>Happiness</h4>
         </div>
       </div>
       <div class="col-md-2">
         <div class="text-center">
-          <div id="sadness" style="height: 300px;margin-left: 45%"></div>
+          <div id="isadness" style="height: 300px;margin-left: 45%"></div>
           <h4 id="initalsadness" style="border-style:solid;border-width:2px;">0</h4>
           <h4>Sadness</h4>
         </div>
       </div>
       <div class="col-md-2">
         <div class="text-center">
-          <div id="fear" style="height: 300px;margin-left: 45%"></div>
+          <div id="ifear" style="height: 300px;margin-left: 45%"></div>
           <h4 id="initalfear" style="border-style:solid;border-width:2px;">0</h4>
           <h4>Fear</h4>
         </div>
       </div>
       <div class="col-md-2">
         <div class="text-center">
-          <div id="anger" style="height: 300px;margin-left: 45%"></div>
+          <div id="ianger" style="height: 300px;margin-left: 45%"></div>
           <h4 id="initalanger" style="border-style:solid;border-width:2px;">0</h4>
           <h4>Anger</h4>
         </div>
       </div>
       <div class="col-md-2">
         <div class="text-center">
-          <div id="surprise" style="height: 300px;margin-left: 45%"></div>
+          <div id="isurprise" style="height: 300px;margin-left: 45%"></div>
           <h4 id="initalsurprise" style="border-style:solid;border-width:2px;">0</h4>
           <h4>Surprise</h4>
         </div>
       </div>
       <div class="col-md-2">
         <div class="text-center">
-          <div id="disgust" style="height: 300px;margin-left: 45%"></div>
+          <div id="idisgust" style="height: 300px;margin-left: 45%"></div>
           <h4 id="initaldisgust" style="border-style:solid;border-width:2px;">0</h4>
           <h4>Disgust</h4>
         </div>
@@ -416,13 +414,13 @@
     <div class="row text-center">
       <div class="col-md-12">
         <div id="tSlider" style="width:600px;"></div>
-        <h4 id="tPercentTransfered">Percentage transfered: {{percent}}</h4>
+        <h4 id="tPercentTransfered">Percentage tranferred: {{percent}}</h4>
       </div>
     </div>
     <br><br><br><br>
     <div class="row">
-      <h3 id="tMoneyTransferred" class="text-center">Money (in $) transferred to your account : {{transfered}}</h3>
-      <h3 id="tFinalEarnings" class="text-center">Money final earnings (in $) for the experiment will be: {{totalincome}}</h3>
+      <h3 id="tMoneyTransferred" class="text-center">The amount tranferred to your account will be $0.</h3>
+      <h3 id="tFinalEarnings" class="text-center">Your final earnings will be ${{totalincome}}.</h3>
     </div>
     <br>
     <div class="row">
@@ -455,8 +453,8 @@
     </div>
     <br><br><br><br>
     <div class="row">
-      <h3 id="pMoneyTransferred" class="text-center">Amount (in $) expected to be transferred to T's account: {{transfered}}</h3>
-      <h3 id="pFinalEarnings" class="text-center">Your expected avaliable earnings (in $) are: {{totalincome}}</h3>
+      <h3 id="pMoneyTransferred" class="text-center">The amount transferred from your account would be $0.</h3>
+      <h3 id="pFinalEarnings" class="text-center">Your final earnings would be ${{totalincome}}.</h3>
     </div>
     <br>
     <div class="row">
@@ -486,8 +484,8 @@
   <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDM1'">
     <div class="row">
       <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
-        (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
-      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
+        (${{floatToMoney(partner.moneytransferred) | number: 2}}) to his/her own account.</h3>
+      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred) | number: 2}}</h3>
     </div>
     <div class="row text-center">
       <h3 class="text-center">What is the maximum amount you would be willing to pay to write and send a message that your
@@ -585,9 +583,9 @@
   <!-- check price -->
   <div class="container" ng-show="showpage.checkprice && role === 'P'">
     <div class="row text-center">
-      <h3>The actual price is ${{floatToMoney(actualprice)}}</h3>
-      <h3 ng-hide="method === 'BDMWTA'">Your maximum willingness was ${{floatToMoney(bid)}}</h3>
-      <h3 ng-show="method === 'BDMWTA'">Your minimum willingness was ${{floatToMoney(bid)}}</h3>
+      <h3>The actual price is ${{floatToMoney(actualprice) | number: 2}}</h3>
+      <h3 ng-hide="method === 'BDMWTA'">Your maximum willingness was ${{floatToMoney(bid) | number: 2}}</h3>
+      <h3 ng-show="method === 'BDMWTA'">Your minimum willingness was ${{floatToMoney(bid) | number: 2}}</h3>
       <h3 ng-show="ablesendmessage">Therefore, the message has been sent to your counterpart.</h3>
       <h3 ng-hide="ablesendmessage">Therefore, <u><strong>no</strong></u> message will be sent to your counterpart.</h3>
     </div>
@@ -700,28 +698,28 @@
         </tr>
         <tr>
           <td>Endownment</td>
-          <td class="text-center">{{floatToMoney(partner.endownment)}}</td>
-          <td class="text-center">{{floatToMoney(endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.endownment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(endownment) | number: 2}}</td>
         </tr>
         <tr>
           <td>Income</td>
-          <td class="text-center">{{floatToMoney(partner.income)}}</td>
-          <td class="text-center">{{floatToMoney(income)}}</td>
+          <td class="text-center">{{floatToMoney(partner.income) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(income) | number: 2}}</td>
         </tr>
         <tr>
           <td>Money<br>Transferred</td>
-          <td class="text-center">+{{floatToMoney(partner.moneytransferred)}}</td>
-          <td class="text-center">-{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">+{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
+          <td class="text-center">-{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
         </tr>
         <tr ng-show="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
-          <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
+          <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice).toFixed(2) : ''}}</td>
         </tr>
         <tr>
           <td>Total Earnings</td>
-          <td class="text-center">{{floatToMoney(partner.totalincome + endownment)}}</td>
-          <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(partner.totalincome + endownment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(totalincome + endownment) | number: 2}}</td>
         </tr>
       </table>
     </div>
@@ -745,28 +743,28 @@
         </tr>
         <tr>
           <td>Endownment</td>
-          <td class="text-center">{{floatToMoney(endownment)}}</td>
-          <td class="text-center">{{floatToMoney(partner.endownment)}}</td>
+          <td class="text-center">{{floatToMoney(endownment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(partner.endownment) | number: 2}}</td>
         </tr>
         <tr>
           <td>Income</td>
-          <td class="text-center">{{floatToMoney(income)}}</td>
-          <td class="text-center">{{floatToMoney(partner.income)}}</td>
+          <td class="text-center">{{floatToMoney(income) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(partner.income) | number: 2}}</td>
         </tr>
         <tr>
           <td>Money<br>Transferred</td>
-          <td class="text-center">+{{floatToMoney(partner.moneytransferred)}}</td>
-          <td class="text-center">-{{floatToMoney(partner.moneytransferred)}}</td>
+          <td class="text-center">+{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
+          <td class="text-center">-{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
         </tr>
         <tr ng-show="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
-          <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice) : ''}}</td>
+          <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice).toFixed(2) : ''}}</td>
         </tr>
         <tr>
           <td>Total Earnings</td>
-          <td class="text-center">{{floatToMoney(totalincome + endownment)}}</td>
-          <td class="text-center">{{floatToMoney(partner.income + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(totalincome + endownment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(partner.income + endownment) | number: 2}}</td>
         </tr>
       </table>
     </div>
@@ -815,7 +813,7 @@
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info"
-          ng-click="showpage.finalquestions = 1; showpage.part4 = false;saveState();">
+          ng-click="showpage.finalquestions = true; showpage.part4 = false;saveState();">
           Continue
         </button>
       </div>
@@ -824,445 +822,63 @@
   <!-- final questions -->
 
   <!-- question 1 -->
-  <div class="container" ng-show="showpage.finalquestions === 1">
+  <div class="container" ng-show="showpage.finalquestions">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
-        <h3 class="text-center">Right now, how would you describe yourself?</h3>
-        <p class="text-center">(Please enter the number that best applies to you at this moment)</p>
-        <div class="row" style="border-style:solid;border-width:2px;">
-          <div class="col-md-1">
-            1:<br>Extremeley<br><strong>unhappy</strong>
-          </div>
-          <div class="col-md-1">
-            2:<br>Very unhappy
-          </div>
-          <div class="col-md-1">
-            3:<br>Unhappy
-          </div>
-          <div class="col-md-1">
-            4:<br>Somewhat happy
-          </div>
-          <div class="col-md-1">
-            5:<br>Neutral
-          </div>
-          <div class="col-md-1">
-            6:<br>Somewhat happy
-          </div>
-          <div class="col-md-1">
-            7:<br>Happy
-          </div>
-          <div class="col-md-1">
-            8:<br>Very happy
-          </div>
-          <div class="col-md-1">
-            9:<br>Extremeley<br><strong>happy</strong>
-          </div>
-        </div>
-        <div class="row text-center">
-          <input class="text" ng-model="finalResponses.question1.answer1" />
-        </div>
-      </div>
-      <div class="text-center">
-        <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(finalResponses.question1,1,9)">Continue</button>
+        <h3 class="text-center">Please use the sliders to indicate your current state:
+        </h3>
+        <h4 class="text-center">(1 : you are not experiencing the feeling very strongly.<br>
+          10 : you are experiencing the feeling very strongly.)
+        </h4>
       </div>
     </div>
-  </div>
-  <!-- question 2 -->
-  <div class="container" ng-show="showpage.finalquestions === 2">
     <div class="row">
-      <h3 class="text-center">Please, give the number that best describes the emotons you
-        are experiencing at this moment :</h3>
-        <p class="text-center">(Follow the scale below)</p>
-        <div class="row" style="border-style:solid;border-width:2px;">
-          <div class="col-md-1">
-            1<br>Emotion is not<br>present at all
-          </div>
-          <div class="col-md-1">
-            2
-          </div>
-          <div class="col-md-1">
-            3
-          </div>
-          <div class="col-md-1">
-            4
-          </div>
-          <div class="col-md-1">
-            5
-          </div>
-          <div class="col-md-1">
-            6
-          </div>
-          <div class="col-md-1">
-            7<br>Emotion feels<br>very intense
-          </div>
-        </div>
-        <br>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-2">
-            Irritation
-            <input type="text" ng-model="finalResponses.question2.answer1" />
-          </div>
-          <div class="col-md-4">
-            Sadness
-            <input type="text" ng-model="finalResponses.question2.answer2" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-2">
-            Anger
-            <input type="text" ng-model="finalResponses.question2.answer3" />
-          </div>
-          <div class="col-md-4">
-            Happiness
-            <input type="text" ng-model="finalResponses.question2.answer4" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-2">
-            Contempt
-            <input type="text" ng-model="finalResponses.question2.answer5" />
-          </div>
-          <div class="col-md-4">
-            Fear
-            <input type="text" ng-model="finalResponses.question2.answer6" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-2">
-            Surprise
-            <input type="text" ng-model="finalResponses.question2.answer7" />
-          </div>
-          <div class="col-md-4">
-            Joy
-            <input type="text" ng-model="finalResponses.question2.answer8" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-2">
-            Envy
-            <input type="text" ng-model="finalResponses.question2.answer9" />
-          </div>
-          <div class="col-md-4">
-            Shame
-            <input type="text" ng-model="finalResponses.question2.answer10" />
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-4 col-md-offset-4">
-            Jealousy
-            <input type="text" ng-model="finalResponses.question2.answer11" />
-          </div>
-        </div>
-        <div class="col-md-2 col-md-offset-5">
-          <button type="button" class="btn btn-info"
-            ng-click="nextFinalQuestion(finalResponses.question2,11,7)">Continue</button>
-        </div>
-    </div>
-  </div>
-  <!-- question 3 -->
-  <div class="container" ng-show="showpage.finalquestions === 3">
-    <div class="row">
-      <h3 class="text-center">Below you are given pairs of opposite feelings. Use the following scale
-        to indicate your current modd relative to these feelings.</h3>
-      <p class="text-center">(1: you are experiencing the feeling on the left side very strongly.<br>
-        9: you are experiencing the feeling on the right side very strongly.)</p>
-    </div>
-    <div class="row" style="border-style:solid;border-width:2px;">
-      <div class="col-md-1">
-        1
-      </div>
-      <div class="col-md-1">
-        2
-      </div>
-      <div class="col-md-1">
-        3
-      </div>
-      <div class="col-md-1">
-        4
-      </div>
-      <div class="col-md-1">
-        5<br>Neutral
-      </div>
-      <div class="col-md-1">
-        6
-      </div>
-      <div class="col-md-1">
-        7
-      </div>
-      <div class="col-md-1">
-        8
-      </div>
-      <div class="col-md-1">
-        9
-      </div>
-    </div>
-      <br>
-    <div class="row">
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Bad mood
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question3.answer1" />
-        </div>
-        <div class="col-md-2">
-          Good mood
+      <div class="col-md-2">
+        <div class="text-center" id="slider1">
+          <div id="fhappiness" style="height: 300px;margin-left: 45%"></div>
+          <h4 id="finalhappiness" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Happiness</h4>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Sad
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question3.answer2" />
-        </div>
-        <div class="col-md-1">
-          Happy
+      <div class="col-md-2">
+        <div class="text-center">
+          <div id="fsadness" style="height: 300px;margin-left: 45%"></div>
+          <h4 id="finalsadness" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Sadness</h4>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Depressed
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question3.answer3" />
-        </div>
-        <div class="col-md-1">
-          Elated
+      <div class="col-md-2">
+        <div class="text-center">
+          <div id="ffear" style="height: 300px;margin-left: 45%"></div>
+          <h4 id="finalfear" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Fear</h4>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Gloomy
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question3.answer4" />
-        </div>
-        <div class="col-md-1">
-          Cheerful
+      <div class="col-md-2">
+        <div class="text-center">
+          <div id="fanger" style="height: 300px;margin-left: 45%"></div>
+          <h4 id="finalanger" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Anger</h4>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Displeased
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question3.answer5" />
-        </div>
-        <div class="col-md-1">
-          Pleased
+      <div class="col-md-2">
+        <div class="text-center">
+          <div id="fsurprise" style="height: 300px;margin-left: 45%"></div>
+          <h4 id="finalsurprise" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Surprise</h4>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Sorrowful
+      <div class="col-md-2">
+        <div class="text-center">
+          <div id="fdisgust" style="height: 300px;margin-left: 45%"></div>
+          <h4 id="finaldisgust" style="border-style:solid;border-width:2px;">0</h4>
+          <h4>Disgust</h4>
         </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question3.answer6" />
-        </div>
-        <div class="col-md-1">
-          Joyful
-        </div>
-      </div>
-      <div class="text-center">
-        <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(finalResponses.question3,6,9)">Continue</button>
-      </div>
-    </div>
-  </div>
-  <!-- question 4 -->
-  <div class="container" ng-show="showpage.finalquestions === 4">
-    <div class="row">
-      <h3 class="text-center">Below you are given pairs of opposite feelings. Use the following scale
-        to indicate your current modd relative to these feelings.</h3>
-      <p class="text-center">(1: you are experiencing the feeling on the left side very strongly.<br>
-        9: you are experiencing the feeling on the right side very strongly.)</p>
-    </div>
-    <div class="row" style="border-style:solid;border-width:2px;">
-      <div class="col-md-1">
-        1
-      </div>
-      <div class="col-md-1">
-        2
-      </div>
-      <div class="col-md-1">
-        3
-      </div>
-      <div class="col-md-1">
-        4
-      </div>
-      <div class="col-md-1">
-        5<br>Neutral
-      </div>
-      <div class="col-md-1">
-        6
-      </div>
-      <div class="col-md-1">
-        7
-      </div>
-      <div class="col-md-1">
-        8
-      </div>
-      <div class="col-md-1">
-        9
-      </div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Nervous
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer1" />
-        </div>
-        <div class="col-md-1">
-          Calm
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Tense
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer2" />
-        </div>
-        <div class="col-md-1">
-          Relaxed
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Unconfortable
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer3" />
-        </div>
-        <div class="col-md-1">
-          Confortable
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Apathetic
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer4" />
-        </div>
-        <div class="col-md-1">
-          Caring
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Lethargic
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer5" />
-        </div>
-        <div class="col-md-1">
-          Energetic
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Unconfident
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer6" />
-        </div>
-        <div class="col-md-1">
-          Confident
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Unresponsive
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer7" />
-        </div>
-        <div class="col-md-1">
-          Emotional
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Unconfident
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer8" />
-        </div>
-        <div class="col-md-1">
-          Confident
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-1 col-md-offset-4">
-          Passive
-        </div>
-        <div class="col-md-2">
-          <input type="text" ng-model="finalResponses.question4.answer9" />
-        </div>
-        <div class="col-md-1">
-          Active
-        </div>
-      </div>
-      <div class="text-center">
-        <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(finalResponses.question4,9,9)">Continue</button>
-      </div>
-    </div>
-  </div>
-  <!-- question 5 -->
-  <div class="container" ng-show="showpage.finalquestions === 5">
-    <div class="row">
-      <h3 class="text-center">Regarding this experiment, how satisfied would you say that you are with it?</h3>
-      <p class="text-center">(Check the option that best describes your satisfaction with respect to this experiment)</p>
-
-      <div class="text-center" ng-repeat="checkbox in finalResponses.question5.satisfiedOptions track by $index">
-        <input type="checkbox" ng-model="checkbox.selected" ng-change="optionToggled($index)">
-        {{checkbox.value}}
       </div>
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info"
-          ng-click="nextFinalQuestion(null,0,null,finalResponses.question5.satisfiedOptions,7)">Continue</button>
-      </div>
-    </div>
-  </div>
-  <!-- question 6 -->
-  <div class="container" ng-show="showpage.finalquestions === 6">
-    <div class="row">
-      <h3 class="text-center">What is your best estimate of your total expenditures this school year?</h3>
-      <h4 class="text-center">(Please consider all expenses, even if some are convered by financial
-        aid or grants, including tuition, housing, food, clothing, transportation,
-        entertainment, etc. Indicate in whole dollars)
-      </h4>
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <input type="text" ng-model="finalResponses.question6.answer1" />
-      </div>
-    </div>
-    <div class="row">
-      <h3 class="text-center">What is the total (gross) income last year of your parents or guardians
-        (or spouse, if married)?
-      </h3>
-      <h4 class="text-center">(Exclude your own earnings)</h4>
-    </div>
-    <div class="row">
-      <div class="text-center" ng-repeat="checkbox in finalResponses.question6.moneyOptions track by $index">
-        <input type="checkbox" ng-model="checkbox.selected" ng-change="moneyToggled($index)">
-        {{checkbox.value}}
-      </div>
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <button type="button" class="btn btn-info"
-          ng-click="finishFinalQuestions(finalResponses.question6,1,null,finalResponses.question6.moneyOptions,7)">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="finishFinalQuestions()">Continue</button>
       </div>
     </div>
     </div>

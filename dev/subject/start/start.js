@@ -1,151 +1,48 @@
   Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "RedwoodSubject", function($rootScope, $scope, $sce, $timeout, rs) {
     $scope.initalResponses = {
-      happiness : '',
-      sadness : '',
-      fear : '',
-      anger : '',
-      surprise : '',
-      disgust : ''
+      happiness: '',
+      sadness: '',
+      fear: '',
+      anger: '',
+      surprise: '',
+      disgust: ''
     };
     $scope.finalResponses = {
-      question1: {
-        answer1: ''
-      },
-      question2: {
-        answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: '', answer9: '', answer10: '', answer11: ''
-      },
-      question3: {
-        answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: ''
-      },
-      question4: {
-        answer1: '', answer2: '', answer3: '', answer4: '', answer5: '', answer6: '', answer7: '', answer8: '', answer9: ''
-      },
-      question5: {
-        satisfiedOptions: [
-          {
-            value: 'Completely satisfied.',
-            selected: false
-          },
-          {
-            value: 'Very satisfied.',
-            selected: false
-          },
-          {
-            value: 'Rather satisfied.',
-            selected: false
-          },
-          {
-            value: 'Neither satisfied nor dissatisfied.',
-            selected: false
-          },
-          {
-            value: 'Rather dissatisfied.',
-            selected: false
-          },
-          {
-            value: 'Very dissatisfied.',
-            selected: false
-          },
-          {
-            value: 'Completely dissatisfied.',
-            selected: false
-          }
-        ]
-      },
-      question6: {
-        answer1: '',
-        moneyOptions: [
-          {
-            value: '$0 to less than $25,000',
-            selected: false
-          },
-          {
-            value: '$25,000 to less than $50,000',
-            selected: false
-          },
-          {
-            value: '$50,000 to less than $75,000',
-            selected: false
-          },
-          {
-            value: '$75,000 to less than $100,000',
-            selected: false
-          },
-          {
-            value: '$100,000 to less than $125,000',
-            selected: false
-          },
-          {
-            value: '$125,000 to less than $150,000',
-            selected: false
-          },
-          {
-            value: '$150,000 or more',
-            selected: false
-          },
-        ]
-      },
-    };
-    $scope.optionToggled = function(index) {
-      for(var i = 0; i < $scope.finalResponses.question5.satisfiedOptions.length; i++) {
-        if (index === i) continue;
-        $scope.finalResponses.question5.satisfiedOptions[i].selected = false;
-      }
-    };
-    $scope.moneyToggled = function(index) {
-      for(var i = 0; i < $scope.finalResponses.question6.moneyOptions.length; i++) {
-        if (index === i) continue;
-        $scope.finalResponses.question6.moneyOptions[i].selected = false;
-      }
+      happiness: '',
+      sadness: '',
+      fear: '',
+      anger: '',
+      surprise: '',
+      disgust: ''
     };
     // checks if inputs are filled out
-    $scope.isValid = function(qNum,rNum,mNum,toggle,tNumber) {
-      if (!qNum && !toggle) return true;
-      console.log("preparing ... ");
-      // checks input values
-      if (qNum) {
-        for (var i = 1; i <= rNum; i++) {
-          console.log("whats the password");
-          if (qNum["answer" + i] === "") {
-            console.log("you shall not pass");
-            sweetAlert({
-              //title: "Sorry",
-              title: "This entry is not valid, please read instructions.",
-              type: "error",
-              allowOutsideClick: true
-            });
-            return false;
-          } else if (isNaN(qNum["answer" + i])) {
-            console.log("you didn't put a number");
-            sweetAlert({
-              //title: "Sorry",
-              title: "This entry is not valid, please read instructions.",
-              type: "error",
-              allowOutsideClick: true
-            });
-            return false;
-          } else if (mNum !== null && (parseInt(qNum["answer" + i]) < 1 ||
-            mNum < parseInt(qNum["answer" + i]))) {
-            console.log("not in range");
-            sweetAlert({
-              //title: "Sorry",
-              title: "This entry is not valid, please read instructions.",
-              type: "error",
-              allowOutsideClick: true
-            });
-            return false;
-          }
+    $scope.isValid = function(answers) {
+      if ($scope.debug) return true;
+      for (answer in answers) {
+        if (!answers[answer]) {
+          sweetAlert({
+            title: "Please enter a value for all emotions.",
+            text: "",
+            type: "error",
+            allowOutsideClick: true
+          });
+          return false;
         }
       }
-      // checks if a toggle is true
-      if (!toggle) return true;
-      for (var i = 1; i < tNumber; i++) {
-        console.log("check " + i);
-        if (toggle[i].selected === true) {
-          return true;
-        }
+      return true;
+    };
+    $scope.checkSlider = function(value) {
+      if ($scope.debug) return true;
+      if (!value) {
+        sweetAlert({
+          title: "Please enter a value of percent.",
+          text: "",
+          type: "error",
+          allowOutsideClick: true
+        });
+        return false;
       }
-      return false;
+      return true;
     };
 
     // saves which pages are open
@@ -217,7 +114,7 @@
       readMessage: false,
       showEarnings: false,
       part4: false,
-      finalquestions: null,
+      finalquestions: false,
       thanks: false
     };
     $scope.barrier = {
@@ -278,20 +175,19 @@
     // finishes questions onto money part
     // barrier : have all people ready for part 2
     $scope.finishQuestions = function() {
-      //if ($scope.isValid(qNum, rNum,mNum)) {
-        $scope.showpage.initalquestions = false;
+      if (!$scope.isValid($scope.initalResponses)) return;
+      $scope.showpage.initalquestions = false;
 
-        $scope.showpage.part2 = true;
-        // send answers back to server
-        rs.trigger("sendinitalanswers", {
-          initalResponses: $scope.initalResponses,
-          showpage: $scope.showpage
-        });
-        // get ready for a barrier
-        console.log("ready for part 2?");
-        rs.trigger("readypart2self", {
-        });
-      //}
+      $scope.showpage.part2 = true;
+      // send answers back to server
+      rs.trigger("sendfinalanswers", {
+        initalResponses: $scope.initalResponses,
+        showpage: $scope.showpage
+      });
+      // get ready for a barrier
+      console.log("ready for part 2?");
+      rs.trigger("readypart2self", {
+      });
     };
     $scope.practiceTimeout = function() {
       $scope.time--;
@@ -464,7 +360,7 @@
       $scope.income += $scope.locatorState.getPointvalue();
       $scope.maxpoints = (Math.floor(Math.random() * 80) + 20) * $scope.scale;
       $("#income").text("So far, your income is $" +
-        $scope.floatToMoney($scope.income) + ".");
+        $scope.floatToMoney($scope.income).toFixed(2) + ".");
 
       // save income
       rs.trigger("saveIncome", {
@@ -529,6 +425,7 @@
       $scope.saveState();
     };
     $scope.sendDecision = function() {
+      if (!$scope.checkSlider($scope.percent)) return;
       $scope.showpage.slider = false;
       $scope.showpage.waitpage = true;
       $scope.saveState();
@@ -565,6 +462,7 @@
       rs.trigger("readyTransferProcessSelf", {});
     };
     $scope.sendEstimate = function() {
+      if (!$scope.checkSlider($scope.percent)) return;
       $scope.showpage.slider = false;
       $scope.showpage.waitpage = true;
       $scope.saveState();
@@ -593,6 +491,15 @@
       rs.trigger("readyTransferProcessSelf", {});
     };
     $scope.sendWillingness = function(responce) {
+      if (!$scope.bid) {
+        sweetAlert({
+          title: "Please enter an amount.",
+          text: "",
+          type: "error",
+          allowOutsideClick: true
+        });
+        return;
+      }
       if ($scope.method === "BDM1" || $scope.method === "BDMWTA") {
         $scope.actualprice = Math.floor(Math.random() * 300);
         $scope.bid *= 100;
@@ -710,6 +617,7 @@
     $scope.sendMessage = function() {
       // navigate to correct page
       $scope.showpage.messagePage = false;
+      $scope.message = " ";
       rs.trigger("adminmessage", {
         message: $scope.message.replace(/\n/g, '<br />')
       });
@@ -758,27 +666,16 @@
 
       $scope.saveState();
     };
-    $scope.nextFinalQuestion = function(qNum,rNum,mNum,toggle,tNumber) {
-      if ($scope.debug) $scope.finishFinalQuestions(qNum,rNum,mNum,toggle,tNumber);
-      else if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
-        $scope.showpage.finalquestions++;
-        // send responses in case of a refresh
-        rs.trigger("savefinalanswers", {
-          finalResponses: $scope.finalResponses,
-          showpage: $scope.showpage
-        });
-      }
-    };
-    $scope.finishFinalQuestions = function(qNum,rNum,mNum,toggle,tNumber) {
-      if ($scope.isValid(qNum,rNum,mNum,toggle,tNumber)) {
-        $scope.showpage.finalquestions = 7;
-        $scope.showpage.thanks = true;
-        // send answers back to server
-        rs.trigger("sendfinalanswers", {
-          finalResponses: $scope.finalResponses,
-          showpage: $scope.showpage
-        });
-      }
+    $scope.finishFinalQuestions = function() {
+      if (!$scope.isValid($scope.finalResponses)) return;
+      $scope.showpage.finalquestions = false;
+
+      $scope.showpage.thanks = true;
+      // send answers back to server
+      rs.trigger("sendinitalanswers", {
+        initalResponses: $scope.finalResponses,
+        showpage: $scope.showpage
+      });
     };
 
     $scope.floatToMoney = function(number) {
@@ -929,7 +826,7 @@
       console.log("begin creation");
 
       // create sliders for the initalquestions
-      $("#happiness").slider({
+      $("#ihappiness").slider({
         orientation: "vertical",
         range: "min",
         min : 0,
@@ -942,7 +839,7 @@
           $("#initalhappiness").text(ui.value);
         }
       });
-      $("#sadness").slider({
+      $("#isadness").slider({
         orientation: "vertical",
         range: "min",
         min : 0,
@@ -954,7 +851,7 @@
           $("#initalsadness").text(ui.value);
         }
       });
-      $("#fear").slider({
+      $("#ifear").slider({
         orientation: "vertical",
         range: "min",
         min : 0,
@@ -966,7 +863,7 @@
           $("#initalfear").text(ui.value);
         }
       });
-      $("#anger").slider({
+      $("#ianger").slider({
         orientation: "vertical",
         range: "min",
         min : 0,
@@ -978,7 +875,7 @@
           $("#initalanger").text(ui.value);
         }
       });
-      $("#surprise").slider({
+      $("#isurprise").slider({
         orientation: "vertical",
         range: "min",
         min : 0,
@@ -990,7 +887,7 @@
           $("#initalsurprise").text(ui.value);
         }
       });
-      $("#disgust").slider({
+      $("#idisgust").slider({
         orientation: "vertical",
         range: "min",
         min : 0,
@@ -1000,6 +897,80 @@
           ui.handle.style.display = "inline";
           $scope.initalResponses.disgust = ui.value;
           $("#initaldisgust").text(ui.value);
+        }
+      });
+      // create sliders for final questions
+      $("#fhappiness").slider({
+        orientation: "vertical",
+        range: "min",
+        min : 0,
+        max : 10,
+        step: 1,
+        value : 0,
+        slide: function(event, ui) {
+          ui.handle.style.display = "inline";
+          $scope.initalResponses.happiness = ui.value;
+          $("#finalhappiness").text(ui.value);
+        }
+      });
+      $("#fsadness").slider({
+        orientation: "vertical",
+        range: "min",
+        min : 0,
+        max : 10,
+        value : 0,
+        slide: function(event, ui) {
+          ui.handle.style.display = "inline";
+          $scope.finalResponses.sadness = ui.value;
+          $("#finalsadness").text(ui.value);
+        }
+      });
+      $("#ffear").slider({
+        orientation: "vertical",
+        range: "min",
+        min : 0,
+        max : 10,
+        value : 0,
+        slide: function(event, ui) {
+          ui.handle.style.display = "inline";
+          $scope.finalResponses.fear = ui.value;
+          $("#finalfear").text(ui.value);
+        }
+      });
+      $("#fanger").slider({
+        orientation: "vertical",
+        range: "min",
+        min : 0,
+        max : 10,
+        value : 0,
+        slide: function(event, ui) {
+          ui.handle.style.display = "inline";
+          $scope.finalResponses.anger = ui.value;
+          $("#finalanger").text(ui.value);
+        }
+      });
+      $("#fsurprise").slider({
+        orientation: "vertical",
+        range: "min",
+        min : 0,
+        max : 10,
+        value : 0,
+        slide: function(event, ui) {
+          ui.handle.style.display = "inline";
+          $scope.finalResponses.surprise = ui.value;
+          $("#finalsurprise").text(ui.value);
+        }
+      });
+      $("#fdisgust").slider({
+        orientation: "vertical",
+        range: "min",
+        min : 0,
+        max : 10,
+        value : 0,
+        slide: function(event, ui) {
+          ui.handle.style.display = "inline";
+          $scope.finalResponses.disgust = ui.value;
+          $("#finaldisgust").text(ui.value);
         }
       });
       $(".slider1.ui-state-default").hide();
@@ -1018,12 +989,9 @@
             $scope.percent = ui.value;
             $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent + "%");
             $scope.transferred = $scope.partner.income * $scope.percent / 100;
-            console.log("transferred : " + $scope.transferred);
-            console.log($scope.partner.income);
-            console.log($scope.percent);
-            $("#tMoneyTransferred").text("Money (in $) transferred to your account : " + $scope.floatToMoney($scope.transferred));
+            $("#tMoneyTransferred").text("The amount tranferred to your account will be $" + $scope.floatToMoney($scope.transferred).toFixed(2) + ".");
             $scope.finalEarnings = $scope.income + $scope.transferred;
-            $("#tFinalEarnings").text("Money final earnings (in $) for the experiment will be : " + $scope.floatToMoney($scope.finalEarnings));
+            $("#tFinalEarnings").text("Your final earnings will be $" + $scope.floatToMoney($scope.finalEarnings).toFixed(2) + ".");
           }
         });
       } else {
@@ -1038,9 +1006,9 @@
             $scope.percent = ui.value;
             $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent + "%");
             $scope.transferred = $scope.income * $scope.percent / 100;
-            $("#pMoneyTransferred").text("Amount (in $) expected to be transferred to T's account : " + $scope.floatToMoney($scope.transferred));
+            $("#pMoneyTransferred").text("The amount transferred from your account would be $" + $scope.floatToMoney($scope.transferred).toFixed(2) + ".");
             $scope.finalEarnings = $scope.income - $scope.transferred;
-            $("#pFinalEarnings").text("Your expected avaliable earnings (in $) are : " + $scope.floatToMoney($scope.finalEarnings));
+            $("#pFinalEarnings").text("Your final earnings would be $" + $scope.floatToMoney($scope.finalEarnings).toFixed(2) + ".");
           }
         });
       }
