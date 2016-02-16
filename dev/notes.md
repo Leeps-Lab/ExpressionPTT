@@ -8,3 +8,8 @@ for sliders, on change, send redwood values.
 	'every 0.1 second, if the position has changed send message to
 	redwood'
 
+
+see screenshot
+tick marks on the beginning/end sliders
+spread out the characters in counting game
+

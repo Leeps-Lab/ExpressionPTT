@@ -826,73 +826,79 @@
       console.log("begin creation");
 
       // create sliders for the initalquestions
-      $("#ihappiness").slider({
-        orientation: "vertical",
+      $("#ihappiness").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         step: 1,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.initalResponses.happiness = ui.value;
           $("#initalhappiness").text(ui.value);
         }
       });
-      $("#isadness").slider({
-        orientation: "vertical",
+      $("#isadness").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.initalResponses.sadness = ui.value;
           $("#initalsadness").text(ui.value);
         }
       });
-      $("#ifear").slider({
-        orientation: "vertical",
+      $("#ifear").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.initalResponses.fear = ui.value;
           $("#initalfear").text(ui.value);
         }
       });
-      $("#ianger").slider({
-        orientation: "vertical",
+      $("#ianger").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.initalResponses.anger = ui.value;
           $("#initalanger").text(ui.value);
         }
       });
-      $("#isurprise").slider({
-        orientation: "vertical",
+      $("#isurprise").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.initalResponses.surprise = ui.value;
           $("#initalsurprise").text(ui.value);
         }
       });
-      $("#idisgust").slider({
-        orientation: "vertical",
+      $("#idisgust").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.initalResponses.disgust = ui.value;
@@ -900,73 +906,79 @@
         }
       });
       // create sliders for final questions
-      $("#fhappiness").slider({
-        orientation: "vertical",
+      $("#fhappiness").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         step: 1,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.initalResponses.happiness = ui.value;
           $("#finalhappiness").text(ui.value);
         }
       });
-      $("#fsadness").slider({
-        orientation: "vertical",
+      $("#fsadness").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.finalResponses.sadness = ui.value;
           $("#finalsadness").text(ui.value);
         }
       });
-      $("#ffear").slider({
-        orientation: "vertical",
+      $("#ffear").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.finalResponses.fear = ui.value;
           $("#finalfear").text(ui.value);
         }
       });
-      $("#fanger").slider({
-        orientation: "vertical",
+      $("#fanger").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.finalResponses.anger = ui.value;
           $("#finalanger").text(ui.value);
         }
       });
-      $("#fsurprise").slider({
-        orientation: "vertical",
+      $("#fsurprise").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.finalResponses.surprise = ui.value;
           $("#finalsurprise").text(ui.value);
         }
       });
-      $("#fdisgust").slider({
-        orientation: "vertical",
+      $("#fdisgust").labeledslider({
         range: "min",
         min : 0,
         max : 10,
         value : 0,
+        tickInterval: 1,
+        orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
           $scope.finalResponses.disgust = ui.value;
@@ -974,7 +986,7 @@
         }
       });
       $(".slider1.ui-state-default").hide();
-      document.getElementById("slider1").children[0].children[1].style.display = "none";
+      $(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
