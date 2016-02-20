@@ -1,4 +1,4 @@
-Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
+Redwood.controller("SubjectFinishCtrl", ["$rootScope", "$scope", "RedwoodSubject", function($rootScope, $scope, rs) {
 
   rs.on_load(function() {
     console.log("goodbye experiment");

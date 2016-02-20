@@ -1,4 +1,4 @@
-  Redwood.controller("SubjectCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "RedwoodSubject", function($rootScope, $scope, $sce, $timeout, rs) {
+  Redwood.controller("SubjectStartCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "RedwoodSubject", function($rootScope, $scope, $sce, $timeout, rs) {
     $scope.initalResponses = {
       happiness: '',
       sadness: '',
