@@ -180,7 +180,7 @@
 
       $scope.showpage.part2 = true;
       // send answers back to server
-      rs.trigger("sendfinalanswers", {
+      rs.trigger("sendinitalanswers", {
         initalResponses: $scope.initalResponses,
         showpage: $scope.showpage
       });
