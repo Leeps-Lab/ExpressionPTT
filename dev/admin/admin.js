@@ -18,7 +18,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 			dataString = element.partnerId+","+element.role+","+element.initaltime+","+element.takerate+","+element.finalearnings+","+element.etakerate+
 			","+element.wtp+","+element.actualprice+","+element.message+","+element.takerate+","+element.etakeratetime+","+element.willingnesstime+
 			","+element.message+","+element.messagetime+","+element.happiness+","+element.sadness+","+element.fear+","+element.anger+","+
-			","+element.surprise+","+element.disgust;
+			","+element.surprise+","+element.disgust+","+element.initalanswerstime;
 			csvContent += index < $scope.subjects.length ? dataString +"\n" : dataString;
 		});
 		var encodedUri = encodeURI(csvContent);
@@ -469,6 +469,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location].anger = value.initalResponses.anger;
 		$scope.subjects[location].surprise = value.initalResponses.surprise;
 		$scope.subjects[location].disgust = value.initalResponses.disgust;
+		$scope.subjects[location].initalanswerstime = value.time;
 		// shows the information on the admin page
 	});
 	ra.recv("admininital", function(sender, value) {

@@ -182,7 +182,8 @@
       // send answers back to server
       rs.trigger("sendinitalanswers", {
         initalResponses: $scope.initalResponses,
-        showpage: $scope.showpage
+        showpage: $scope.showpage,
+        time: new Date.getMilliseconds()
       });
       // get ready for a barrier
       console.log("ready for part 2?");
