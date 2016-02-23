@@ -1,4 +1,8 @@
   Redwood.controller("SubjectStartCtrl", ["$rootScope", "$scope", "$sce", "$timeout", "RedwoodSubject", function($rootScope, $scope, $sce, $timeout, rs) {
+    $scope.getTime = function() {
+      var d = new Date();
+      return d.getTime();
+    };
     $scope.initalResponses = {
       happiness: '',
       sadness: '',
@@ -180,10 +184,12 @@
 
       $scope.showpage.part2 = true;
       // send answers back to server
+
+
       rs.trigger("sendinitalanswers", {
         initalResponses: $scope.initalResponses,
         showpage: $scope.showpage,
-        time: new Date.getMilliseconds()
+        time: $scope.getTime()
       });
       // get ready for a barrier
       console.log("ready for part 2?");
@@ -440,7 +446,7 @@
       rs.trigger("admintakerate", {
         takerate: $scope.percent,
         finalearnings: $scope.floatToMoney($scope.totalincome),
-        time: new Date.getMilliseconds()
+        time: $scope.getTime()
       });
       rs.send("sendDecision", {
         percent: $scope.percent,
@@ -472,7 +478,7 @@
       console.log("sending payload, over.");
       rs.trigger("adminetakerate", {
         etakerate: $scope.percent,
-        time: new Date.getMilliseconds()
+        time: $scope.getTime()
       });
       rs.send("sendEstimate", {
         percent: $scope.percent,
@@ -552,7 +558,7 @@
           wtp: $scope.floatToMoney($scope.bid),
           actualprice: $scope.floatToMoney($scope.actualprice),
           finalearnings: $scope.floatToMoney($scope.totalincome),
-          time: new Date.getMilliseconds()
+          time: $scope.getTime()
 
         });
       } else if ($scope.bid <= $scope.actualprice && $scope.method === "BDMWTA") {
@@ -567,7 +573,7 @@
           wtp: $scope.floatToMoney($scope.bid),
           actualprice: $scope.floatToMoney($scope.actualprice),
           finalearnings: $scope.floatToMoney($scope.totalincome),
-          time: new Date.getMilliseconds()
+          time: $scope.getTime()
         });
       } else if (responce === "yes") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
@@ -581,7 +587,7 @@
           wtp: $scope.floatToMoney($scope.bid),
           actualprice: $scope.floatToMoney($scope.actualprice),
           finalearnings: $scope.floatToMoney($scope.totalincome),
-          time: new Date.getMilliseconds()
+          time: $scope.getTime()
         });
       } else {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
@@ -591,7 +597,7 @@
           wtp: $scope.floatToMoney($scope.bid),
           actualprice: $scope.floatToMoney($scope.actualprice),
           finalearnings: $scope.floatToMoney($scope.totalincome),
-          time: new Date.getMilliseconds()
+          time: $scope.getTime()
         });
       }
       if (responce !== "no") {
@@ -628,7 +634,7 @@
       $scope.message = " ";
       rs.trigger("adminmessage", {
         message: $scope.message.replace(/\n/g, '<br />'),
-        time: new Date.getMilliseconds()
+        time: $scope.getTime()
       });
       if ($scope.reader) {
         rs.send("sendMessage", {
@@ -1365,7 +1371,7 @@
       rs.trigger("admininital", {
         partnerId: $scope.partner.index,
         role: $scope.role,
-        time: new Date.getMilliseconds()
+        time: $scope.getTime()
       });
       rs.synchronizationBarrier('initalQuestions').then(function() {
         $scope.questions = false;
