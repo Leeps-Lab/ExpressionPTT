@@ -14,7 +14,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 
 	$scope.downloadcsv = function() {
 		var csvContent = "data:text/csv;charset=utf-8,";
-		$scope.subjects.forEach(function(element) {
+		$scope.subjects.forEach(function(element, index) {
 			dataString = element.partnerId+","+element.role+","+element.initaltime+","+element.takerate+","+element.finalearnings+","+element.etakerate+
 			","+element.wtp+","+element.actualprice+","+element.message+","+element.takerate+","+element.etakeratetime+","+element.willingnesstime+
 			","+element.message+","+element.messagetime+","+element.happiness+","+element.sadness+","+element.fear+","+element.anger+","+
