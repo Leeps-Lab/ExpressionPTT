@@ -12,6 +12,19 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	$scope.validate = true;
 	$scope.subjects = [];
 
+	$scope.downloadcsv = function() {
+		var csvContent = "data:text/csv;charset=utf-8,";
+		$scope.subjects.forEach(function(element) {
+			dataString = element.partnerId+","+element.role+","+element.initaltime+","+element.takerate+","+element.finalearnings+","+element.etakerate+
+			","+element.wtp+","+element.actualprice+","+element.message+","+element.takerate+","+element.etakeratetime+","+element.willingnesstime+
+			","+element.message+","+element.messagetime+","+element.happiness+","+element.sadness+","+element.fear+","+element.anger+","+
+			","+element.surprise+","+element.disgust;
+			csvContent += index < $scope.subjects.length ? dataString +"\n" : dataString;
+		});
+		var encodedUri = encodeURI(csvContent);
+		window.open(encodedUri);
+	};
+
 	$scope.methods = {
 		'Directed Message' : [{
 			name : 'BDM1',
@@ -463,6 +476,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		var location = getlocation(sender);
 		$scope.subjects[location].partnerId = value.partnerId;
 		$scope.subjects[location].role = value.role;
+		$scope.subjects[location].initaltime = value.time;
 	});
 	ra.recv("admintakerate", function(sender, value) {
 		// stores information
@@ -473,12 +487,14 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location].wtp = '-----';
 		$scope.subjects[location].actualprice = '-----';
 		$scope.subjects[location].message = '-----';
+		$scope.subjects[location].takerate = value.time;
 	});
 	ra.recv("adminetakerate", function(sender, value) {
 		// stores information
 		var location = getlocation(sender);
 		$scope.subjects[location].etakerate = value.etakerate;
 		$scope.subjects[location].takerate = '-----';
+		$scope.subjects[location].etakeratetime = value.time;
 	});
 	ra.recv("adminwillingness", function(sender, value) {
 		// stores information
@@ -486,12 +502,14 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location].wtp = value.wtp;
 		$scope.subjects[location].actualprice = value.actualprice;
 		$scope.subjects[location].finalearnings = value.finalearnings;
+		$scope.subjects[location].willingnesstime = value.time;
 	});
 	ra.recv("adminmessage", function(sender, value) {
 		// stores information
 		console.log("got the message");
 		var location = getlocation(sender);
 		$scope.subjects[location].message = $sce.trustAsHtml(value.message);
+		$scope.subjects[location].messagetime = value.time;
 	});
 
 }]);
