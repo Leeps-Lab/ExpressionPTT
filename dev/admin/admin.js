@@ -489,7 +489,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location].etakerate = '-----';
 		$scope.subjects[location].wtp = '-----';
 		$scope.subjects[location].actualprice = '-----';
-		$scope.subjects[location].message = '-----';
+		$scope.subjects[location].message = $sce.trustAsHtml('-----');
 		$scope.subjects[location].takerate = value.time;
 	});
 	ra.recv("adminetakerate", function(sender, value) {

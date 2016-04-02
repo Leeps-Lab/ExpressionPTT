@@ -632,7 +632,6 @@
     $scope.sendMessage = function() {
       // navigate to correct page
       $scope.showpage.messagePage = false;
-      $scope.message = " ";
       rs.trigger("adminmessage", {
         message: $scope.message.replace(/\n/g, '<br />'),
         time: $scope.getTime()
