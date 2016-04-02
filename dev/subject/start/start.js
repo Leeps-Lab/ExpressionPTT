@@ -1114,6 +1114,7 @@
       }
     });
     rs.recv("sendMessage", function(sender, value) {
+      console.log ("sendmessage recv");
       if ($scope.reader && $scope.role === "R") {
         console.log(sender);
         console.log($scope.readerlist);
@@ -1131,8 +1132,8 @@
             $scope.showpage.messagePage = true;
           }
         }
-      }
-      if (sender == parseInt($scope.partner.index) && !$scope.reader) {
+      } else if (sender == parseInt($scope.partner.index) && !$scope.reader) {
+        console.log(value);
         $scope.messages = $sce.trustAsHtml(value.messages);
         $scope.showpage.waitpage = false;
         $scope.showpage.messagePage = true;
