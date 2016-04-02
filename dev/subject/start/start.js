@@ -618,6 +618,7 @@
         $scope.showpage.checkprice = false;
         $scope.saveState();
 
+        console.log($scope.message);
         rs.send("sendMessage", {
           messages : $scope.message.replace(/\n/g, '<br />'),
           taken : $scope.partner.moneytransferred
