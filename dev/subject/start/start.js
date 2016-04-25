@@ -444,6 +444,8 @@
       $scope.saveState();
       // send values
       $scope.percentTransferred = $scope.percent;
+      console.log($scope.percent);
+      console.log($scope.percentTransferred);
       $scope.moneytransferred = $scope.transferred;
       $scope.partner.percenttransferred = $scope.percent;
       $scope.partner.moneytransferred = $scope.transferred;
@@ -1011,7 +1013,6 @@
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
-          min: 0,
           max: 100,
           tickArray: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
           value: 0,
