@@ -1266,7 +1266,7 @@
         if ($scope.role === "T") {
         }
         if ($scope.role === "P") {
-          $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
+          $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
           $scope.bid = 0;
           rs.send("sendWillingness", {
             actualprice: $scope.actualprice,
