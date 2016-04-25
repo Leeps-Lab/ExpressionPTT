@@ -1264,6 +1264,9 @@
     $scope.transferprocessbarrier = function() {
       if ($scope.nomessage) {
         if ($scope.role === "T") {
+          $scope.showpage.waitpage = false;
+          $scope.showpage.showEarnings = true;
+          $scope.saveState();
         }
         if ($scope.role === "P") {
           $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
@@ -1272,6 +1275,12 @@
             actualprice: $scope.actualprice,
             totalincome: $scope.totalincome,
             message: false
+          });
+          rs.trigger("adminwillingness", {
+            wtp: "---",
+            actualprice: "---",
+            finalearnings: $scope.floatToMoney($scope.totalincome),
+            time: $scope.getTime()
           });
           $scope.showpage.waitpage = false;
           $scope.showpage.showEarnings = true;
