@@ -553,7 +553,7 @@
       $scope.showpage.willingnesspage = false;
 
       if ($scope.bid >= $scope.actualprice && ($scope.method === "BDM1" || $scope.method === "BDM2")) {
-        $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
+        $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice + $scope.endownment;
         // p gets to send message
         $scope.ablesendmessage = true;
         rs.trigger("saveWillingness", {
