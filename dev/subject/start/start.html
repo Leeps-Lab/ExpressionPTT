@@ -454,7 +454,9 @@
     <div class="row">
       <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
         (${{floatToMoney(partner.moneytransferred) | number: 2}}) to his/her own account.</h3>
-      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred) | number: 2}}</h3>
+      <h3 class="text-center">Your avaliable earnings are now
+        ${{floatToMoney(income - partner.moneytransferred + endownment) | number: 2}}
+      </h3>
     </div>
     <div class="row text-center">
       <h3 class="text-center">What is the maximum amount you would be willing to pay to write and send a message that your
@@ -576,7 +578,7 @@
     </div>
     <div class="row">
         <div class="col-md-offset-3"
-          style="border-style:solid;border-width:2px;height:300px;width:600px;">
+          style="border-style:solid;border-width:2px;height:300px;width:600px;padding:10px;">
           <h4><div ng-bind-html="messages">
           </div></h4>
         </div>
@@ -613,7 +615,7 @@
     </div>
     <div class="row">
         <div class="col-md-offset-3 scollable"
-          style="border-style:solid;border-width:2px;height:300px;width:600px;">
+          style="border-style:solid;border-width:2px;height:300px;width:600px;padding:10px;">
           <div ng-repeat="message in readerMessages track by $index">
             <h4>
               (Money Taken : {{floatToMoney(message.taken)}})

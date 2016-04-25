@@ -531,7 +531,7 @@
           $scope.actualprice = $scope.sopValue;
         }
       }
-      if ($scope.bid > $scope.income - $scope.partner.moneytransferred) {
+      if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endownment) {
         sweetAlert({
           title: "Your willingness exeeds your avaliable earnings.",
           text: "",
