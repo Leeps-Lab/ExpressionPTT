@@ -196,8 +196,9 @@
               <th>Total Income</th>
             </tr>
             <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <td ng-repeat="task in tasknum">{{subject.tasks[task]}}</td>
-              <td>{{subject.totalpoints}}</td>
+              <td>{{subject.userid}}</td>
+              <td ng-repeat="task in tasknum">{{subject.tasks[task] | number:2}}</td>
+              <td>{{subject.totalpoints | number:2}}</td>
             </tr>
           </table>
           <h3>Part 3</h3>
