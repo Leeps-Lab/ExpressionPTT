@@ -192,18 +192,12 @@
           <table class="table table-striped table-hover table-condensed">
             <tr>
               <th>ID</th>
-              <div ng-repeat="task in tasknum">
-                <th>T{{task}}-time</th>
-                <th>T{{task}}-points</th>
-              </div>
+              <th ng-repeat="task in tasknum">T{{task}}-points</th>
               <th>Total Income</th>
             </tr>
             <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <div ng-repeat="task in tasknum">
-                <th>{{subject.tasks[task]}}</th>
-                <th>{{subject.tasktime[task]}}</th>
-              </div>
-              <th>{{subject.totalpoints}}</th>
+              <td ng-repeat="task in tasknum">{{subject.tasks[task]}}</td>
+              <td>{{subject.totalpoints}}</td>
             </tr>
           </table>
           <h3>Part 3</h3>

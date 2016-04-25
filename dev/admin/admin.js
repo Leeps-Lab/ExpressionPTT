@@ -159,7 +159,9 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				}
 				//outputGroups
 				$scope.subjects.push({
-					userid: user
+					userid: user,
+					tasks: Array(22),
+					tasktime: Array(22)
 				});
 				console.log($scope.subjects);
 			});
