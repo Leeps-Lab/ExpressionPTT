@@ -11,16 +11,20 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	};
 	$scope.validate = true;
 	$scope.subjects = [];
+	$scope.tasknum = [];
+	for(var i = 1; i <= 22; i++) {
+		$scope.tasknum.push(i);
+	}
 
 	$scope.downloadcsv = function() {
 		var csvContent = "data:text/csv;charset=utf-8,";
 		var dataString = "subjectId,partnerId,role,initaltime,takerate,finalearnings,etakerate,wtp,actualprice,message,takerate,etrakeratetime,willingnesstime,message"+
-		"messagetime,happiness,sadness,fear,anger,surprise,disgust,initalanswerstime";
+		"messagetime,happiness,sadness,fear,anger,surprise,disgust,finalanswerstime";
 		$scope.subjects.forEach(function(element, index) {
 			dataString = element.userid+","+element.partnerId+","+element.role+","+element.initaltime+","+element.takerate+","+element.finalearnings+","+element.etakerate+
 			","+element.wtp+","+element.actualprice+","+element.message+","+element.takerate+","+element.etakeratetime+","+element.willingnesstime+
 			","+element.message+","+element.messagetime+","+element.happiness+","+element.sadness+","+element.fear+","+element.anger+","+
-			","+element.surprise+","+element.disgust+","+element.initalanswerstime;
+			","+element.surprise+","+element.disgust+","+element.finalanswerstime;
 			csvContent += index < $scope.subjects.length ? dataString +"\n" : dataString;
 		});
 		var encodedUri = encodeURI(csvContent);
@@ -474,12 +478,30 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location].initalanswerstime = value.time;
 		// shows the information on the admin page
 	});
+	ra.recv("sendfinalanswers", function(sender, value) {
+		// stores information
+		var location = getlocation(sender);
+		$scope.subjects[location].fhappiness = value.finalResponses.happiness;
+		$scope.subjects[location].fsadness = value.finalResponses.sadness;
+		$scope.subjects[location].ffear = value.finalResponses.fear;
+		$scope.subjects[location].fanger = value.finalResponses.anger;
+		$scope.subjects[location].fsurprise = value.finalResponses.surprise;
+		$scope.subjects[location].fdisgust = value.finalResponses.disgust;
+		$scope.subjects[location].finalanswerstime = value.time;
+		// shows the information on the admin page
+	});
 	ra.recv("admininital", function(sender, value) {
 		// stores information
 		var location = getlocation(sender);
 		$scope.subjects[location].partnerId = value.partnerId;
 		$scope.subjects[location].role = value.role;
 		$scope.subjects[location].initaltime = value.time;
+	});
+	ra.recv("adminTasks", function(sender, value) {
+		var location = getlocation(sender);
+		$scope.subjects[location].tasks[value.task] = value.points;
+		$scope.subjects[location].tasktime[value.task] = value.time;
+		$scope.subjects[location].totalpoints = value.totalpoints;
 	});
 	ra.recv("admintakerate", function(sender, value) {
 		// stores information

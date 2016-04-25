@@ -365,7 +365,7 @@
     };
     $scope.nexttask = function() {
       $scope.income += $scope.locatorState.getPointvalue();
-      $scope.maxpoints = (Math.floor(Math.random() * 80) + 20) * $scope.scale;
+      $scope.maxpoints = (Math.floor(Math.random() * 80) + 40) * $scope.scale;
       $("#income").text("So far, your income is $" +
         $scope.floatToMoney($scope.income).toFixed(2) + ".");
 
@@ -380,9 +380,15 @@
         moneytransferred: $scope.moneytransferred,
         totalincome: $scope.totalincome
       });
+      rs.trigger("adminTasks", {
+        points: $scope.locatorState.getPointvalue(),
+        totalpoints: $scope.income,
+        task: $scope.task,
+        time: $scope.getTime()
+      });
 
-      // reaches income goal
-      if ($scope.income > $scope.incomegoal * 100 * $scope.scale) {
+      // reaches income goal or passes max number of tasks
+      if ($scope.income > $scope.incomegoal * 100 * $scope.scale || $scope.task > 22) {
         $timeout.cancel($scope.mytimeout);
         console.log("sending payload, over.");
         rs.send("sendIncome", {
@@ -687,8 +693,8 @@
 
       $scope.showpage.thanks = true;
       // send answers back to server
-      rs.trigger("sendinitalanswers", {
-        initalResponses: $scope.finalResponses,
+      rs.trigger("sendfinalanswers", {
+        finalResponses: $scope.finalResponses,
         showpage: $scope.showpage
       });
     };

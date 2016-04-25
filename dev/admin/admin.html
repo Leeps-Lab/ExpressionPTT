@@ -192,20 +192,18 @@
           <table class="table table-striped table-hover table-condensed">
             <tr>
               <th>ID</th>
-              <th>T1-time</th>
-              <th>T1-points</th>
-              <th>T3-time</th>
-              <th>T30-points</th>
-              <th>Income</th>
+              <div ng-repeat="task in tasknum">
+                <th>T{{task}}-time</th>
+                <th>T{{task}}-points</th>
+              </div>
+              <th>Total Income</th>
             </tr>
             <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <td ng-bind="subject.userid"></td>
-              <td ng-bind="subject.happiness"></td>
-              <td ng-bind="subject.sadness"></td>
-              <td ng-bind="subject.fear"></td>
-              <td ng-bind="subject.anger"></td>
-              <td ng-bind="subject.disgust"></td>
-              <td ng-bind="subject.surprise"></td>
+              <div ng-repeat="task in tasknum">
+                <th>{{subject.tasks[task]}}</th>
+                <th>{{subject.tasktime[task]}}</th>
+              </div>
+              <th>{{subject.totalpoints}}</th>
             </tr>
           </table>
           <h3>Part 3</h3>
