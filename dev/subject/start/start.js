@@ -447,7 +447,7 @@
       $scope.moneytransferred = $scope.transferred;
       $scope.partner.percenttransferred = $scope.percent;
       $scope.partner.moneytransferred = $scope.transferred;
-      $scope.totalincome = $scope.finalEarnings || $scope.income;
+      $scope.totalincome = ($scope.finalEarnings || $scope.income) + $scope.endownment;
       console.log("sending payload, over.");
       rs.trigger("admintakerate", {
         takerate: $scope.percent,
