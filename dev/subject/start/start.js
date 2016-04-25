@@ -936,7 +936,7 @@
         orientation: 'vertical',
         slide: function(event, ui) {
           ui.handle.style.display = "inline";
-          $scope.initalResponses.happiness = ui.value;
+          $scope.finalResponses.happiness = ui.value;
           $("#finalhappiness").text(ui.value);
         }
       });
