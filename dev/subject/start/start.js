@@ -1297,6 +1297,12 @@
             totalincome: $scope.totalincome,
             message: true
           });
+          rs.trigger("adminwillingness", {
+            wtp: "---",
+            actualprice: "---",
+            finalearnings: $scope.floatToMoney($scope.totalincome),
+            time: $scope.getTime()
+          });
           $scope.showpage.waitpage = false;
           $scope.showpage.messagePage = true;
           $scope.saveState();
