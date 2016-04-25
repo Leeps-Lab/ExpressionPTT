@@ -1101,6 +1101,7 @@
     });
     rs.recv("sendWillingness", function(sender, value) {
       if (sender == parseInt($scope.partner.index)) {
+        console.log(value);
         $scope.showpage.willingnesspage = false;
         $scope.partner.totalincome = value.totalincome;
         console.log("got willingness, what's the next step?");
