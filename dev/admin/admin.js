@@ -18,11 +18,11 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 
 	$scope.downloadcsv = function() {
 		var csvContent = "data:text/csv;charset=utf-8,";
-		var dataString = "subjectId,partnerId,role,initaltime,takerate,finalearnings,etakerate,wtp,actualprice,message,takerate,etrakeratetime,willingnesstime,message"+
+		var dataString = "subjectId,partnerId,role,initaltime,takerate,finalearnings,etakerate,wtp,actualprice,message,takeratetime,etrakeratetime,willingnesstime,message"+
 		"messagetime,happiness,sadness,fear,anger,surprise,disgust,finalanswerstime";
 		$scope.subjects.forEach(function(element, index) {
 			dataString = element.userid+","+element.partnerId+","+element.role+","+element.initaltime+","+element.takerate+","+element.finalearnings+","+element.etakerate+
-			","+element.wtp+","+element.actualprice+","+element.message+","+element.takerate+","+element.etakeratetime+","+element.willingnesstime+
+			","+element.wtp+","+element.actualprice+","+element.message+","+element.takeratetime+","+element.etakeratetime+","+element.willingnesstime+
 			","+element.message+","+element.messagetime+","+element.happiness+","+element.sadness+","+element.fear+","+element.anger+","+
 			","+element.surprise+","+element.disgust+","+element.finalanswerstime;
 			csvContent += index < $scope.subjects.length ? dataString +"\n" : dataString;
@@ -163,7 +163,6 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 					tasks: Array(22),
 					tasktime: Array(22)
 				});
-				console.log($scope.subjects);
 			});
 
 			// here for the new stuff; for the config files
@@ -379,15 +378,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				for (var i = 0, l = ra.subjects.length; i < 1; i++) {
 					//ra.set(i + 1,"role",$("#role").val());
 					ra.set_group(1, 1);
-					/*
-					ra.set_group(2, 2);
-					ra.set_group(1, 3);
-					ra.set_group(2, 4);
-					*/
-					console.log(i);
-					console.log(ra.subjects[i]);
 				}
-				console.log(ra);
 			});
 
 			ra.on_set_config(function(config) { //Display the config file
@@ -431,7 +422,6 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	Display.initialize();
 
 	ra.on_load(function () {
-		console.log(ra);
 		resetGroups(); //Assign groups to users
 	});
 
@@ -457,7 +447,6 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	};
 	$scope.setmethodvalue = function(index) {
 		$scope.configsettings.method = $scope.methods[$scope.configsettings][index];
-		console.log($scope.configsettings.method);
 	};
 
 	var getlocation = function(sender) {
@@ -514,7 +503,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location].wtp = '-----';
 		$scope.subjects[location].actualprice = '-----';
 		$scope.subjects[location].message = $sce.trustAsHtml('-----');
-		$scope.subjects[location].takerate = value.time;
+		$scope.subjects[location].takeratetime = value.time;
 	});
 	ra.recv("adminetakerate", function(sender, value) {
 		// stores information

@@ -444,8 +444,6 @@
       $scope.saveState();
       // send values
       $scope.percentTransferred = $scope.percent;
-      console.log($scope.percent);
-      console.log($scope.percentTransferred);
       $scope.moneytransferred = $scope.transferred;
       $scope.partner.percenttransferred = $scope.percent;
       $scope.partner.moneytransferred = $scope.transferred;
