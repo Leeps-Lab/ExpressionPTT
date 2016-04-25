@@ -565,7 +565,6 @@
           actualprice: $scope.floatToMoney($scope.actualprice),
           finalearnings: $scope.floatToMoney($scope.totalincome),
           time: $scope.getTime()
-
         });
       } else if ($scope.bid <= $scope.actualprice && $scope.method === "BDMWTA") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
@@ -1266,7 +1265,7 @@
         if ($scope.role === "T") {
         }
         if ($scope.role === "P") {
-          $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
+          $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
           $scope.bid = 0;
           rs.send("sendWillingness", {
             actualprice: $scope.actualprice,
