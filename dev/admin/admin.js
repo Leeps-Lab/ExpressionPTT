@@ -3,7 +3,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		numberofpeople: null,
 		treatment: 'Directed Message',
 		method : 'BDM1',
-		sopValue : '3',
+		sopValue : '1',
 		endowment: null,
 		incomegoal: null,
 		scale: null,

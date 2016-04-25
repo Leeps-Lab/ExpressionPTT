@@ -531,7 +531,7 @@
           $scope.actualprice = $scope.sopValue;
         }
       }
-      if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endownment) {
+      if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endownment && $scope.method !== "BDMWTA") {
         sweetAlert({
           title: "Your willingness exeeds your avaliable earnings.",
           text: "",
