@@ -1384,10 +1384,10 @@
         console.log("userId : " + $scope.userIndex);
         console.log("role : " + $scope.role);
         console.log("partner : " + $scope.partner);
-        $scope.createSliders();
       } else {
         $scope.readerlist = configfile.readerlist[0];
       }
+      $scope.createSliders();
 
       rs.trigger("admininital", {
         partnerId: $scope.partner.index,
