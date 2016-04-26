@@ -298,16 +298,16 @@
   <!-- money received-->
   <div class="container" ng-show="showpage.moneyReceived">
     <div class="row">
-      <h3 ng-if="endowment">
+      <h3 ng-if="endowment" class="text-center">
         For this part of the experiment you have received ${{floatToMoney(endowment)}}
         of endowment and earned ${{floatToMoney(income)}} of task income.
       </h3>
-      <h3 ng-if="!endowment">
+      <h3 ng-if="!endowment" class="text-center">
         For this part of the experiment you have earned ${{floatToMoney(income)}} of task income.
       </h3>
     </div>
     <div class="row">
-      <div class="col-md-2 col-md-offset-5">
+      <div class="col-md-2 col-md-offset-5" style="margin-left:auto;margin-right:auto;">
         <button type="button" class="btn btn-success" ng-click="moneyShown()">
           Continue
         </button>
