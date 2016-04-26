@@ -137,7 +137,7 @@
     // user variables
     // set in config
     $scope.role = "T";
-    $scope.endownment = 300;
+    $scope.endowment = 300;
     $scope.income = 0;
     $scope.percent = 0;
     $scope.transferred = 0;
@@ -159,7 +159,7 @@
     // partner variables
     $scope.partner = {
       index: '',
-      endownment: 0,
+      endowment: 0,
       role: 0,
       income: '',
       percent: '',
@@ -372,7 +372,7 @@
       // save income
       rs.trigger("saveIncome", {
         role: $scope.role,
-        endownment: $scope.endownment,
+        endowment: $scope.endowment,
         income: $scope.income,
         percent: $scope.percent,
         transferred: $scope.transferred,
@@ -396,7 +396,7 @@
         });
         rs.trigger("saveIncome", {
           role: $scope.role,
-          endownment: $scope.endownment,
+          endowment: $scope.endowment,
           income: $scope.income,
           percent: $scope.percent,
           transferred: $scope.transferred,
@@ -447,7 +447,7 @@
       $scope.moneytransferred = $scope.transferred;
       $scope.partner.percenttransferred = $scope.percent;
       $scope.partner.moneytransferred = $scope.transferred;
-      $scope.totalincome = ($scope.finalEarnings || $scope.income) + $scope.endownment;
+      $scope.totalincome = ($scope.finalEarnings || $scope.income) + $scope.endowment;
       console.log("sending payload, over.");
       rs.trigger("admintakerate", {
         takerate: $scope.percent,
@@ -463,7 +463,7 @@
       });
       rs.trigger("saveIncome", {
         role: $scope.role,
-        endownment: $scope.endownment,
+        endowment: $scope.endowment,
         income: $scope.income,
         percent: $scope.percent,
         transferred: $scope.transferred,
@@ -492,7 +492,7 @@
       });
       rs.trigger("saveIncome", {
         role: $scope.role,
-        endownment: $scope.endownment,
+        endowment: $scope.endowment,
         income: $scope.income,
         percent: $scope.percent,
         transferred: $scope.transferred,
@@ -531,7 +531,7 @@
           $scope.actualprice = $scope.sopValue;
         }
       }
-      if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endownment && $scope.method !== "BDMWTA") {
+      if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endowment && $scope.method !== "BDMWTA") {
         sweetAlert({
           title: "Your willingness exeeds your avaliable earnings.",
           text: "",
@@ -553,7 +553,7 @@
       $scope.showpage.willingnesspage = false;
 
       if ($scope.bid >= $scope.actualprice && ($scope.method === "BDM1" || $scope.method === "BDM2")) {
-        $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice + $scope.endownment;
+        $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice + $scope.endowment;
         // p gets to send message
         $scope.ablesendmessage = true;
         rs.trigger("saveWillingness", {
@@ -1176,7 +1176,7 @@
     // recieves income after game
     rs.on("saveIncome", function(value) {
       $scope.role = value.role;
-      $scope.endownment = value.endownment;
+      $scope.endowment = value.endowment;
       $scope.income = value.income;
       $scope.percent = value.percent;
       $scope.transferred = value.transferred;
@@ -1363,10 +1363,10 @@
 
       $scope.showpage.showStartExperiment = true;
       // set values from config file
-      // role index endownment
+      // role index endowment
       $scope.role = configfile.role[0];
-      $scope.endownment = configfile.endowment[0] * 100 * $scope.scale;
-      if ($scope.method === "BDMWTA") $scope.endownment = 0;
+      $scope.endowment = configfile.endowment[0] * 100 * $scope.scale;
+      if ($scope.method === "BDMWTA") $scope.endowment = 0;
 
       // check if debug is up
       if (configfile.debug[0] === "False") $scope.debug = false;
@@ -1376,11 +1376,11 @@
       }
 
       // set partner values from config file
-      // index role endownment
+      // index role endowment
       if ($scope.role !== 'R') {
         $scope.partner.index = configfile.pair[0];
         $scope.partner.role = rs.subjects[$scope.partner.index - 1].data.role[0];
-        $scope.partner.endownment = configfile.endowment[0] * 100;
+        $scope.partner.endowment = configfile.endowment[0] * 100;
         console.log("userId : " + $scope.userIndex);
         console.log("role : " + $scope.role);
         console.log("partner : " + $scope.partner);

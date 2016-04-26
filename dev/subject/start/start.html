@@ -298,9 +298,12 @@
   <!-- money received-->
   <div class="container" ng-show="showpage.moneyReceived">
     <div class="row">
-      <h3>
-        For this part of the experiment you have received ${{floatToMoney(endownment)}}
+      <h3 ng-if="endowment">
+        For this part of the experiment you have received ${{floatToMoney(endowment)}}
         of endowment and earned ${{floatToMoney(income)}} of task income.
+      </h3>
+      <h3 ng-if="!endowment">
+        For this part of the experiment you have earned ${{floatToMoney(income)}} of task income.
       </h3>
     </div>
     <div class="row">
@@ -340,12 +343,20 @@
   <div class="container" ng-show="showpage.roles">
     <div class="row">
       <h2 class="text-center">Your role is {{role}}</h2>
-      <h2 class="text-center">In Part 2, you have recieved ${{floatToMoney(endownment)}} as
-        endowment and earned ${{floatToMoney(income)}} of income.</h2>
-      <h2 class="text-center" ng-hide="role === 'R'">Your counterpart, {{partner.role}}, has received
-        ${{floatToMoney(partner.endownment)}} as endowment and earned
-        ${{floatToMoney(partner.income)}} of income.
-      </h2>
+      <div ng-if="endowment">
+        <h2 class="text-center">In Part 2, you have recieved ${{floatToMoney(endowment)}} as
+          endowment and earned ${{floatToMoney(income)}} of income.</h2>
+        <h2 class="text-center" ng-hide="role === 'R'">Your counterpart, {{partner.role}}, has received
+          ${{floatToMoney(partner.endowment)}} as endowment and earned
+          ${{floatToMoney(partner.income)}} of income.
+        </h2>
+      </div>
+      <div ng-if="!endowment">
+        <h2 class="text-center">In Part 2, you have recieved earned ${{floatToMoney(income)}} of income.</h2>
+        <h2 class="text-center" ng-hide="role === 'R'">Your counterpart, {{partner.role}}, has received
+          earned ${{floatToMoney(partner.income)}} of income.
+        </h2>
+      </div>
     </div>
     <div class="row" ng-hide="role === 'R'">
       <div class="text-center">
@@ -453,9 +464,10 @@
   <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDM1'">
     <div class="row">
       <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
-        (${{floatToMoney(partner.moneytransferred) | number: 2}}) to his/her own account.</h3>
+        (${{floatToMoney(partner.moneytransferred) | number: 2}}) to his/her own account.
+      </h3>
       <h3 class="text-center">Your avaliable earnings are now
-        ${{floatToMoney(income - partner.moneytransferred + endownment) | number: 2}}
+        ${{floatToMoney(income - partner.moneytransferred + endowment) | number: 2}}
       </h3>
     </div>
     <div class="row text-center">
@@ -510,6 +522,7 @@
     </div>
     <div class="row text-center">
       <h3 class="text-center">Do you want to send your message for ${{floatToMoney(sopValue)}}?</h3>
+      <br>
     </div>
     <div class="row">
       <div class="text-center">
@@ -666,10 +679,10 @@
           <td class="col-md-1">Role {{partner.role}}</td>
           <td class="col-md-1">Role {{role}} (You)</td>
         </tr>
-        <tr>
+        <tr ng-if="endowment">
           <td>Endowment</td>
-          <td class="text-center">{{floatToMoney(partner.endownment) | number: 2}}</td>
-          <td class="text-center">{{floatToMoney(endownment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(partner.endowment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(endowment) | number: 2}}</td>
         </tr>
         <tr>
           <td>Income</td>
@@ -681,7 +694,7 @@
           <td class="text-center">+{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
           <td class="text-center">-{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
         </tr>
-        <tr ng-show="! (nomessage || freemessage)">
+        <tr ng-if="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
           <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice).toFixed(2) : ''}}</td>
@@ -711,10 +724,10 @@
           <td class="col-md-1">Role {{role}} (You)</td>
           <td class="col-md-1">Role {{partner.role}}</td>
         </tr>
-        <tr>
+        <tr ng-if="endowment">
           <td>Endowment</td>
-          <td class="text-center">{{floatToMoney(endownment) | number: 2}}</td>
-          <td class="text-center">{{floatToMoney(partner.endownment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(endowment) | number: 2}}</td>
+          <td class="text-center">{{floatToMoney(partner.endowment) | number: 2}}</td>
         </tr>
         <tr>
           <td>Income</td>
@@ -726,7 +739,7 @@
           <td class="text-center">+{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
           <td class="text-center">-{{floatToMoney(partner.moneytransferred) | number: 2}}</td>
         </tr>
-        <tr ng-show="! (nomessage || freemessage)">
+        <tr ng-if="! (nomessage || freemessage)">
           <td>Message Price</td>
           <td></td>
           <td class="text-center">-{{partner.actualprice ? floatToMoney(partner.actualprice).toFixed(2) : ''}}</td>
@@ -755,16 +768,16 @@
           <td class="col-md-1"></td>
           <td class="col-md-1">Role {{role}} (You)</td>
         </tr>
-        <tr>
+        <tr ng-if="endowment">
           <td>Endowment</td>
-          <td class="text-center">{{floatToMoney(endownment)}}</td>
+          <td class="text-center">{{floatToMoney(endowment)}}</td>
         </tr>
         <tr>
           <td>Income</td>
           <td class="text-center">{{floatToMoney(income)}}</td>
         </tr>
           <td>Total Earnings</td>
-          <td class="text-center">{{floatToMoney(income + endownment)}}</td>
+          <td class="text-center">{{floatToMoney(income + endowment)}}</td>
         </tr>
       </table>
     </div>
