@@ -1366,7 +1366,6 @@
       // role index endowment
       $scope.role = configfile.role[0];
       $scope.endowment = configfile.endowment[0] * 100 * $scope.scale;
-      if ($scope.method === "BDMWTA") $scope.endowment = 0;
 
       // check if debug is up
       if (configfile.debug[0] === "False") $scope.debug = false;
