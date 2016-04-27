@@ -516,7 +516,7 @@
         return;
       }
       if ($scope.method === "BDM1" || $scope.method === "BDMWTA") {
-        $scope.actualprice = Math.floor(Math.random() * 300 * scale);
+        $scope.actualprice = Math.floor(Math.random() * 300 * $scope.scale);
         $scope.bid *= 100;
       } else if ($scope.method === "BDM2") {
         var length = $scope.bdm2values.length;
@@ -1380,7 +1380,7 @@
       if ($scope.role !== 'R') {
         $scope.partner.index = configfile.pair[0];
         $scope.partner.role = rs.subjects[$scope.partner.index - 1].data.role[0];
-        $scope.partner.endowment = configfile.endowment[0] * 100 * scale;
+        $scope.partner.endowment = configfile.endowment[0] * 100 * $scope.scale;
         console.log("userId : " + $scope.userIndex);
         console.log("role : " + $scope.role);
         console.log("partner : " + $scope.partner);
