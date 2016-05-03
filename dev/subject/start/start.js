@@ -1083,26 +1083,7 @@
       console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         console.log("#initalslider-"+index);
-        $("#initalslider-"+index).labeledslider({
-          min: options.min,
-          max: options.max,
-          step: options.step,
-          value: 1,
-          orientation: options.orientation,
-          slide: function(event, ui) {
-            if ($scope.questionaire === 'batson') {
-              ui.handle.style.display = "inline";
-
-              $scope.initalResponses.happiness = ui.value;
-              $("#initalhappiness").text(ui.value);
-
-              val.begin.value = ui.value;
-              val.end.value = 9-ui.value;
-            } else {
-              val.value = ui.value;
-            }
-          }
-        });
+        $("#initalslider-"+index).slider();
         console.log("create of "+index);
         console.log(val);
       });
