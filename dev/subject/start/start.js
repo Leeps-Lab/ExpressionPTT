@@ -1084,7 +1084,6 @@
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         console.log("#initalslider-"+index);
         console.log(document.getElementById("initalslider-"+index));
-        /*
         $("#initalslider-"+index).slider({
           min: options.min,
           max: options.max,
@@ -1105,7 +1104,6 @@
             }
           }
         });
-        */
         console.log("create of "+index);
         console.log(val);
       });
