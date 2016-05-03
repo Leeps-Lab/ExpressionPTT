@@ -286,11 +286,11 @@
             value: 0
           },
           {
-            name: 'active'
+            name: 'active',
             value: 0
           },
           {
-            name: 'afraid'
+            name: 'afraid',
             value: 0
           }
         ]
