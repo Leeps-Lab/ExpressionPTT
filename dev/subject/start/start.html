@@ -44,8 +44,8 @@
       <div class="text-center" ng-repeat="value in questionaireoptions[questionaire].values track by $index" on-finish-render="ngRepeatFinished">
         <div style="width:600px; margin:auto" ng-attr-id="{{'initalslider-'+$index}}"></div>
         <h4 ng-if="questionaire === 'bosman'">{{value.name}}</h4>
-        <h4 ng-if="questionaire === 'batson'" style="margin-left:25%" class="pull-left">{{value.begin.name}} ({{value.begin.value}})</h4>
-        <h4 ng-if="questionaire === 'batson'" style="margin-right:25%" class="pull-right">{{value.end.name}} ({{value.end.value}})</h4>
+        <h4 ng-if="questionaire === 'batson'" ng-attr-id="{{'beginvalue-'+$index}}" style="margin-left:25%" class="pull-left">{{value.begin.name}} ({{value.begin.value}})</h4>
+        <h4 ng-if="questionaire === 'batson'" ng-attr-id="{{'endvalue-'+$index}}" style="margin-right:25%" class="pull-right">{{value.end.name}} ({{value.end.value}})</h4>
         <h4 ng-if="questionaire === 'panas'">{{value.name}}</h4>
         <br><br>
       </div>

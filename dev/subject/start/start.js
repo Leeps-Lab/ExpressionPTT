@@ -1098,9 +1098,8 @@
             if ($scope.questionaire === 'batson') {
               val.begin.value = ui.value;
               val.end.value = 10-ui.value;
-              console.log(val);
-              console.log('begin : '+val.begin.value);
-              console.log('end : '+val.end.value);
+              $('#beginvalue-'+index).text(val.begin.value);
+              $('#endvalue-'+index).text(val.end.value);
             } else {
               val.value = ui.value;
             }
