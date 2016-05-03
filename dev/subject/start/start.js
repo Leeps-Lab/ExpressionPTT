@@ -1088,7 +1088,17 @@
           max: options.max,
           step: options.step,
           value: 1,
-          orientation: options.orientation
+          orientation: options.orientation,
+          slide: function(event, ui) {
+            console.log(ui.value);
+            ui.handle.style.display = "inline";
+            if ($scope.questionaire === 'batson') {
+              val.begin.value = ui.value;
+              val.end.value = 9-ui.value;
+            } else {
+              val.value = ui.value;
+            }
+          }
         });
       });
       /*
@@ -1291,6 +1301,7 @@
           }
         });
       }
+      $(".ui-state-default").hide();
       $(".ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
       console.log("sliders created, buttons hidden");
     };
