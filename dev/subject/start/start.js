@@ -72,7 +72,7 @@
       'batson': {
         options: {
           max: 0,
-          min: 0,
+          min: 9,
           orientation: 'horizontal',
           step: 1
         },
