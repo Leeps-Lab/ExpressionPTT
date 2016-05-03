@@ -1265,7 +1265,7 @@
           $("#finaldisgust").text(ui.value);
         }
       });
-      //$(".ui-slider-labels").css("margin-left", "100%");
+      $(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
