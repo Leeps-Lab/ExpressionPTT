@@ -1082,6 +1082,7 @@
       console.log($scope.questionaireoptions[$scope.questionaire].values);
       console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
+        console.log(options);
         $("#initalslider-"+index).slider({
           min: options.min,
           max: options.max,
@@ -1261,6 +1262,8 @@
           $("#finaldisgust").text(ui.value);
         }
       });
+      $(".slider1.ui-state-default").hide();
+      $(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
@@ -1619,6 +1622,8 @@
       $scope.treatmentConfig();
       $scope.method = configfile.method[0];
       $scope.questionaire = configfile.questionaire[0].name;
+      console.log($scope.questionaire);
+      console.log(configfile.questionaire[0]);
       $scope.sopValue = configfile.sopValue[0] * 100;
 
       $scope.showpage.showStartExperiment = true;
