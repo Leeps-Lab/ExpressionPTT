@@ -209,7 +209,7 @@
         options: {
           min: 1,
           max: 5,
-          orientation: 'veritcal',
+          orientation: 'vertical',
           step: 0.1
         },
         values: [
