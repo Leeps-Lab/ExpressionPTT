@@ -64,6 +64,238 @@
     $scope.method = 'BDM1';
     $scope.nomessage = false;
     $scope.freemessage = false;
+    $scope.questionaire = 'Baton';
+
+    // questionaire options
+
+    $scope.questionaireoptions = {
+      'batson': {
+        options: {
+          max: 0,
+          min: 0,
+          orientation: 'horizontal',
+          step: 1
+        },
+        values: [
+          {
+            begin: {
+              name: 'bad-mood',
+              value: 0
+            },
+            end: {
+              name: 'good-mood',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'sad',
+              value: 0
+            },
+            end: {
+              name: 'happy',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'depressed',
+              value: 0
+            },
+            end: {
+              name: 'satisfied',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'gloomy',
+              value: 0
+            },
+            end: {
+              name: 'cheerful',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'displeased',
+              value: 0
+            },
+            end: {
+              name: 'pleased',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'sorrowful',
+              value: 0
+            },
+            end: {
+              name: 'joyful',
+              value: 0
+            }
+          }
+        ]
+      },
+      'bosman': {
+        options: {
+          max: 7,
+          min: 0,
+          orientation: 'horizontal',
+          step: 0.1
+        },
+        values: [
+          {
+            name: 'saddness',
+            value: 0
+          },
+          {
+            name: 'happiness',
+            value: 0
+          },
+          {
+            name: 'shame',
+            value: 0
+          },
+          {
+            name: 'fear',
+            value: 0
+          },
+          {
+            name: 'envy',
+            value: 0
+          },
+          {
+            name: 'hope',
+            value: 0
+          },
+          {
+            name: 'anger',
+            value: 0
+          },
+          {
+            name: 'anxiety',
+            value: 0
+          },
+          {
+            name: 'joy',
+            value: 0
+          },
+          {
+            name: 'irritation',
+            value: 0
+          },
+          {
+            name: 'contempt',
+            value: 0
+          },
+          {
+            name: 'surprise',
+            value: 0
+          },
+          {
+            name: 'dissapointment',
+            value: 0
+          },
+          {
+            name: 'nervousness',
+            value: 0
+          }
+        ]
+      },
+      'panas': {
+        options: {
+          max: 5,
+          min: 1,
+          orientation: 'veritcal',
+          step: 0.1
+        },
+        values: [
+          {
+            name: 'interested',
+            value: 0
+          },
+          {
+            name: 'distressed',
+            value: 0
+          },
+          {
+            name: 'excited',
+            value: 0
+          },
+          {
+            name: 'upset',
+            value: 0
+          },
+          {
+            name: 'strong',
+            value: 0
+          },
+          {
+            name: 'guilty',
+            value: 0
+          },
+          {
+            name: 'scared',
+            value: 0
+          },
+          {
+            name: 'hostile',
+            value: 0
+          },
+          {
+            name: 'enthusiastic',
+            value: 0
+          },
+          {
+            name: 'proud',
+            value: 0
+          },
+          {
+            name: 'irritable',
+            value: 0
+          },
+          {
+            name: 'alert',
+            value: 0
+          },
+          {
+            name: 'ashamed',
+            value: 0
+          },
+          {
+            name: 'inspired',
+            value: 0
+          },
+          {
+            name: 'nervous',
+            value: 0
+          },
+          {
+            name: 'determined',
+            value: 0
+          },
+          {
+            name: 'attentive',
+            value: 0
+          },
+          {
+            name: 'jittery',
+            value: 0
+          },
+          {
+            name: 'active'
+            value: 0
+          },
+          {
+            name: 'afraid'
+            value: 0
+          }
+        ]
+      }
+    };
 
     // method config
     $scope.bdm2values = [];
@@ -846,6 +1078,30 @@
       console.log("begin creation");
 
       // create sliders for the initalquestions
+      var options = $scope.questionaireoptions[$scope.questionaire].options;
+      $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
+        $("#initalslider-"+index).slider({
+          min: options.min,
+          max: options.max,
+          step: options.step,
+          value: 1,
+          orientation: options.orientation,
+          slide: function(event, ui) {
+            if ($scope.questionaire === 'batson') {
+              ui.handle.style.display = "inline";
+
+              $scope.initalResponses.happiness = ui.value;
+              $("#initalhappiness").text(ui.value);
+
+              val.begin.value = ui.value;
+              val.end.value = 9-ui.value;
+            } else {
+              val.value = ui.value;
+            }
+          }
+        });
+      });
+      /*
       $("#ihappiness").labeledslider({
         range: "min",
         min : 0,
@@ -925,6 +1181,7 @@
           $("#initaldisgust").text(ui.value);
         }
       });
+      */
       // create sliders for final questions
       $("#fhappiness").labeledslider({
         range: "min",
@@ -1359,6 +1616,7 @@
       $scope.treatment = configfile.treatment[0];
       $scope.treatmentConfig();
       $scope.method = configfile.method[0];
+      $scope.questionaire = configfile.questionaire[0];
       $scope.sopValue = configfile.sopValue[0] * 100;
 
       $scope.showpage.showStartExperiment = true;

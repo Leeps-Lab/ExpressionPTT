@@ -88,6 +88,13 @@
                 <label for="Price">SOP Value (in dollars)</label>
                 <input type="integer" class="form-control" id="sopValue" value="1" placeholder="SOP Value">
               </div>
+              <!-- Questionarie Type -->
+              <div class="form-group">
+                <label>Questionaire Type</label>
+                <select class="form-control" id="questionaire" ng-model="selectedQuestionaire"
+                  ng-options="questionaire.name for questionaire in questionaires">
+                </select>
+              </div>
               <!-- endowment -->
               <div class="form-group">
                 <label for="endowment">Endowment (in dollars)</label>
@@ -133,6 +140,10 @@
               <tr ng-show="configsettings.treatment === 'Directed Message' || configsettings.treatment === 'Readers'">
                 <td>Method</td>
                 <td id="showmethod"></td>
+              </tr>
+              <tr>
+                <td>Questionaire</td>
+                <td id="questionaire"></td>
               </tr>
               <tr ng-show="methods.selectedOption.name === 'SOP'">
                 <td>SOP Value</td>

@@ -41,6 +41,16 @@
       </div>
     </div>
     <div class="row">
+      <div ng-if="questionaire === 'baston'" class="text-center" ng-repeat="value in questionaireoptions['batson'].values">
+        <h4 ng-if="questionaire === 'baston'" >{{value.begin.name}} ({{value.begin.value}})</h4>
+        <h4 ng-if="questionaire === 'bosman'">{{value.name}}</h4>
+        <div ng-attr-id="{{'initalslider-'+$index}}"></div>
+        <h4 ng-if="questionaire === 'baston'" >{{value.end.name}} ({{value.end.value}})</h4>
+        <h4 ng-if="questionaire === 'panas'">{{value.name}}</h4>
+      </div>
+    </div>
+    <!--
+    <div class="row">
       <div class="col-md-2">
         <div class="text-center" id="slider1">
           <div id="ihappiness" style="height: 300px;margin-left: 100%"></div>
@@ -89,6 +99,7 @@
         <button type="button" class="btn btn-info" ng-click="finishQuestions()">Continue</button>
       </div>
     </div>
+    -->
   </div>
   <!-- start part 2 -->
   <!-- have a barrier here -->

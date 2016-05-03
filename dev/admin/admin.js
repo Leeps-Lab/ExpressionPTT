@@ -64,6 +64,25 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		}
 	};
 
+	$scope.questionaire = [
+		{
+			name: 'batson',
+			id: '0'
+		},
+		{
+			name: 'bosman',
+			id: '1'
+		},
+		{
+			name: 'panas'
+			id: '2'
+		},
+	];
+	$scope.selectedQuestionaire = {
+		name: 'Baton',
+		id: '0'
+	};
+
 	var Display = { //Display controller
 
 		initialize: function() {
@@ -131,12 +150,12 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
         var status = $("#router-status");
         if (connected) {
           status.text("Router Connected");
-          status.removeClass("badge-important");
-          status.addClass("badge-success");
+          status.removeClass("alert-success");
+          status.addClass("alert-success");
         } else {
           status.text("Router Disconnected");
-          status.removeClass("badge-success");
-          status.addClass("badge-important");
+          status.removeClass("alert-success");
+          status.addClass("alert-success");
         }
       });
 
@@ -171,6 +190,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				$scope.configsettings.numberofpeople = ra.subjects.length;
 				var treatment = $("#treatment").val();
 				$scope.configsettings.method = $scope.methods.selectedOption.name;
+				$scope.configsettings.questionaire = $scope.selectedQuestionaire.name;
 				$scope.configsettings.sopValue = Number($("#sopValue").val());
 				switch(treatment) {
 		      case "Directed Message":
@@ -198,6 +218,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 					numberofpeople: $scope.configsettings.numberofpeople,
 					treatment: $scope.configsettings.treatmentvalue,
 					method: $scope.configsettings.method,
+					questionaire: $scope.configsettings.questionaire,
 					sopValue: $scope.configsettings.sopValue,
 					endowment: $scope.configsettings.endowment,
 					incomegoal: $scope.configsettings.incomegoal,
@@ -245,6 +266,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 				$scope.validate = false;
 				$("#showtreatment").text($("#treatment").val());
 				$("#showmethod").text($scope.configsettings.method);
+				$("#questionaire").text($scope.configsettings.questionaire);
 				$("#showsopValue").text($scope.configsettings.sopValue);
 				$("#showendowment").text($scope.configsettings.endowment);
 				$("#showincomegoal").text($scope.configsettings.incomegoal);
@@ -359,6 +381,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 					ra.set(ra.subjects[i].user_id,"role",r[i]);
 					ra.set(ra.subjects[i].user_id,"treatment",$scope.configsettings.treatmentvalue);
 					ra.set(ra.subjects[i].user_id,"method",$scope.configsettings.method);
+					ra.set(ra.subjects[i].user_id,"questionaire",$scope.configsettings.questionaire);
 					ra.set(ra.subjects[i].user_id,"sopValue",$scope.configsettings.sopValue);
 					ra.set(ra.subjects[i].user_id,"endowment",$scope.configsettings.endowment);
 					ra.set(ra.subjects[i].user_id,"incomegoal",$scope.configsettings.incomegoal);
@@ -369,6 +392,8 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 			ra.on("save_values", function(value) {
 				$scope.configsettings.numberofpeople = value.numberofpeople;
 				$scope.configsettings.treatmentvalue = value.treatment;
+				$scope.configsettings.method = value.method;
+				$scope.configsettings.questionaire = value.questionaire;
 				$scope.configsettings.endowment = value.endowment;
 				$scope.configsettings.incomegoal = value.incomegoal;
 				$scope.configsettings.scale = value.scale;
