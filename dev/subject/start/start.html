@@ -45,7 +45,7 @@
       <div class="text-center" on-finish-render="ngRepeatFinished"
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
         <!-- labels for panas -->
-        <div ng-if="questionaire === 'panas' && $index % 10 === 0" class="col-md-2">
+        <div ng-if="questionaire === 'panas' && $index % 10 === 0" class="col-md-1">
           <div class="row">
             <h5 style="color: gray;"><strong>5</strong><br>Extremely</h5>
           </div>
@@ -92,7 +92,7 @@
             </div>
           </div>
         </div>
-        <div ng-if="questionaire === 'panas' && $index % 10 === 0" class="col-md-2">
+        <div ng-if="questionaire === 'panas' && $index % 10 === 0" class="col-md-1">
           <div class="row">
             <h5 style="color: gray;"><strong>5</strong><br>Extremely</h5>
           </div>
