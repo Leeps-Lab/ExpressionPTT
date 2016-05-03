@@ -1617,7 +1617,7 @@
       $scope.treatment = configfile.treatment[0];
       $scope.treatmentConfig();
       $scope.method = configfile.method[0];
-      $scope.questionaire = configfile.questionaire[0];
+      $scope.questionaire = configfile.questionaire[0].name;
       $scope.sopValue = configfile.sopValue[0] * 100;
 
       $scope.showpage.showStartExperiment = true;
