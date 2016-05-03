@@ -1078,10 +1078,10 @@
       console.log("begin creation");
 
       // create sliders for the initalquestions
-      console.log($scope.questionaire);
       var options = $scope.questionaireoptions[$scope.questionaire].options;
-      console.log($scope.questionaireoptions[$scope.questionaire].values);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
+        console.log("create of "+index);
+        console.log(val);
         $("#initalslider-"+index).slider({
           min: options.min,
           max: options.max,
