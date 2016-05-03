@@ -59,7 +59,7 @@
         </div>
       </div>
       <!-- repeat questions -->
-      <div ng-class="[text-center, {'col-md-1': questionaire === 'panas'}]" on-finish-render="ngRepeatFinished"
+      <div class="text-center" on-finish-render="ngRepeatFinished"
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
         <!-- label on the left -->
         <div ng-if="questionaire !== 'panas'"
@@ -70,7 +70,7 @@
           <h4 ng-if="questionaire === 'bosman'" class="pull-right">{{value.name}}</h4>
         </div>
         <!-- slider -->
-        <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman'}">
+        <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman', 'col-md-1': questionaire === 'panas'}">
           <div ng-class="{'row': questionaire === 'panas'}">
             <div ng-class="{'horizontal-slider': questionaire !== 'panas', 'vertical-slider': questionaire === 'panas'}"
               ng-attr-id="{{'initalslider-'+$index}}">
