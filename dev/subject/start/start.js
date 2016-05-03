@@ -1291,7 +1291,6 @@
           }
         });
       }
-      $(".ui-state-default").hide();
       $(".ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
       console.log("sliders created, buttons hidden");
     };
