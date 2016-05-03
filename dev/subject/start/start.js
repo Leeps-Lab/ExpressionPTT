@@ -1080,7 +1080,7 @@
           max: options.max,
           step: options.step,
           range: 'min',
-          value: 1,
+          value: 0,
           orientation: options.orientation,
           slide: function(event, ui) {
             console.log(ui.value);
