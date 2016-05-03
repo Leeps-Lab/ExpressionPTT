@@ -1616,7 +1616,6 @@
 
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       console.log('and here we are');
-      $scope.createSliders();
     });
 
     rs.on_load(function() {
@@ -1657,6 +1656,7 @@
       } else {
         $scope.readerlist = configfile.readerlist[0];
       }
+      $scope.createSliders();
 
       rs.trigger("admininital", {
         partnerId: $scope.partner.index,
