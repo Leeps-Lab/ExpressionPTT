@@ -64,7 +64,7 @@
     $scope.method = 'BDM1';
     $scope.nomessage = false;
     $scope.freemessage = false;
-    $scope.questionaire = 'batson';
+    $scope.questionaire = '';
 
     // questionaire options
 
