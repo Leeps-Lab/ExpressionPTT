@@ -1080,6 +1080,7 @@
       // create sliders for the initalquestions
       console.log($scope.questionaire);
       var options = $scope.questionaireoptions[$scope.questionaire].options;
+      console.log($scope.questionaireoptions[$scope.questionaire].values);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         $("#initalslider-"+index).slider({
           min: options.min,
