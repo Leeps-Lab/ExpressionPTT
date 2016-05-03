@@ -1248,8 +1248,8 @@
           $("#finaldisgust").text(ui.value);
         }
       });
-      $(".slider1.ui-state-default").hide();
-      $(".ui-slider-labels").css("margin-left", "100%");
+      //$(".slider1.ui-state-default").hide();
+      //$(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
@@ -1630,6 +1630,7 @@
       } else {
         $scope.readerlist = configfile.readerlist[0];
       }
+
       $scope.createSliders();
 
       rs.trigger("admininital", {
