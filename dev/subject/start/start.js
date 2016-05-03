@@ -1084,7 +1084,7 @@
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         console.log(options);
         for (ele in options) {
-          console.log(ele + " :  " + typeof ele);
+          console.log(ele + " :  " + typeof options[ele]);
         }
         $("#initalslider-"+index).labeledslider({
           min: options.min,
