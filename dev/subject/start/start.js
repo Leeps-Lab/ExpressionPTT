@@ -1614,6 +1614,10 @@
       }
     };
 
+    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+      $scope.createSliders();
+    });
+
     rs.on_load(function() {
       console.log("hello experiment");
       // congif values
@@ -1672,4 +1676,15 @@
     return function(text) {
       if (text !== undefined) return text.replace(/\n/g, '<br />');
     };
-  });
+  })
+  .directive('onFinishRender', function ($timeout) {
+  return {
+      restrict: 'A',
+      link: function (scope, element, attr) {
+          if (scope.$last === true) {
+              $timeout(function () {
+                  scope.$emit('ngRepeatFinished');
+              });
+          }
+      }
+  };
