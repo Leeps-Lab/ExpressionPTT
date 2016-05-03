@@ -1089,6 +1089,7 @@
           value: 1,
           orientation: options.orientation,
           slide: function(event, ui) {
+            console.log(ui.value);
             ui.handle.style.display = "inline";
             if ($scope.questionaire === 'batson') {
               val.begin.value = ui.value;
