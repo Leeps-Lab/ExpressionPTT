@@ -1083,6 +1083,7 @@
       console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         console.log("#initalslider-"+index);
+        /*
         $("#initalslider-"+index).slider({
           min: options.min,
           max: options.max,
@@ -1103,7 +1104,7 @@
             }
           }
         });
-        $("#fakeid").slider();
+        */
         console.log("create of "+index);
         console.log(val);
       });
