@@ -1088,17 +1088,7 @@
           max: options.max,
           step: options.step,
           value: 1,
-          orientation: options.orientation,
-          slide: function(event, ui) {
-            console.log(ui.value);
-            ui.handle.style.display = "inline";
-            if ($scope.questionaire === 'batson') {
-              val.begin.value = ui.value;
-              val.end.value = 9-ui.value;
-            } else {
-              val.value = ui.value;
-            }
-          }
+          orientation: options.orientation
         });
       });
       /*
@@ -1262,6 +1252,7 @@
           $("#finaldisgust").text(ui.value);
         }
       });
+      $(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
@@ -1300,6 +1291,8 @@
           }
         });
       }
+      $(".ui-state-default").hide();
+      $(".ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
       console.log("sliders created, buttons hidden");
     };
     $scope.showSliders = function() {
