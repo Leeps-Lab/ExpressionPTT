@@ -1083,7 +1083,10 @@
       console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         console.log(options);
-        $("#initalslider-"+index).slider({
+        for (ele in options) {
+          console.log(ele + " :  " + typeof ele);
+        }
+        $("#initalslider-"+index).labeledslider({
           min: options.min,
           max: options.max,
           step: options.step,
@@ -1094,7 +1097,7 @@
             ui.handle.style.display = "inline";
             if ($scope.questionaire === 'batson') {
               val.begin.value = ui.value;
-              val.end.value = 9-ui.value;
+              val.end.value = 10-ui.value;
             } else {
               val.value = ui.value;
             }
