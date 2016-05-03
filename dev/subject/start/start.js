@@ -1082,6 +1082,8 @@
       console.log($scope.questionaireoptions[$scope.questionaire].values);
       console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
+        while (!document.getElementById("#initalslider-"+index)) {
+        }
         console.log("#initalslider-"+index);
         $("#initalslider-"+index).slider();
         console.log("create of "+index);
@@ -1248,8 +1250,8 @@
           $("#finaldisgust").text(ui.value);
         }
       });
-      //$(".slider1.ui-state-default").hide();
-      //$(".ui-slider-labels").css("margin-left", "100%");
+      $(".slider1.ui-state-default").hide();
+      $(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
