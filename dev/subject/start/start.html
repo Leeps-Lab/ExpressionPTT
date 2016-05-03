@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="row">
-      <div ng-if="questionaire === 'panas'" ng-class="col-md-2">
+      <div ng-if="questionaire === 'panas'" class="col-md-2">
         <div class="row">
           <h4><strong>5</strong><br>Extremely</h4>
         </div>
@@ -58,8 +58,10 @@
           <h4><strong>1</strong><br>Very Slightly or Not at all</h4>
         </div>
       </div>
+      <!-- repeat questions -->
       <div ng-class="[text-center, {'col-md-1': questionaire === 'panas'}]" on-finish-render="ngRepeatFinished"
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
+        <!-- label on the left -->
         <div ng-if="questionaire !== 'panas'"
           ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
           <h4 ng-if="questionaire === 'batson'" class="pull-right">
@@ -67,6 +69,7 @@
           </h4>
           <h4 ng-if="questionaire === 'bosman'" class="pull-right">{{value.name}}</h4>
         </div>
+        <!-- slider -->
         <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman'}">
           <div class="row">
             <div ng-class="{'horizontal-slider': questionaire !== 'panas', 'vertical-slider': questionaire === 'panas'}"
@@ -74,6 +77,7 @@
             </div>
             <h4 ng-if="questionaire === 'panas'" class="pull-right">{{value.name}}</h4>
           </div>
+          <!-- labels on the botton for bosman -->
           <div class="row" ng-if="questionaire === 'bosman'">
             <div class="col-md-2">
               <h4 class="pull-right">Not at all</h4>
@@ -83,6 +87,7 @@
             </div>
           </div>
         </div>
+        <!-- label on left for batson-->
         <div class="col-md-2">
           <h4 ng-if="questionaire === 'batson'" class="pull-left">
             {{value.end.name}} ({{value.end.value}})
@@ -91,52 +96,6 @@
         <br><br><br><br>
       </div>
     </div>
-    <!--
-    <div class="row">
-      <div class="col-md-2">
-        <div class="text-center" id="slider1">
-          <div id="ihappiness" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="initalhappiness">0</h4>
-          <h4>Happiness</h4>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="isadness" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="initalsadness">0</h4>
-          <h4>Sadness</h4>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="ifear" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="initalfear">0</h4>
-          <h4>Fear</h4>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="ianger" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="initalanger">0</h4>
-          <h4>Anger</h4>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="isurprise" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="initalsurprise">0</h4>
-          <h4>Surprise</h4>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="idisgust" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="initaldisgust">0</h4>
-          <h4>Disgust</h4>
-        </div>
-      </div>
-    </div>
-    -->
     <div class="row">
       <div class="text-center">
         <button type="button" class="btn btn-info" ng-click="finishQuestions()">Continue</button>
