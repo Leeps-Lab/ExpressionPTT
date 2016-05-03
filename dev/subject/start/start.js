@@ -1087,10 +1087,13 @@
             ui.handle.style.display = "inline";
             if ($scope.questionaire === 'batson') {
               val.begin.value = ui.value;
+              $scope.initalResponses[val.begin.name] = ui.value;
               val.end.value = 10-ui.value;
+              $scope.initalResponses[val.end.name] = 10-ui.value;
               $scope.$apply();
             } else {
               val.value = ui.value;
+              $scope.initalResponses[val.name] = ui.value;
             }
           }
         });
