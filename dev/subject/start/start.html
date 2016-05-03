@@ -43,22 +43,22 @@
     <div class="row">
       <div ng-if="questionaire === 'panas'" ng-class="col-md-2">
         <div class="row">
-          <h4><strong>5</strong>Extremely</h4>
+          <h4><strong>5</strong><br>Extremely</h4>
         </div>
         <div class="row">
-          <h4><strong>4</strong>Quite a Bit</h4>
+          <h4><strong>4</strong><br>Quite a Bit</h4>
         </div>
         <div class="row">
-          <h4><strong>3</strong>Moderately</h4>
+          <h4><strong>3</strong><br>Moderately</h4>
         </div>
         <div class="row">
-          <h4><strong>2</strong>A Little</h4>
+          <h4><strong>2</strong><br>A Little</h4>
         </div>
         <div class="row">
-          <h4><strong>1</strong>Very Slightly or Not at all</h4>
+          <h4><strong>1</strong><br>Very Slightly or Not at all</h4>
         </div>
       </div>
-      <div ng-class="[text-center, 'col-md-1': questionaire === 'panas']" on-finish-render="ngRepeatFinished"
+      <div ng-class="[text-center, {'col-md-1': questionaire === 'panas'}]" on-finish-render="ngRepeatFinished"
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
         <div ng-if="questionaire !== 'panas'"
           ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
