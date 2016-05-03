@@ -42,18 +42,18 @@
     </div>
     <div class="row">
       <div class="text-center" ng-repeat="value in questionaireoptions[questionaire].values track by $index" on-finish-render="ngRepeatFinished">
-        <div class="col-md-3">
+        <div ng-class="{col-md-2: questionaire === 'batson', col-md-3: questionaire === 'bosman'}">
           <h4 ng-if="questionaire === 'batson'" class="pull-right">
             {{value.begin.name}} ({{value.begin.value}})
           </h4>
           <h4 ng-if="questionaire === 'bosman'" class="pull-right">{{value.name}}</h4>
           <h4 ng-if="questionaire === 'panas'" class="pull-right">{{value.name}}</h4>
         </div>
-        <div class="col-md-9">
+        <div ng-class="{col-md-8: questionaire === 'batson', col-md-9: questionaire === 'bosman'}">
           <div class="row">
             <div style="width:600px; margin:auto; margin-top: 14.3px" ng-attr-id="{{'initalslider-'+$index}}"></div>
           </div>
-          <div class="row">
+          <div class="row" ng-if="questionaire === 'bosman'">
             <div class="col-md-2">
               <h4 class="pull-right">Not at all</h4>
             </div>
