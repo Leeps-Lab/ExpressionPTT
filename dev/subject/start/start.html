@@ -92,6 +92,27 @@
             </div>
           </div>
         </div>
+        <div ng-if="questionaire === 'panas' && $index % 10 === 0" class="col-md-2">
+          <div class="row">
+            <h5 style="color: gray;"><strong>5</strong><br>Extremely</h5>
+          </div>
+          <br>
+          <div class="row">
+            <h5 style="color: gray;"><strong>4</strong><br>Quite a Bit</h5>
+          </div>
+          <br>
+          <div class="row">
+            <h5 style="color: gray;"><strong>3</strong><br>Moderately</h5>
+          </div>
+          <br>
+          <div class="row">
+            <h5 style="color: gray;"><strong>2</strong><br>A Little</h5>
+          </div>
+          <br>
+          <div class="row">
+            <h5 style="color: gray;"><strong>1</strong><br>Not at all</h5>
+          </div>
+        </div>
         <!-- label on left for batson-->
         <div ng-if="questionaire === 'batson'" class="col-md-2">
           <h4 class="pull-left">
