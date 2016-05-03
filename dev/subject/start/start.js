@@ -1082,8 +1082,6 @@
       console.log($scope.questionaireoptions[$scope.questionaire].values);
       console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
-        console.log("#initalslider-"+index);
-        console.log(document.getElementById("initalslider-"+index));
         $("#initalslider-"+index).slider({
           min: options.min,
           max: options.max,
@@ -1091,12 +1089,8 @@
           value: 1,
           orientation: options.orientation,
           slide: function(event, ui) {
+            ui.handle.style.display = "inline";
             if ($scope.questionaire === 'batson') {
-              ui.handle.style.display = "inline";
-
-              $scope.initalResponses.happiness = ui.value;
-              $("#initalhappiness").text(ui.value);
-
               val.begin.value = ui.value;
               val.end.value = 9-ui.value;
             } else {
@@ -1104,8 +1098,6 @@
             }
           }
         });
-        console.log("create of "+index);
-        console.log(val);
       });
       /*
       $("#ihappiness").labeledslider({
