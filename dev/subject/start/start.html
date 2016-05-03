@@ -41,26 +41,27 @@
       </div>
     </div>
     <div class="row">
-      <div ng-if="questionaire === 'panas'" class="col-md-2">
-        <div class="row">
-          <h4><strong>5</strong><br>Extremely</h4>
-        </div>
-        <div class="row">
-          <h4><strong>4</strong><br>Quite a Bit</h4>
-        </div>
-        <div class="row">
-          <h4><strong>3</strong><br>Moderately</h4>
-        </div>
-        <div class="row">
-          <h4><strong>2</strong><br>A Little</h4>
-        </div>
-        <div class="row">
-          <h4><strong>1</strong><br>Very Slightly or Not at all</h4>
-        </div>
-      </div>
       <!-- repeat questions -->
       <div class="text-center" on-finish-render="ngRepeatFinished"
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
+        <!-- labels for panas -->
+        <div ng-if="questionaire === 'panas' && $index % 12 === 0" class="col-md-2">
+          <div class="row">
+            <h4><strong>5</strong><br>Extremely</h4>
+          </div>
+          <div class="row">
+            <h4><strong>4</strong><br>Quite a Bit</h4>
+          </div>
+          <div class="row">
+            <h4><strong>3</strong><br>Moderately</h4>
+          </div>
+          <div class="row">
+            <h4><strong>2</strong><br>A Little</h4>
+          </div>
+          <div class="row">
+            <h4><strong>1</strong><br>Very Slightly or Not at all</h4>
+          </div>
+        </div>
         <!-- label on the left -->
         <div ng-if="questionaire !== 'panas'"
           ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
