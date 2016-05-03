@@ -1081,7 +1081,7 @@
       var options = $scope.questionaireoptions[$scope.questionaire].options;
       console.log($scope.questionaireoptions[$scope.questionaire].values);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
-        $("#initalslider-"+index).slider({
+        $("#initalslider-"+index).labeledslider({
           min: options.min,
           max: options.max,
           step: options.step,
