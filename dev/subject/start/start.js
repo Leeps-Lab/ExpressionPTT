@@ -1083,6 +1083,7 @@
       console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         while (!document.getElementById("#initalslider-"+index)) {
+          console.log('you spin me right round right round');
         }
         console.log("#initalslider-"+index);
         $("#initalslider-"+index).slider();
