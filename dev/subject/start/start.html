@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="row">
-      <div ng-if="questionaire === 'baston'" class="text-center" ng-repeat="value in questionaireoptions[$scope.questionaire].values">
+      <div ng-if="questionaire === 'baston'" class="text-center" ng-repeat="value in questionaireoptions[questionaire].values">
         <h4 ng-if="questionaire === 'baston'" >{{value.begin.name}} ({{value.begin.value}})</h4>
         <h4 ng-if="questionaire === 'bosman'">{{value.name}}</h4>
         <div ng-attr-id="{{'initalslider-'+$index}}"></div>
