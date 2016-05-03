@@ -71,8 +71,8 @@
     $scope.questionaireoptions = {
       'batson': {
         options: {
-          max: 0,
-          min: 9,
+          min: 1,
+          max: 9,
           orientation: 'horizontal',
           step: 1
         },
@@ -141,8 +141,8 @@
       },
       'bosman': {
         options: {
-          max: 7,
           min: 0,
+          max: 7,
           orientation: 'horizontal',
           step: 0.1
         },
@@ -207,8 +207,8 @@
       },
       'panas': {
         options: {
-          max: 5,
           min: 1,
+          max: 5,
           orientation: 'veritcal',
           step: 0.1
         },
