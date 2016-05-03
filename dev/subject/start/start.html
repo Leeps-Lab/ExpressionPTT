@@ -41,18 +41,41 @@
       </div>
     </div>
     <div class="row">
-      <div class="text-center" ng-repeat="value in questionaireoptions[questionaire].values track by $index" on-finish-render="ngRepeatFinished">
-        <div ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
+      <div ng-if="questionaire === 'panas'" ng-class="col-md-2">
+        <div class="row">
+          <h4><strong>5</strong>Extremely</h4>
+        </div>
+        <div class="row">
+          <h4><strong>4</strong>Quite a Bit</h4>
+        </div>
+        <div class="row">
+          <h4><strong>3</strong>Moderately</h4>
+        </div>
+        <div class="row">
+          <h4><strong>2</strong>A Little</h4>
+        </div>
+        <div class="row">
+          <h4><strong>1</strong>Very Slightly or Not at all</h4>
+        </div>
+      </div>
+      <div ng-class="[text-center, 'col-md-1': questionaire === 'panas']" on-finish-render="ngRepeatFinished"
+        ng-repeat="value in questionaireoptions[questionaire].values track by $index">
+        <div ng-if="questionaire !== 'panas'"
+          ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
           <h4 ng-if="questionaire === 'batson'" class="pull-right">
             {{value.begin.name}} ({{value.begin.value}})
           </h4>
           <h4 ng-if="questionaire === 'bosman'" class="pull-right">{{value.name}}</h4>
-          <h4 ng-if="questionaire === 'panas'" class="pull-right">{{value.name}}</h4>
         </div>
-        <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman'}">
+        <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman'">
           <div class="row">
+            <div id="fhappiness" style="height: 300px;margin-left: 100%"></div>
+            <h4 id="finalhappiness">0</h4>
+            <h4>Happiness</h4>
             <div ng-class="{'horizontal-slider': questionaire !== 'panas', 'vertical-slider': questionaire === 'panas'}"
-              ng-attr-id="{{'initalslider-'+$index}}"></div>
+              ng-attr-id="{{'initalslider-'+$index}}">
+            </div>
+            <h4 ng-if="questionaire === 'panas'" class="pull-right">{{value.name}}</h4>
           </div>
           <div class="row" ng-if="questionaire === 'bosman'">
             <div class="col-md-2">
