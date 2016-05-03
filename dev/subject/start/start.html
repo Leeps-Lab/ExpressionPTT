@@ -42,7 +42,7 @@
     </div>
     <div class="row">
       <div class="text-center" ng-repeat="value in questionaireoptions[questionaire].values track by $index" on-finish-render="ngRepeatFinished">
-        <div ng-class="{'col-md-2': questionaire === 'batson', 'col-md-3': questionaire === 'bosman'}">
+        <div ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
           <h4 ng-if="questionaire === 'batson'" class="pull-right">
             {{value.begin.name}} ({{value.begin.value}})
           </h4>
