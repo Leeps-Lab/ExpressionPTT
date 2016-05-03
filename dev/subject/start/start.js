@@ -1090,6 +1090,7 @@
           min: options.min,
           max: options.max,
           step: options.step,
+          range: 'min',
           value: 1,
           orientation: options.orientation,
           slide: function(event, ui) {
