@@ -71,7 +71,7 @@
         </div>
         <!-- slider -->
         <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman'}">
-          <div class="row">
+          <div ng-class="{'row': questionaire === 'panas'}">
             <div ng-class="{'horizontal-slider': questionaire !== 'panas', 'vertical-slider': questionaire === 'panas'}"
               ng-attr-id="{{'initalslider-'+$index}}">
             </div>
