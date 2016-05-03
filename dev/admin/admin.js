@@ -64,7 +64,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		}
 	};
 
-	$scope.questionaire = [
+	$scope.questionaires = [
 		{
 			name: 'batson',
 			id: '0'
