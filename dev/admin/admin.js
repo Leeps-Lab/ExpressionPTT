@@ -74,7 +74,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 			id: '1'
 		},
 		{
-			name: 'panas'
+			name: 'panas',
 			id: '2'
 		},
 	];
