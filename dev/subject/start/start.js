@@ -1080,28 +1080,15 @@
       // create sliders for the initalquestions
       var options = $scope.questionaireoptions[$scope.questionaire].options;
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
-        console.log("create of "+index);
-        console.log(val);
         $("#initalslider-"+index).slider({
           min: options.min,
           max: options.max,
           step: options.step,
           value: 1,
-          orientation: options.orientation,
-          slide: function(event, ui) {
-            if ($scope.questionaire === 'batson') {
-              ui.handle.style.display = "inline";
-
-              $scope.initalResponses.happiness = ui.value;
-              $("#initalhappiness").text(ui.value);
-
-              val.begin.value = ui.value;
-              val.end.value = 9-ui.value;
-            } else {
-              val.value = ui.value;
-            }
-          }
+          orientation: options.orientation
         });
+        console.log("create of "+index);
+        console.log(val);
       });
       /*
       $("#ihappiness").labeledslider({
