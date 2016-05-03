@@ -1086,7 +1086,7 @@
         for (ele in options) {
           console.log(ele + " :  " + typeof options[ele]);
         }
-        $("#initalslider-"+index).slider({
+        $("#initalslider-"+index).labeledslider({
           min: options.min,
           max: options.max,
           step: options.step,
