@@ -80,7 +80,7 @@
             <div ng-class="{'horizontal-slider': questionaire !== 'panas', 'vertical-slider': questionaire === 'panas'}"
               ng-attr-id="{{'initalslider-'+$index}}">
             </div>
-            <h4 ng-if="questionaire === 'panas'" class="text-center">{{value.name}}</h4>
+            <h4 ng-if="questionaire === 'panas'" class="text-center">{{value.name}} <h4 ng-if="value.value">({{value.value}})</h4></h4>
           </div>
           <!-- labels on the botton for bosman -->
           <div class="row" ng-if="questionaire === 'bosman'">
