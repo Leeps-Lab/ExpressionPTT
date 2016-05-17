@@ -70,7 +70,7 @@
         <div ng-if="questionaire !== 'panas'"
           ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
           <h4 ng-if="questionaire === 'batson'" class="pull-right">
-            {{value.begin.name}} ({{value.begin.value}})
+            {{value.begin.name}} <h4 ng-if="value.begin.value">({{value.begin.value}})</h4>
           </h4>
           <h4 ng-if="questionaire === 'bosman'" class="pull-right">{{value.name}}</h4>
         </div>
@@ -116,7 +116,7 @@
         <!-- label on left for batson-->
         <div ng-if="questionaire === 'batson'" class="col-md-2">
           <h4 class="pull-left">
-            {{value.end.name}} ({{value.end.value}})
+            {{value.end.name}} <h4 ng-if="value.end.value">({{value.end.value}})</h4>
           </h4>
         </div>
         <div ng-if="questionaire !== 'panas'">
