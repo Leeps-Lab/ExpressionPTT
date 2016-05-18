@@ -1300,6 +1300,7 @@
     rs.recv("sendMessage", function(sender, value) {
       console.log ("sendmessage recv");
       if ($scope.reader && $scope.role === "R") {
+        console.log("r recieved message");
         console.log(sender);
         console.log($scope.readerlist);
         // check if on readerlist
