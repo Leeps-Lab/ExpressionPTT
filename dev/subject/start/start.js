@@ -1381,6 +1381,9 @@
     // barriers
     rs.on("readypart2self", function(value) {
       $scope.barrier.subject.readyPart2 = true;
+      if ($scope.role === "R") {
+        $scope.part2barrier();
+      }
       rs.send("readypart2send", {
       });
       if ($scope.barrier.subject.readyPart2 && $scope.barrier.partner.readyPart2) {
