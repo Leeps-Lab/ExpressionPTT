@@ -1407,6 +1407,9 @@
     };
     rs.on("readypart3self", function(value) {
       $scope.barrier.subject.readyPart3 = true;
+      if ($scope.role === "R") {
+        $scope.part3barrier();
+      }
       rs.send("readypart3send", {
       });
       if ($scope.barrier.subject.readyPart3 && $scope.barrier.partner.readyPart3) {
