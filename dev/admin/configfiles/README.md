@@ -45,9 +45,9 @@ Groups of two or three numbers
 * FALSE
 
 ###Questionaire (string)
-* Batson
-* Bosman
+* 'Batson'
+* 'Bosman'
 
 ###QuestionList (array)
-* Batson :[['happy', 'sad'], ['inspired', 'uninspired']]
-* Bosman : ['interested', 'excited']
+* Batson -> Array of pairs. Ex : [['happy', 'sad'], ['inspired', 'uninspired']]
+* Bosman -> Array of strings. Ex : ['interested', 'excited']
