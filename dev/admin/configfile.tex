@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{morefloats}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\newcommand{\minitab}[2][l]{\begin{tabular}{#1}#2\end{tabular}}
+%\usepackage{subfigure}
+\usepackage{subcaption}
+\usepackage[titletoc,title]{appendix}
+%\usepackage{etoolbox}
+
+\usepackage[margin=1in]{geometry}
+\renewcommand{\baselinestretch}{1.4}
+\newcommand{\eps}{\varepsilon}
+
+\textwidth = 6.5 in
+\textheight = 9 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.0 in
+\parskip = 0.1 in
+\parindent = 0.3 in
+
+\newcommand{\ep}{\varepsilon}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}{Definition}
+
+
+\title{Visual Market -- Config File Explanations}
+
+\begin{document}
+\maketitle
+
+\subsection*{Basics}
+
+\paragraph{pause} (boolean) [TRUE$|$FALSE] Whether each session is paused at the beginning. If TRUE, the administer needs to resume the session every time. If FALSE, round starts after round automatically.
+
+\paragraph{groups} (string) "[[Group1][Group2]\dots]" Subject grouping. Outer brackets are required and inner brackets show the group assignment.  
+
+\paragraph{Ex Ey} (string) "[XforPlayer1, XforPlayer2,\dots]" Endowments of goods X and Y for each player, respectively.
+
+\paragraph{utility} (string) Utility function.
+
+\paragraph{canBid canAsk canBuy canSell}(boolean) [1$|$0] Whether players can bis/ask/buy/sell. No need to change.
+
+\paragraph{ProbX} (real) Probability of holding X. No need to change.
+
+\paragraph{roundDuration} (integer) Duration of each round, in second.
+
+\paragraph{round} (integer) The number of rounds to be run for each line in config file. Default value (blank) is 1. If you need a same treatment to be run in multiple rounds, change this value.
+
+\paragraph{numCurves} (integer) Number of indifference curves shown on the heatmap. Note that, these curves are anchored to the heatmap (instead to the reference point). Suggested value is 0 (and if you put 0 here, an indifference curve crossing endowment point still exists).
+
+\paragraph{showHeatmap} (boolean) [TRUE$|$FALSE] Whether to show the heatmap or not.
+
+\paragraph{disableHeatmapClicks} (boolean) [TRUE$|$FALSE] Whether to disable putting bids/offers by clicking on the heatmap.
+
+\paragraph{showFrontier} (boolean) [TRUE$|$FALSE] Whether to show the frontier (most preferred bids/offers) on the heatmap (and you can click to accept it). If FALSE, only your bid/offer will appear on the heatmap.
+
+\paragraph{showThermometer} (boolean) [TRUE$|$FALSE] Show the thermometer at the top. Note that this does not automatically disappear when you let showHeatmap to be FALSE, in which case, showThermometer needs to be manually set to FALSE, too. 
+
+\paragraph{showOrderBook} (boolean) [TRUE$|$FALSE] Whether to show the order book. Note that if showOrderBook is FALSE, showHeatmap has to be TRUE and disableHeatmapClicks has to be FALSE. Otherwise subjects  cannot make any inputs!
+
+\paragraph{highlightBestPrice} (boolean) [TRUE$|$FALSE]Whether to highlight if your offer/bid is the best price on the order book. Rely on showOrderBook to be TRUE.
+
+{\color{red} \paragraph{highlightInsertionPoint} (boolean) [TRUE$|$FALSE] }
+{\color{red} \paragraph{ghostBestOffer} (boolean) [TRUE$|$FALSE]}
+{\color{red} \paragraph{convention} (string) [marginal$|$blended$|$sequential] }
+
+\paragraph{hoverTextType} (string) [utility$|$price$|$both] This choice controls for the text shown on the heapmap when you tend to make a choice. Price is shown by "P" and utility is shown with $\pounds$.
+
+{\color{red}
+\paragraph{removeOnPartial} (boolean) [TRUE$|$FALSE]	
+\paragraph{colorBound} (string) "[range]"
+\paragraph{showYourOffers} (boolean) [TRUE$|$FALSE]
+\paragraph{heatmapHover} (boolean) [TRUE$|$FALSE]	}								
+
+\end{document}
+
+
+
