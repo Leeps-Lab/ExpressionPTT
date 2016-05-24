@@ -6,7 +6,7 @@
 * Same for all. Ex : 3
 * Different between Subjects. Ex : [3, 5]
 
-#### Target-Income (int | array)
+#### TargetIncome (int | array)
 * Same for all. Ex : 10
 * Different between Subjects. Ex : 15
 

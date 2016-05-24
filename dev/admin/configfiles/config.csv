@@ -1,2 +1,3 @@
-period,pairs,endownment,incomegoal,roles,debug,numberofpeople,scale,treatement
-1,"[2, 1]",300,10,"[2, 1]",1,2,1,1
+Endowment,TargetIncome,Scale,Treatment,Group,Role,Method,MethodParams,Questionaire,EmotionList,EmotionRange,Debug
+3,10,1,"DM","[1,2]","[T,P]","BDM_CONT_WTP",,"Batson",,,TRUE
+4,15,1,"TP","[3,4,5]","[P,R,T]","BDM_LIST_WTP",,"Bosman",,,TRUE

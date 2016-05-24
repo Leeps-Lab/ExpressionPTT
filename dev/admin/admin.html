@@ -47,7 +47,7 @@
 					</div>
 					<div class="row">
 						<div class="col-md-8">
-							<button id="start-session" class="btn btn-success" disabled="disabled">Start Session</button>
+							<button id="start-session" class="btn btn-success">Start Session</button>
 							<button id="refresh-subjects" class="btn btn-info" title="Attempt recover by refreshing all subject browsers">Recover Session</button>
 							<button id="reset-session" class="btn btn-danger">Reset Session</button>
 						</div>
@@ -61,117 +61,8 @@
 				</div>
 			</div>
       <hr>
-      <div class="row" ng-show="validate">
-        <div class="col-md-6 col-md-offset-3">
-          <div class="well">
-            <form class="form-horizontal">
-              <h3>Config File</h3>
-              <!-- treatment -->
-              <div class="form-group">
-                <label>Treatment</label>
-                <select class="form-control" id="treatment" ng-model="configsettings.treatment">
-                  <option>Directed Message</option>
-                  <option>No Message</option>
-                  <option>Free Message</option>
-                  <option>Readers</option>
-                </select>
-              </div>
-              <!-- methods -->
-              <div class="form-group" ng-show="configsettings.treatment === 'Directed Message' || configsettings.treatment === 'Readers'">
-                <label>Elicitation Method</label>
-                <select class="form-control" id="method" ng-model="methods.selectedOption"
-                  ng-options="method.name for method in methods[configsettings.treatment]">
-                </select>
-              </div>
-              <!-- Single Price Offer Value -->
-              <div class="form-group" ng-show="methods.selectedOption.name === 'SOP'">
-                <label for="Price">SOP Value (in dollars)</label>
-                <input type="integer" class="form-control" id="sopValue" value="1" placeholder="SOP Value">
-              </div>
-              <!-- Questionarie Type -->
-              <div class="form-group">
-                <label>Questionaire Type</label>
-                <select class="form-control" id="questionaire" ng-model="selectedQuestionaire.name"
-                  ng-options="questionaire.name for questionaire in questionaires">
-                </select>
-              </div>
-              <!-- endowment -->
-              <div class="form-group">
-                <label for="endowment">Endowment (in dollars)</label>
-                <input type="integer" class="form-control" id="endowment" value="3" placeholder="Endowment">
-              </div>
-              <!-- incomegoal -->
-              <div class="form-group">
-                <label for="incomegoal">Income Goal (in dollars)</label>
-                <input type="integer" class="form-control" id="incomegoal" value="10" placeholder="Income Goal" style="text-align:left;">
-              </div>
-              <!-- scale -->
-              <div class="form-group">
-                <label for="scale">Scale</label>
-                <input type="integer" class="form-control" id="scale" value="1" placeholder="Scale" style="text-align:left;">
-              </div>
-              <!-- debug -->
-              <div class="form-group">
-                <label>Debug</label>
-                <select class="form-control" id="debug">
-                  <option>False</option>
-                  <option>True</option>
-                </select>
-              </div>
-              <!-- validate -->
-              <div class="row">
-                <div class="text-center">
-                  <button type="submit" class="btn btn-default" id="set_config">Validate</button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <div class="row" ng-hide="validate">
-        <div class="col-md-6 col-md-offset-3">
-          <div class="well">
-            <h3>Current Session</h3>
-            <table class="table table-striped table-hover table-condensed">
-              <tr>
-                <td>Treatment</td>
-                <td id="showtreatment"></td>
-              </tr>
-              <tr ng-show="configsettings.treatment === 'Directed Message' || configsettings.treatment === 'Readers'">
-                <td>Method</td>
-                <td id="showmethod"></td>
-              </tr>
-              <tr>
-                <td>Questionaire</td>
-                <td id="questionaire"></td>
-              </tr>
-              <tr ng-show="methods.selectedOption.name === 'SOP'">
-                <td>SOP Value</td>
-                <td id="showsopValue"></td>
-              </tr>
-              <tr ng-hide="methods.selectedOption.name === 'BDMWTA'">
-                <td>Endowment</td>
-                <td id="showendowment"></td>
-              </tr>
-              <tr>
-                <td>Income Goal</td>
-                <td id="showincomegoal"></td>
-              </tr>
-              <tr>
-                <td>Scale</td>
-                <td id="showscale"></td>
-              </tr>
-              <tr>
-                <td>Debug</td>
-                <td id="showdebug"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-
       <div class="row">
-        <button ng-click="downloadcsv()" type="button" class="btn btn-default">
+        <button ng-click="downloadcsv()" type="button" class="btn btn-default" style="margin-left:auto;margin-right:auto;">
           Download
         </button>
       </div>

@@ -46,16 +46,16 @@
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
         <!-- label on the left -->
         <div class="col-md-2">
-          <h4 ng-if="questionaire === 'batson'" class="pull-right">
+          <h4 ng-if="questionaire === 'Batson'" class="pull-right">
             {{value.begin.name}} <h4 ng-if="value.begin.value">({{value.begin.value}})</h4>
           </h4>
-          <h4 ng-if="questionaire === 'bosman'" class="pull-right">{{value.name}}</h4>
+          <h4 ng-if="questionaire === 'Bosman'" class="pull-right">{{value.name}}</h4>
         </div>
         <!-- slider -->
-        <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman'}">
+        <div ng-class="{'col-md-8': questionaire === 'Batson', 'col-md-9': questionaire === 'Bosman'}">
           <div class="horizontal-slider" ng-attr-id="{{'initalslider-'+$index}}"></div>
           <!-- labels on the botton for bosman -->
-          <div class="row" ng-if="questionaire === 'bosman'">
+          <div class="row" ng-if="questionaire === 'Bosman'">
             <div class="col-md-2 col-md-offset-1">
               <h5 style="color: gray; margin-left: auto; margin-right: auto;">Not at all</h5>
             </div>
@@ -65,7 +65,7 @@
           </div>
         </div>
         <!-- label on left for batson-->
-        <div ng-if="questionaire === 'batson'" class="col-md-2">
+        <div ng-if="questionaire === 'Batson'" class="col-md-2">
           <h4 class="pull-left">
             {{value.end.name}} <h4 ng-if="value.end.value">({{value.end.value}})</h4>
           </h4>
@@ -450,7 +450,7 @@
   <!-- bid -->
   <!-- P Willingnesspage-->
   <!-- BDM1 -->
-  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDM1'">
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method.inc === 'CONT'">
     <div class="row">
       <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
         (${{floatToMoney(partner.moneytransferred) | number: 2}}) to his/her own account.
@@ -460,8 +460,12 @@
       </h3>
     </div>
     <div class="row text-center">
-      <h3 class="text-center">What is the maximum amount you would be willing to pay to write and send a message that your
-        counterpart T will read?</h3>
+      <h3 ng-show="method.direction === 'WTP'" class="text-center">What is the maximum
+        amount you would be willing to pay to write and send a message that your counterpart T will read?
+      </h3>
+      <h3 ng-show="method.direction === 'WTA'" class="text-center">What is the minimum
+        amount you would be willing to accept to not write and send a message that your counterpart T will read?
+      </h3>
       <p class="text-center">(Express the amount in dollars and cents)</p>
       <input ng-model="bid" type="text" />
     </div>
@@ -477,15 +481,19 @@
     </div>
   </div>
   <!-- BDM2 -->
-  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDM2'">
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method.inc === 'LIST'">
     <div class="row">
       <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
         (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
       <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
     </div>
     <div class="row">
-      <h3 class="text-center">What is the maximum amount you would be willing to pay to write and send a message that your
-        counterpart T will read?</h3>
+      <h3 ng-show="method.direction === 'WTP'" class="text-center">What is the maximum
+        amount you would be willing to pay to write and send a message that your counterpart T will read?
+      </h3>
+      <h3 ng-show="method.direction === 'WTA'" class="text-center">What is the minimum
+        amount you would be willing to accept to not write and send a message that your counterpart T will read?
+      </h3>
       <div class="col-md-offset-5 col-md-2" ng-repeat="price in bdm2values track by $index">
         <input type="checkbox" ng-model="price.selected" ng-change="bdm2Toggle($index)">
         ${{floatToMoney(price.value)}}
@@ -503,7 +511,7 @@
     </div>
   </div>
   <!-- SOP -->
-  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'SOP'">
+  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method.type === 'SOP'">
     <div class="row">
       <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
         (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
@@ -524,30 +532,6 @@
       </div>
     </div>
   </div>
-  <!-- BDMWTA -->
-  <div class="container" ng-show="showpage.willingnesspage && role === 'P' && method === 'BDMWTA'">
-    <div class="row">
-      <h3 class="text-center">Your counterpart, T, has transferred {{partner.percentTransferred}}% of your income
-        (${{floatToMoney(partner.moneytransferred)}}) to his/her own account.</h3>
-      <h3 class="text-center">Your avaliable earnings are now ${{floatToMoney(income - partner.moneytransferred)}}</h3>
-    </div>
-    <div class="row text-center">
-      <h3 class="text-center">What is the minimum amount you would be willing to
-        accept to not write and send a message that your counterpart T will read?</h3>
-      <p class="text-center">(Express the amount in dollars and cents)</p>
-      <input ng-model="bid" type="text" />
-    </div>
-    <div class="row text-center">
-      <h3>The actual price of sending a message will be shown on the next screen.</h3>
-    </div>
-    <div class="row">
-      <div class="text-center">
-        <button type="button" class="btn btn-success" ng-click="sendWillingness();">
-          Send Your Decision
-        </button>
-      </div>
-    </div>
-  </div>
   <!-- T Willingnesspage -->
   <div class="container" ng-show="showpage.willingnesspage && role === 'T'">
   </div>
@@ -556,10 +540,10 @@
   <div class="container" ng-show="showpage.checkprice && role === 'P'">
     <div class="row text-center">
       <h3>The actual price is ${{floatToMoney(actualprice) | number: 2}}</h3>
-      <h3 ng-hide="method === 'BDMWTA'">Your maximum willingness was ${{floatToMoney(bid) | number: 2}}</h3>
-      <h3 ng-show="method === 'BDMWTA'">Your minimum willingness was ${{floatToMoney(bid) | number: 2}}</h3>
+      <h3 ng-hide="method.direction === 'WTA'">Your maximum willingness was ${{floatToMoney(bid) | number: 2}}</h3>
+      <h3 ng-show="method.direction === 'WTA'">Your minimum willingness was ${{floatToMoney(bid) | number: 2}}</h3>
       <h3 ng-show="ablesendmessage">Therefore, the message has been sent to your counterpart.</h3>
-      <h3 ng-hide="ablesendmessage">Therefore, <u><strong>no</strong></u> message will be sent to your counterpart.</h3>
+      <h3 ng-show="!ablesendmessage">Therefore, <u><strong>no</strong></u> message will be sent to your counterpart.</h3>
     </div>
     <div class="row">
       <div class="text-center">

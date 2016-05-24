@@ -54,7 +54,11 @@
     $scope.scale = 1;
     $scope.incomegoal = 10;
     $scope.treatment = 1;
-    $scope.method = 'BDM1';
+    $scope.method = {
+      type: '',
+      inc: '',
+      direction: ''
+    };
     $scope.nomessage = false;
     $scope.freemessage = false;
     $scope.questionaire = '';
@@ -62,7 +66,7 @@
     // questionaire options
 
     $scope.questionaireoptions = {
-      'batson': {
+      'Batson': {
         options: {
           min: 1,
           max: 9,
@@ -132,7 +136,7 @@
           }
         ]
       },
-      'bosman': {
+      'Bosman': {
         options: {
           min: 0,
           max: 7,
@@ -319,7 +323,6 @@
 
       $scope.showpage.part2 = true;
       // send answers back to server
-
 
       rs.trigger("sendinitalanswers", {
         initalResponses: $scope.initalResponses,
@@ -641,7 +644,8 @@
       rs.trigger("readyTransferProcessSelf", {});
     };
     $scope.sendWillingness = function(responce) {
-      if (!$scope.bid) {
+      // check if there is a bid
+      if (!$scope.bid && $scope.method.type !== "SOP") {
         sweetAlert({
           title: "Please enter an amount.",
           text: "",
@@ -650,14 +654,8 @@
         });
         return;
       }
-      if ($scope.method === "BDM1" || $scope.method === "BDMWTA") {
-        $scope.actualprice = Math.floor(Math.random() * 300 * $scope.scale);
-        $scope.bid *= 100;
-      } else if ($scope.method === "BDM2") {
-        var length = $scope.bdm2values.length;
-        $scope.actualprice = $scope.bdm2values[Math.floor(Math.random() * length)].value;
-        console.log("random value : " + $scope.actualprice);
-      } else if ($scope.method === "SOP") {
+      // set bid in sop
+      if ($scope.method.type === "SOP") {
         if (responce === "yes") {
           $scope.bid = $scope.sopValue;
           $scope.actualprice = $scope.sopValue;
@@ -666,10 +664,10 @@
           $scope.actualprice = $scope.sopValue;
         }
       }
-      if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endowment && $scope.method !== "BDMWTA") {
+      if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endowment && $scope.method.direction === "WTP") {
         sweetAlert({
-          title: "Your willingness exeeds your avaliable earnings.",
-          text: "",
+          title: "Unavaliable Value",
+          text: "Your willingness exeeds your avaliable earnings.",
           type: "error",
           allowOutsideClick: true
         });
@@ -687,7 +685,15 @@
       }
       $scope.showpage.willingnesspage = false;
 
-      if ($scope.bid >= $scope.actualprice && ($scope.method === "BDM1" || $scope.method === "BDM2")) {
+      if ($scope.method.inc === "CONT") {
+        $scope.actualprice = Math.floor(Math.random() * 300 * $scope.scale);
+        $scope.bid *= 100;
+      } else if ($scope.method.inc === "LIST") {
+        var length = $scope.bdm2values.length;
+        $scope.actualprice = $scope.bdm2values[Math.floor(Math.random() * length)].value;
+      }
+
+      if ($scope.bid >= $scope.actualprice && $scope.method.direction === "WTP") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice + $scope.endowment;
         // p gets to send message
         $scope.ablesendmessage = true;
@@ -701,21 +707,7 @@
           finalearnings: $scope.floatToMoney($scope.totalincome),
           time: $scope.getTime()
         });
-      } else if ($scope.bid <= $scope.actualprice && $scope.method === "BDMWTA") {
-        $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
-        // p gets to send message
-        $scope.ablesendmessage = true;
-        rs.trigger("saveWillingness", {
-          bid: $scope.bid,
-          actualprice: $scope.actualprice
-        });
-        rs.trigger("adminwillingness", {
-          wtp: $scope.floatToMoney($scope.bid),
-          actualprice: $scope.floatToMoney($scope.actualprice),
-          finalearnings: $scope.floatToMoney($scope.totalincome),
-          time: $scope.getTime()
-        });
-      } else if (responce === "yes") {
+      } else if ($scope.bid <= $scope.actualprice && $scope.method.direction === "WTA") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
         // p gets to send message
         $scope.ablesendmessage = true;
@@ -740,12 +732,10 @@
           time: $scope.getTime()
         });
       }
-      if (responce !== "no") {
-        $scope.showpage.messagePage = true;
-      } else {
-        $scope.showpage.showEarnings = true;
-      }
+      
+      $scope.showpage.messagePage = true;
       $scope.saveState();
+
       rs.send("sendWillingness", {
         actualprice: $scope.actualprice,
         totalincome: $scope.totalincome,
@@ -758,7 +748,6 @@
         $scope.showpage.checkprice = false;
         $scope.saveState();
 
-        console.log($scope.message);
         rs.send("sendMessage", {
           messages : $scope.message.replace(/\n/g, '<br />'),
           taken : $scope.partner.moneytransferred
@@ -982,8 +971,6 @@
 
       // create sliders for the initalquestions
       var options = $scope.questionaireoptions[$scope.questionaire].options;
-      console.log($scope.questionaireoptions[$scope.questionaire].values);
-      console.log(options);
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         $("#initalslider-"+index).slider({
           min: options.min,
@@ -993,9 +980,8 @@
           value: 0,
           orientation: options.orientation,
           slide: function(event, ui) {
-            console.log(ui.value);
             ui.handle.style.display = "inline";
-            if ($scope.questionaire === 'batson') {
+            if ($scope.questionaire === 'Batson') {
               val.begin.value = ui.value;
               $scope.initalResponses[val.begin.name] = ui.value;
               val.end.value = 10-ui.value;
@@ -1007,13 +993,12 @@
             }
           }
         });
-        if ($scope.questionaire === 'batson') {
+        if ($scope.questionaire === 'Batson') {
           $scope.initalResponses[val.begin.name] = null;
           $scope.initalResponses[val.end.name] = null;
         } else {
           $scope.initalResponses[val.name] = null;
         }
-        console.log($scope.initalResponses);
       });
       // create sliders for final questions
       $("#fhappiness").labeledslider({
@@ -1297,13 +1282,17 @@
       rs.send("readypart2send", {
       });
       if ($scope.barrier.subject.readyPart2 && $scope.barrier.partner.readyPart2) {
+        console.log('past 2nd barrier');
         $scope.part2barrier();
       }
     });
     rs.recv("readypart2send", function(sender, value) {
+      console.log('sender '+sender);
+      console.log('partner index '+$scope.partner.index);
       if (sender == parseInt($scope.partner.index)) {
         $scope.barrier.partner.readyPart2 = true;
         if ($scope.barrier.subject.readyPart2 && $scope.barrier.partner.readyPart2) {
+          console.log('past 2nd barrier');
           $scope.part2barrier();
         }
       }
@@ -1404,6 +1393,7 @@
           $scope.saveState();
         }
       } else {
+        console.log('through part 3');
         if ($scope.role === "P") {
           $scope.showpage.waitpage = false;
           $scope.showpage.willingnesspage = true;
@@ -1417,24 +1407,24 @@
     $scope.treatmentConfig = function() {
       switch($scope.treatment) {
         // as is
-        case 1:
+        case 'DM':
           console.log("welcome, nothing out of the ordinary is here");
           break;
         // no message :
         // no references to messages
-        case 2:
+        case 'NM':
           console.log("carry on, nothing to see here");
           $scope.nomessage = true;
           break;
         // free message :
         // no references to paying for the message
-        case 3:
+        case 'FM':
           console.log("'cause I'm free as a message now baby");
           $scope.freemessage = true;
           break;
         // reader :
         // all messages go to an isolated reader(s)
-        case 4:
+        case 'TP':
           console.log("time for the reader");
           // need to make algorithm for sorting peoples
           $scope.reader = true;
@@ -1444,6 +1434,16 @@
           break;
       }
     };
+    $scope.parseMethod = function(method) {
+      var splitMethod = method.split("_");
+      $scope.method.type = splitMethod[0];
+      if ($scope.method.type === "BDM") {
+        $scope.method.inc = splitMethod[1];
+        $scope.method.direction = splitMethod[2];
+      } else {
+        $scope.method.direction = splitMethod[1];
+      }
+    };
 
     $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
       console.log('and here we are');
@@ -1451,28 +1451,47 @@
     });
 
     rs.on_load(function() {
+      console.log('find the config. good luck');
+      var configfile;
+      var userIndex;
+      var partnerIndex;
+      $scope.userIndex = parseInt(rs.user_id);
+      for (var i = 0; i < rs.configs.length; i++) {
+        var groupindex = rs.configs[i].Group.indexOf($scope.userIndex)
+        if (groupindex !== -1) {
+          console.log('config is at '+i);
+          configfile = rs.configs[i];
+          userIndex = groupindex;
+          for (var j = 0; j < rs.configs[i].Group.length; j++) {
+            if (j !== userIndex && rs.configs[i].Role[j] !== 'R') {
+              partnerIndex = j;
+            }
+          }
+        }
+      }
+      console.log('my index '+userIndex);
+      console.log('other index '+partnerIndex);
       console.log("hello experiment");
       // congif values
-      $scope.userIndex = parseInt(rs.user_id);
-      var configfile = rs.subjects[$scope.userIndex - 1].data;
-      $scope.incomegoal = configfile.incomegoal[0];
-      $scope.scale = configfile.scale[0];
-      $scope.treatment = configfile.treatment[0];
+      $scope.incomegoal = configfile.TargetIncome;
+      $scope.scale = configfile.Scale;
+      $scope.treatment = configfile.Treatment;
       $scope.treatmentConfig();
-      $scope.method = configfile.method[0];
-      $scope.questionaire = configfile.questionaire[0].name;
-      console.log($scope.questionaire);
-      console.log(configfile.questionaire[0]);
-      $scope.sopValue = configfile.sopValue[0] * 100;
+      $scope.parseMethod(configfile.Method);
+      $scope.questionaire = configfile.Questionaire;
+      $scope.methodParams = configfile.MethodParams * 100;
 
       $scope.showpage.showStartExperiment = true;
       // set values from config file
       // role index endowment
-      $scope.role = configfile.role[0];
-      $scope.endowment = configfile.endowment[0] * 100 * $scope.scale;
+      configfile.Role = configfile.Role.substring(1,configfile.Role.length-1).split(",");
+      console.log(configfile.Role);
+      $scope.role = configfile.Role[userIndex];
+      console.log(typeof configfile.Role);
+      $scope.endowment = configfile.Endowment * 100 * $scope.scale;
 
       // check if debug is up
-      if (configfile.debug[0] === "False") $scope.debug = false;
+      if (configfile.Debug === "False") $scope.debug = false;
       else {
         $scope.debug = true;
         $scope.income = $scope.incomegoal * 100 * $scope.scale + 1;
@@ -1481,14 +1500,22 @@
       // set partner values from config file
       // index role endowment
       if ($scope.role !== 'R') {
-        $scope.partner.index = configfile.pair[0];
-        $scope.partner.role = rs.subjects[$scope.partner.index - 1].data.role[0];
-        $scope.partner.endowment = configfile.endowment[0] * 100 * $scope.scale;
-        console.log("userId : " + $scope.userIndex);
-        console.log("role : " + $scope.role);
-        console.log("partner : " + $scope.partner);
+        $scope.partner.index = configfile.Group[partnerIndex];
+        $scope.partner.role = configfile.Role[partnerIndex];
+        $scope.partner.endowment = $.isArray(configfile.Endowment) ?
+          configfile.Endowment[partnerIndex] * 100 * $scope.scale :
+          configfile.Endowment * 100 * $scope.scale;
+        console.log("userId : "+$scope.userIndex);
+        console.log("role : "+$scope.role);
+        console.log("partnerId : "+$scope.partner.index);
+        console.log("partnerRole : "+$scope.partner.role);
       } else {
-        $scope.readerlist = configfile.readerlist[0];
+        $scope.readerlist = [];
+        for (var i = 0; i < configfile.Group.length; i++) {
+          if (i !== $scope.userIndex && configfile.Role[i] === 'P') {
+            $scope.readerlist.push(i);
+          }
+        }
       }
 
       rs.trigger("admininital", {
