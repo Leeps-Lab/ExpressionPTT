@@ -72,11 +72,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		{
 			name: 'bosman',
 			id: '1'
-		},
-		{
-			name: 'panas',
-			id: '2'
-		},
+		}
 	];
 	$scope.selectedQuestionaire = {
 		name: 'Baton',

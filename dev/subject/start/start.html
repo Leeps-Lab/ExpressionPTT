@@ -44,44 +44,16 @@
       <!-- repeat questions -->
       <div class="text-center" on-finish-render="ngRepeatFinished"
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
-        <!-- labels for panas -->
-        <div ng-if="questionaire === 'panas' && $index % 10 === 0" class="col-md-1">
-          <div class="row">
-            <h5 style="color: gray;"><strong>5</strong><br>Extremely</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>4</strong><br>Quite a Bit</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>3</strong><br>Moderately</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>2</strong><br>A Little</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>1</strong><br>Not at all</h5>
-          </div>
-        </div>
         <!-- label on the left -->
-        <div ng-if="questionaire !== 'panas'"
-          ng-class="{'col-md-2': questionaire === 'batson', 'col-md-2': questionaire === 'bosman'}">
+        <div class="col-md-2">
           <h4 ng-if="questionaire === 'batson'" class="pull-right">
             {{value.begin.name}} <h4 ng-if="value.begin.value">({{value.begin.value}})</h4>
           </h4>
           <h4 ng-if="questionaire === 'bosman'" class="pull-right">{{value.name}}</h4>
         </div>
         <!-- slider -->
-        <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman', 'col-md-1': questionaire === 'panas'}">
-          <div ng-class="{'row': questionaire === 'panas'}">
-            <div ng-class="{'horizontal-slider': questionaire !== 'panas', 'vertical-slider': questionaire === 'panas'}"
-              ng-attr-id="{{'initalslider-'+$index}}">
-            </div>
-            <h4 ng-if="questionaire === 'panas'" class="text-center">{{value.name}} <h4 ng-if="value.value">({{value.value}})</h4></h4>
-          </div>
+        <div ng-class="{'col-md-8': questionaire === 'batson', 'col-md-9': questionaire === 'bosman'}">
+          <div class="horizontal-slider" ng-attr-id="{{'initalslider-'+$index}}"></div>
           <!-- labels on the botton for bosman -->
           <div class="row" ng-if="questionaire === 'bosman'">
             <div class="col-md-2 col-md-offset-1">
@@ -92,36 +64,13 @@
             </div>
           </div>
         </div>
-        <div ng-if="questionaire === 'panas' && ($index === 10 || $index === 20)" class="col-md-1">
-          <div class="row">
-            <h5 style="color: gray;"><strong>5</strong><br>Extremely</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>4</strong><br>Quite a Bit</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>3</strong><br>Moderately</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>2</strong><br>A Little</h5>
-          </div>
-          <br>
-          <div class="row">
-            <h5 style="color: gray;"><strong>1</strong><br>Not at all</h5>
-          </div>
-        </div>
         <!-- label on left for batson-->
         <div ng-if="questionaire === 'batson'" class="col-md-2">
           <h4 class="pull-left">
             {{value.end.name}} <h4 ng-if="value.end.value">({{value.end.value}})</h4>
           </h4>
         </div>
-        <div ng-if="questionaire !== 'panas'">
-          <br><br><br><br>
-        </div>
+        <br><br><br><br>
       </div>
     </div>
     <div class="row">
