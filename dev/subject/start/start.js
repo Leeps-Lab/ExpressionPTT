@@ -798,6 +798,11 @@
           $scope.actualprice = $scope.sopValue;
         }
       }
+      $scope.bid *= 100;
+
+      console.log('bid : '+$scope.bid);
+      console.log('other : '+($scope.income - $scope.partner.moneytransferred + $scope.endowment));
+      
       if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endowment && $scope.method.direction === "WTP") {
         sweetAlert({
           title: "Unavaliable Value",
