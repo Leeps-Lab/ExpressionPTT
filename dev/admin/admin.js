@@ -9,13 +9,51 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 
 	$scope.downloadcsv = function() {
 		var csvContent = "data:text/csv;charset=utf-8,";
-		var dataString = "subjectId,partnerId,role,initaltime,takerate,finalearnings,etakerate,wtp,actualprice,message,takeratetime,etrakeratetime,willingnesstime,message"+
-		"messagetime,happiness,sadness,fear,anger,surprise,disgust,finalanswerstime";
+		// pregame
+		var dataString = "subjectId,partnerId,role,initaltime,";
+		// part 1
+		console.log($scope.emotions);
+		for (var i = 0; i < $scope.emotions.length; i++) {
+			console.log($scope.emotions[i]);
+			dataString += 'init_'+$scope.emotions[i]+',';
+		}
+		dataString += 'initalanswerstime,';
+		// part 2
+		for (var i = 1; i <= $scope.tasknum.length; i++) {
+			dataString += 'task'+i+',';
+			dataString += 'tast'+i+'time,';
+		}
+		dataString += 'totalpoints,';
+		// part 3
+		dataString += 'takerate,etakerate,wtp,actualprice,message,finalearnings,';
+		// part 4
+		for (var i = 0; i < $scope.emotions.length; i++) {
+			dataString += 'final_'+$scope.emotions[i]+',';
+		}
+		dataString += 'finalanswerstime\n';
+		csvContent += dataString;
 		$scope.subjects.forEach(function(element, index) {
-			dataString = element.userid+","+element.partnerId+","+element.role+","+element.initaltime+","+element.takerate+","+element.finalearnings+","+element.etakerate+
-			","+element.wtp+","+element.actualprice+","+element.message+","+element.takeratetime+","+element.etakeratetime+","+element.willingnesstime+
-			","+element.message+","+element.messagetime+","+element.happiness+","+element.sadness+","+element.fear+","+element.anger+","+
-			","+element.surprise+","+element.disgust+","+element.finalanswerstime;
+			// pregame
+			dataString = element.userid+","+element.partnerId+","+element.role+","+element.initaltime+",";
+			// part 1
+			for (var i = 0; i < element.part1.length; i++) {
+				dataString += element.part1[i].value+",";
+			}
+			dataString += element.initalanswerstime+",";
+			// part 2
+			for (var i = 0; i < element.tasks.length; i++) {
+				dataString += element.tasks[i]+","+element.tasktime[i]+",";
+			}
+			dataString += element.totalpoints+",";
+			// part 3
+			dataString += element.takerate+","+element.etakerate+","+element.wtp+","+
+										element.actualprice+","+element.message+","+element.finalearnings+",";
+			// part 4
+			for (var i = 0; i < element.part4.length; i++) {
+				dataString += element.part4[i].value+",";
+			}
+			dataString += element.finalanswerstime;
+			console.log(element);
 			csvContent += index < $scope.subjects.length ? dataString +"\n" : dataString;
 		});
 		var encodedUri = encodeURI(csvContent);
@@ -182,6 +220,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		resetGroups(); //Assign groups to users
 		$scope.emotions = ['bad-mood','good-mood','sad','happy','depressed','satisfied','gloomy','cheerful',
 											 'displeased','pleased','sorrowful','joyful']
+											 console.log($scope.subjects);
 	});
 
 	ra.on_register(function(user) { //Add a row to the table to each user
@@ -246,8 +285,8 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 	});
 	ra.recv("adminTasks", function(sender, value) {
 		var location = getlocation(sender);
-		$scope.subjects[location].tasks[value.task] = value.points;
-		$scope.subjects[location].tasktime[value.task] = value.time;
+		$scope.subjects[location].tasks[value.task-1] = value.points;
+		$scope.subjects[location].tasktime[value.task-1] = value.time;
 		$scope.subjects[location].totalpoints = value.totalpoints;
 	});
 	ra.recv("admintakerate", function(sender, value) {
