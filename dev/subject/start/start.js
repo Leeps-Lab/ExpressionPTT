@@ -4,27 +4,20 @@
       return d.getTime();
     };
     $scope.initalResponses = {};
-    $scope.finalResponses = {
-      happiness: '',
-      sadness: '',
-      fear: '',
-      anger: '',
-      surprise: '',
-      disgust: ''
-    };
+    $scope.finalResponses = {};
     // checks if inputs are filled out
     $scope.isValid = function(answers) {
       if ($scope.debug) return true;
       for (answer in answers) {
-        if (!answers[answer]) {
-          sweetAlert({
-            title: "Please enter a value for all emotions.",
-            text: "",
-            type: "error",
-            allowOutsideClick: true
-          });
-          return false;
-        }
+          if (!answers[answer]) {
+            sweetAlert({
+              title: "Please enter a value for all emotions.",
+              text: "",
+              type: "error",
+              allowOutsideClick: true
+            });
+            return false;
+          }
       }
       return true;
     };
@@ -65,7 +58,144 @@
 
     // questionaire options
 
-    $scope.questionaireoptions = {
+    $scope.finalquestionaireoptions = {
+      'Batson': {
+        options: {
+          min: 1,
+          max: 9,
+          orientation: 'horizontal',
+          step: 1
+        },
+        values: [
+          {
+            begin: {
+              name: 'bad-mood',
+              value: 0
+            },
+            end: {
+              name: 'good-mood',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'sad',
+              value: 0
+            },
+            end: {
+              name: 'happy',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'depressed',
+              value: 0
+            },
+            end: {
+              name: 'satisfied',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'gloomy',
+              value: 0
+            },
+            end: {
+              name: 'cheerful',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'displeased',
+              value: 0
+            },
+            end: {
+              name: 'pleased',
+              value: 0
+            }
+          },
+          {
+            begin: {
+              name: 'sorrowful',
+              value: 0
+            },
+            end: {
+              name: 'joyful',
+              value: 0
+            }
+          }
+        ]
+      },
+      'Bosman': {
+        options: {
+          min: 0,
+          max: 7,
+          orientation: 'horizontal',
+          step: 0.1
+        },
+        values: [
+          {
+            name: 'saddness',
+            value: 0
+          },
+          {
+            name: 'happiness',
+            value: 0
+          },
+          {
+            name: 'shame',
+            value: 0
+          },
+          {
+            name: 'fear',
+            value: 0
+          },
+          {
+            name: 'envy',
+            value: 0
+          },
+          {
+            name: 'hope',
+            value: 0
+          },
+          {
+            name: 'anger',
+            value: 0
+          },
+          {
+            name: 'anxiety',
+            value: 0
+          },
+          {
+            name: 'joy',
+            value: 0
+          },
+          {
+            name: 'irritation',
+            value: 0
+          },
+          {
+            name: 'contempt',
+            value: 0
+          },
+          {
+            name: 'surprise',
+            value: 0
+          },
+          {
+            name: 'dissapointment',
+            value: 0
+          },
+          {
+            name: 'nervousness',
+            value: 0
+          }
+        ]
+      }
+    };$scope.questionaireoptions = {
       'Batson': {
         options: {
           min: 1,
@@ -323,12 +453,16 @@
 
       $scope.showpage.part2 = true;
       // send answers back to server
-
-      rs.trigger("sendinitalanswers", {
-        initalResponses: $scope.initalResponses,
+      var value = {
         showpage: $scope.showpage,
         time: $scope.getTime()
-      });
+      };
+      for(emotion in $scope.initalResponses) {
+        value[emotion] = $scope.initalResponses[emotion];
+      };
+      console.log(value);
+
+      rs.trigger("sendinitalanswers", value);
       // get ready for a barrier
       console.log("ready for part 2?");
       rs.trigger("readypart2self", {
@@ -732,7 +866,7 @@
           time: $scope.getTime()
         });
       }
-      
+
       $scope.showpage.messagePage = true;
       $scope.saveState();
 
@@ -816,10 +950,16 @@
 
       $scope.showpage.thanks = true;
       // send answers back to server
-      rs.trigger("sendfinalanswers", {
-        finalResponses: $scope.finalResponses,
-        showpage: $scope.showpage
-      });
+      var value = {
+        showpage: $scope.showpage,
+        time: $scope.getTime()
+      };
+      for(emotion in $scope.finalResponses) {
+        value[emotion] = $scope.finalResponses[emotion];
+      };
+      console.log(value);
+
+      rs.trigger("sendfinalanswers", value);
     };
 
     $scope.floatToMoney = function(number) {
@@ -973,10 +1113,10 @@
       var options = $scope.questionaireoptions[$scope.questionaire].options;
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         $("#initalslider-"+index).slider({
+          range: 'min',
           min: options.min,
           max: options.max,
           step: options.step,
-          range: 'min',
           value: 0,
           orientation: options.orientation,
           slide: function(event, ui) {
@@ -1000,84 +1140,34 @@
           $scope.initalResponses[val.name] = null;
         }
       });
-      // create sliders for final questions
-      $("#fhappiness").labeledslider({
-        range: "min",
-        min : 0,
-        max : 10,
-        step: 1,
-        value : 0,
-        tickInterval: 1,
-        orientation: 'vertical',
-        slide: function(event, ui) {
-          ui.handle.style.display = "inline";
-          $scope.finalResponses.happiness = ui.value;
-          $("#finalhappiness").text(ui.value);
-        }
-      });
-      $("#fsadness").labeledslider({
-        range: "min",
-        min : 0,
-        max : 10,
-        value : 0,
-        tickInterval: 1,
-        orientation: 'vertical',
-        slide: function(event, ui) {
-          ui.handle.style.display = "inline";
-          $scope.finalResponses.sadness = ui.value;
-          $("#finalsadness").text(ui.value);
-        }
-      });
-      $("#ffear").labeledslider({
-        range: "min",
-        min : 0,
-        max : 10,
-        value : 0,
-        tickInterval: 1,
-        orientation: 'vertical',
-        slide: function(event, ui) {
-          ui.handle.style.display = "inline";
-          $scope.finalResponses.fear = ui.value;
-          $("#finalfear").text(ui.value);
-        }
-      });
-      $("#fanger").labeledslider({
-        range: "min",
-        min : 0,
-        max : 10,
-        value : 0,
-        tickInterval: 1,
-        orientation: 'vertical',
-        slide: function(event, ui) {
-          ui.handle.style.display = "inline";
-          $scope.finalResponses.anger = ui.value;
-          $("#finalanger").text(ui.value);
-        }
-      });
-      $("#fsurprise").labeledslider({
-        range: "min",
-        min : 0,
-        max : 10,
-        value : 0,
-        tickInterval: 1,
-        orientation: 'vertical',
-        slide: function(event, ui) {
-          ui.handle.style.display = "inline";
-          $scope.finalResponses.surprise = ui.value;
-          $("#finalsurprise").text(ui.value);
-        }
-      });
-      $("#fdisgust").labeledslider({
-        range: "min",
-        min : 0,
-        max : 10,
-        value : 0,
-        tickInterval: 1,
-        orientation: 'vertical',
-        slide: function(event, ui) {
-          ui.handle.style.display = "inline";
-          $scope.finalResponses.disgust = ui.value;
-          $("#finaldisgust").text(ui.value);
+
+      $scope.finalquestionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
+        $("#finalslider-"+index).slider({
+          range: "min",
+          min : options.min,
+          max : options.max,
+          step: options.step,
+          value : 0,
+          orientation: options.orientation,
+          slide: function(event, ui) {
+            ui.handle.style.display = "inline";
+            if ($scope.questionaire === 'Batson') {
+              val.begin.value = ui.value;
+              $scope.finalResponses[val.begin.name] = ui.value;
+              val.end.value = 10-ui.value;
+              $scope.finalResponses[val.end.name] = 10-ui.value;
+              $scope.$apply();
+            } else {
+              val.value = ui.value;
+              $scope.finalResponses[val.name] = ui.value;
+            }
+          }
+        });
+        if ($scope.questionaire === 'Batson') {
+          $scope.finalResponses[val.begin.name] = null;
+          $scope.finalResponses[val.end.name] = null;
+        } else {
+          $scope.finalResponses[val.name] = null;
         }
       });
       $(".ui-slider-labels").css("margin-left", "100%");
@@ -1445,9 +1535,19 @@
       }
     };
 
-    $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+    $scope.$on('ngRepeatInitFinished', function(ngRepeatFinishedEvent) {
       console.log('and here we are');
-      $scope.createSliders();
+      $scope.initalfinished = true
+      if ($scope.initalfinished && $scope.finalfinished) {
+        $scope.createSliders();
+      }
+    });
+    $scope.$on('ngRepeatFinalFinished', function(ngRepeatFinishedEvent) {
+      console.log('and here we are');
+      $scope.finalfinished = true;
+      if ($scope.initalfinished && $scope.finalfinished) {
+        $scope.createSliders();
+      }
     });
 
     rs.on_load(function() {
@@ -1491,7 +1591,7 @@
       $scope.endowment = configfile.Endowment * 100 * $scope.scale;
 
       // check if debug is up
-      if (configfile.Debug === "False") $scope.debug = false;
+      if (!configfile.Debug) $scope.debug = false;
       else {
         $scope.debug = true;
         $scope.income = $scope.incomegoal * 100 * $scope.scale + 1;
@@ -1537,13 +1637,25 @@
       if (text !== undefined) return text.replace(/\n/g, '<br />');
     };
   })
-  .directive('onFinishRender', function ($timeout) {
+  .directive('onInitFinishRender', function ($timeout) {
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
             if (scope.$last === true) {
                 $timeout(function () {
-                    scope.$emit('ngRepeatFinished');
+                    scope.$emit('ngRepeatInitFinished');
+                });
+            }
+        }
+    }
+  })
+  .directive('onFinalFinishRender', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function () {
+                    scope.$emit('ngRepeatFinalFinished');
                 });
             }
         }

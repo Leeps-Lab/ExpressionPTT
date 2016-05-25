@@ -2,6 +2,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 
 	$scope.subjects = [];
 	$scope.tasknum = [];
+	$scope.emotions = [];
 	for(var i = 1; i <= 22; i++) {
 		$scope.tasknum.push(i);
 	}
@@ -130,11 +131,26 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 									$("<td>").text(""))))));
 				}
 				//outputGroups
-				$scope.subjects.push({
+				var subject = {
 					userid: user,
 					tasks: Array(22),
-					tasktime: Array(22)
-				});
+					tasktime: Array(22),
+					part1: [],
+					part4: []
+				}
+				for (var i = 0; i < $scope.emotions.length; i++) {
+					var emotion = $scope.emotions[i];
+					subject.part1.push({
+						name: emotion,
+						value: null
+					});
+					subject.part4.push({
+						name: emotion,
+						value: null
+					});
+				}
+				console.log(subject);
+				$scope.subjects.push(subject);
 			});
 		}
 	};
@@ -164,6 +180,8 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 
 	ra.on_load(function () {
 		resetGroups(); //Assign groups to users
+		$scope.emotions = ['bad-mood','good-mood','sad','happy','depressed','satisfied','gloomy','cheerful',
+											 'displeased','pleased','sorrowful','joyful']
 	});
 
 	ra.on_register(function(user) { //Add a row to the table to each user
@@ -199,26 +217,23 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		return location[0];
 	};
 	ra.recv("sendinitalanswers", function(sender, value) {
+		console.log(value);
 		// stores information
 		var location = getlocation(sender);
-		$scope.subjects[location].happiness = value.initalResponses.happiness;
-		$scope.subjects[location].sadness = value.initalResponses.sadness;
-		$scope.subjects[location].fear = value.initalResponses.fear;
-		$scope.subjects[location].anger = value.initalResponses.anger;
-		$scope.subjects[location].surprise = value.initalResponses.surprise;
-		$scope.subjects[location].disgust = value.initalResponses.disgust;
+		for (var i = 0; i < $scope.emotions.length; i++) {
+			var emotion = $scope.emotions[i];
+			$scope.subjects[location].part1[i].value = value[emotion];
+		}
 		$scope.subjects[location].initalanswerstime = value.time;
 		// shows the information on the admin page
 	});
 	ra.recv("sendfinalanswers", function(sender, value) {
 		// stores information
 		var location = getlocation(sender);
-		$scope.subjects[location].fhappiness = value.finalResponses.happiness;
-		$scope.subjects[location].fsadness = value.finalResponses.sadness;
-		$scope.subjects[location].ffear = value.finalResponses.fear;
-		$scope.subjects[location].fanger = value.finalResponses.anger;
-		$scope.subjects[location].fsurprise = value.finalResponses.surprise;
-		$scope.subjects[location].fdisgust = value.finalResponses.disgust;
+		for (var i = 0; i < $scope.emotions.length; i++) {
+			var emotion = $scope.emotions[i];
+			$scope.subjects[location].part4[i].value = value[emotion];
+		}
 		$scope.subjects[location].finalanswerstime = value.time;
 		// shows the information on the admin page
 	});

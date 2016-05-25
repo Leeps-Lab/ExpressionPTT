@@ -42,24 +42,24 @@
     </div>
     <div class="row">
       <!-- repeat questions -->
-      <div class="text-center" on-finish-render="ngRepeatFinished"
+      <div class="text-center" on-init-finish-render="ngRepeatInitFinished"
         ng-repeat="value in questionaireoptions[questionaire].values track by $index">
         <!-- label on the left -->
-        <div class="col-md-2">
+        <div ng-class="{'col-md-2': questionaire === 'Batson', 'col-md-3': questionaire === 'Bosman'}">
           <h4 ng-if="questionaire === 'Batson'" class="pull-right">
             {{value.begin.name}} <h4 ng-if="value.begin.value">({{value.begin.value}})</h4>
           </h4>
           <h4 ng-if="questionaire === 'Bosman'" class="pull-right">{{value.name}}</h4>
         </div>
         <!-- slider -->
-        <div ng-class="{'col-md-8': questionaire === 'Batson', 'col-md-9': questionaire === 'Bosman'}">
+        <div ng-class="{'col-md-8': questionaire === 'Batson', 'col-md-7': questionaire === 'Bosman'}">
           <div class="horizontal-slider" ng-attr-id="{{'initalslider-'+$index}}"></div>
           <!-- labels on the botton for bosman -->
           <div class="row" ng-if="questionaire === 'Bosman'">
-            <div class="col-md-2 col-md-offset-1">
+            <div class="col-md-2">
               <h5 style="color: gray; margin-left: auto; margin-right: auto;">Not at all</h5>
             </div>
-            <div class="col-md-2 col-md-offset-6">
+            <div class="col-md-2 col-md-offset-8">
               <h5 style="color: gray; margin-left: auto; margin-right: auto;">Very Intense</h5>
             </div>
           </div>
@@ -789,47 +789,36 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-2">
-        <div class="text-center" id="slider1">
-          <div id="fhappiness" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="finalhappiness">0</h4>
-          <h4>Happiness</h4>
+      <!-- repeat questions -->
+      <div class="text-center" on-final-finish-render="ngRepeatFinalFinished"
+        ng-repeat="value in questionaireoptions[questionaire].values track by $index">
+        <!-- label on the left -->
+        <div ng-class="{'col-md-2': questionaire === 'Batson', 'col-md-3': questionaire === 'Bosman'}">
+          <h4 ng-if="questionaire === 'Batson'" class="pull-right">
+            {{value.begin.name}} <h4 ng-if="value.begin.value">({{value.begin.value}})</h4>
+          </h4>
+          <h4 ng-if="questionaire === 'Bosman'" class="pull-right">{{value.name}}</h4>
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="fsadness" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="finalsadness">0</h4>
-          <h4>Sadness</h4>
+        <!-- slider -->
+        <div ng-class="{'col-md-8': questionaire === 'Batson', 'col-md-7': questionaire === 'Bosman'}">
+          <div class="horizontal-slider" ng-attr-id="{{'finalslider-'+$index}}"></div>
+          <!-- labels on the botton for bosman -->
+          <div class="row" ng-if="questionaire === 'Bosman'">
+            <div class="col-md-2">
+              <h5 style="color: gray; margin-left: auto; margin-right: auto;">Not at all</h5>
+            </div>
+            <div class="col-md-2 col-md-offset-8">
+              <h5 style="color: gray; margin-left: auto; margin-right: auto;">Very Intense</h5>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="ffear" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="finalfear">0</h4>
-          <h4>Fear</h4>
+        <!-- label on left for batson-->
+        <div ng-if="questionaire === 'Batson'" class="col-md-2">
+          <h4 class="pull-left">
+            {{value.end.name}} <h4 ng-if="value.end.value">({{value.end.value}})</h4>
+          </h4>
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="fanger" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="finalanger">0</h4>
-          <h4>Anger</h4>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="fsurprise" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="finalsurprise">0</h4>
-          <h4>Surprise</h4>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <div class="text-center">
-          <div id="fdisgust" style="height: 300px;margin-left: 100%"></div>
-          <h4 id="finaldisgust">0</h4>
-          <h4>Disgust</h4>
-        </div>
+        <br><br><br><br>
       </div>
     </div>
     <div class="row">
