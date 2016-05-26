@@ -460,7 +460,6 @@
       for(emotion in $scope.initalResponses) {
         value[emotion] = $scope.initalResponses[emotion];
       };
-      console.log(value);
 
       rs.trigger("sendinitalanswers", value);
       // get ready for a barrier
@@ -800,9 +799,6 @@
       }
       $scope.bid *= 100;
 
-      console.log('bid : '+$scope.bid);
-      console.log('other : '+($scope.income - $scope.partner.moneytransferred + $scope.endowment));
-      
       if ($scope.bid > $scope.income - $scope.partner.moneytransferred + $scope.endowment && $scope.method.direction === "WTP") {
         sweetAlert({
           title: "Unavaliable Value",
@@ -962,7 +958,6 @@
       for(emotion in $scope.finalResponses) {
         value[emotion] = $scope.finalResponses[emotion];
       };
-      console.log(value);
 
       rs.trigger("sendfinalanswers", value);
     };
@@ -1239,17 +1234,13 @@
     // sent from self to server and self
     rs.recv("sendIncome", function(sender, value) {
       console.log("got from the other person");
-      console.log(sender == $scope.partner.index);
       if (sender == parseInt($scope.partner.index)) {
         console.log("got the payload, over.");
         $scope.partner.income = value.income;
-        console.log("income from " + $scope.partner.index + " is " + $scope.partner.income);
       }
     });
     // sends decision on percent
     rs.recv("sendDecision", function(sender, value) {
-      console.log(sender);
-      console.log(value);
       if (sender == parseInt($scope.partner.index)) {
         console.log("got the payload, over.");
         $scope.partner.percent = value.percent;
@@ -1260,8 +1251,6 @@
       }
     });
     rs.recv("sendEstimate", function(sender, value) {
-      console.log(sender);
-      console.log(value);
       if (sender == parseInt($scope.partner.index)) {
         console.log("got the payload, over.");
         $scope.partner.percent = value.percent;
@@ -1270,7 +1259,6 @@
     });
     rs.recv("sendWillingness", function(sender, value) {
       if (sender == parseInt($scope.partner.index)) {
-        console.log(value);
         $scope.showpage.willingnesspage = false;
         $scope.partner.totalincome = value.totalincome;
         console.log("got willingness, what's the next step?");
@@ -1291,8 +1279,6 @@
       console.log ("sendmessage recv");
       if ($scope.reader && $scope.role === "R") {
         console.log("r recieved message");
-        console.log(sender);
-        console.log($scope.readerlist);
         // check if on readerlist
         if ($scope.readerlist.indexOf(sender) !== -1) {
           $scope.readerMessages.push({
@@ -1308,7 +1294,6 @@
           }
         }
       } else if (sender == parseInt($scope.partner.index) && !$scope.reader) {
-        console.log(value);
         $scope.messages = $sce.trustAsHtml(value.messages);
         $scope.showpage.waitpage = false;
         $scope.showpage.messagePage = true;
@@ -1382,8 +1367,6 @@
       }
     });
     rs.recv("readypart2send", function(sender, value) {
-      console.log('sender '+sender);
-      console.log('partner index '+$scope.partner.index);
       if (sender == parseInt($scope.partner.index)) {
         $scope.barrier.partner.readyPart2 = true;
         if ($scope.barrier.subject.readyPart2 && $scope.barrier.partner.readyPart2) {
@@ -1541,14 +1524,14 @@
     };
 
     $scope.$on('ngRepeatInitFinished', function(ngRepeatFinishedEvent) {
-      console.log('and here we are');
+      console.log('and here we are at last');
       $scope.initalfinished = true
       if ($scope.initalfinished && $scope.finalfinished) {
         $scope.createSliders();
       }
     });
     $scope.$on('ngRepeatFinalFinished', function(ngRepeatFinishedEvent) {
-      console.log('and here we are');
+      console.log('and here we are at last');
       $scope.finalfinished = true;
       if ($scope.initalfinished && $scope.finalfinished) {
         $scope.createSliders();
@@ -1556,10 +1539,12 @@
     });
 
     rs.on_load(function() {
-      console.log('find the config. good luck');
       var configfile;
       var userIndex;
       var partnerIndex;
+
+      console.log("hello experiment");
+
       $scope.userIndex = parseInt(rs.user_id);
       for (var i = 0; i < rs.configs.length; i++) {
         var groupindex = rs.configs[i].Group.indexOf($scope.userIndex)
@@ -1576,7 +1561,6 @@
       }
       console.log('my index '+userIndex);
       console.log('other index '+partnerIndex);
-      console.log("hello experiment");
       // congif values
       $scope.incomegoal = configfile.TargetIncome;
       $scope.scale = configfile.Scale;
@@ -1590,9 +1574,7 @@
       // set values from config file
       // role index endowment
       configfile.Role = configfile.Role.substring(1,configfile.Role.length-1).split(",");
-      console.log(configfile.Role);
       $scope.role = configfile.Role[userIndex];
-      console.log(typeof configfile.Role);
       $scope.endowment = configfile.Endowment * 100 * $scope.scale;
 
       // check if debug is up
