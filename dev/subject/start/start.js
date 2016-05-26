@@ -1174,6 +1174,8 @@
         }
       });
       $(".ui-slider-labels").css("margin-left", "100%");
+      $(".ui-state-default").hide();
+
       // create sliders for core interaction
     };
     $scope.createSliders = function() {
