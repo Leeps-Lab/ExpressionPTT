@@ -831,6 +831,7 @@
       if ($scope.bid >= $scope.actualprice && $scope.method.direction === "WTP") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice + $scope.endowment;
         // p gets to send message
+        $scope.bid = $scope.bid / 100;
         $scope.ablesendmessage = true;
         rs.trigger("saveWillingness", {
           bid: $scope.bid,
@@ -845,6 +846,7 @@
       } else if ($scope.bid <= $scope.actualprice && $scope.method.direction === "WTA") {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred - $scope.actualprice;
         // p gets to send message
+        $scope.bid = $scope.bid / 100;
         $scope.ablesendmessage = true;
         rs.trigger("saveWillingness", {
           bid: $scope.bid,
@@ -859,6 +861,7 @@
       } else {
         $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
         // p doesnt get to send message
+        $scope.bid = $scope.bid / 100;
         $scope.ablesendmessage = false;
         rs.trigger("adminwillingness", {
           wtp: $scope.floatToMoney($scope.bid),
