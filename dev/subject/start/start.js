@@ -1142,7 +1142,6 @@
           $scope.initalResponses[val.name] = null;
         }
       });
-      $(".ui-slider-labels").css("margin-left", "100%");
       $(".ui-state-default").hide();
     };
 
@@ -1177,7 +1176,6 @@
           $scope.finalResponses[val.name] = null;
         }
       });
-      $(".ui-slider-labels").css("margin-left", "100%");
       $(".ui-state-default").hide();
     };
     $scope.createSliders = function() {
@@ -1219,8 +1217,7 @@
         });
       }
       $(".ui-state-default").hide();
-      $("#pSlider.ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
-      $("#tSlider.ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
+      $(".ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
     };
     $scope.showSliders = function() {
       $scope.showpage.roles = false;
