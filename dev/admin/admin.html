@@ -70,65 +70,73 @@
       <div class="row">
         <div class="well">
           <h3>Part 1</h3>
-          <table class="table table-striped table-hover table-condensed">
-            <tr>
-              <th>ID</th>
-              <th ng-repeat="emotion in emotions">{{emotion}}</th>
-            </tr>
-            <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <td ng-bind="subject.userid"></td>
-              <td ng-bind="emotion.value" ng-repeat="emotion in subject.part1"></td>
-            </tr>
-          </table>
+          <div class="xscollable">
+            <table class="table table-striped table-hover table-condensed">
+              <tr>
+                <th>ID</th>
+                <th ng-repeat="emotion in emotions">{{emotion}}</th>
+              </tr>
+              <tr ng-repeat="subject in subjects | orderBy : 'userid'">
+                <td ng-bind="subject.userid"></td>
+                <td ng-bind="emotion.value" ng-repeat="emotion in subject.part1"></td>
+              </tr>
+            </table>
+          </div>
           <h3>Part 2</h3>
-          <table class="table table-striped table-hover table-condensed xscollable">
-            <tr>
-              <th>ID</th>
-              <th ng-repeat="task in tasknum">T{{task}}-points</th>
-              <th>Total Income</th>
-            </tr>
-            <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <td>{{subject.userid}}</td>
-              <td ng-repeat="task in tasknum">{{subject.tasks[task] | number:0}}</td>
-              <td>{{subject.totalpoints | number:0}}</td>
-            </tr>
-          </table>
+          <div class="xscollable">
+            <table class="table table-striped table-hover table-condensed">
+              <tr>
+                <th>ID</th>
+                <th ng-repeat="task in tasknum">T{{task}}-points</th>
+                <th>Total Income</th>
+              </tr>
+              <tr ng-repeat="subject in subjects | orderBy : 'userid'">
+                <td>{{subject.userid}}</td>
+                <td ng-repeat="task in tasknum">{{subject.tasks[task] | number:0}}</td>
+                <td>{{subject.totalpoints | number:0}}</td>
+              </tr>
+            </table>
+          </div>
           <h3>Part 3</h3>
-          <table class="table table-striped table-hover table-condensed xscollable">
-            <tr>
-              <th>ID</th>
-              <th>Partner-ID</th>
-              <th>Role</th>
-              <th>TakeRate</th>
-              <th>ETakeRate</th>
-              <th>WTP</th>
-              <th>Actual Price</th>
-              <th>Message</th>
-              <th>FinalEarnings</th>
-            </tr>
-            <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <td ng-bind="subject.userid"></td>
-              <td ng-bind="subject.partnerId"></td>
-              <td ng-bind="subject.role"></td>
-              <td ng-bind="subject.takerate"></td>
-              <td ng-bind="subject.etakerate"></td>
-              <td ng-bind="subject.wtp"></td>
-              <td ng-bind="subject.actualprice"></td>
-              <td ng-bind-html="subject.message"></td>
-              <td ng-bind="subject.finalearnings"></td>
-            </tr>
-          </table>
+          <div class="xscollable">
+            <table class="table table-striped table-hover table-condensed">
+              <tr>
+                <th>ID</th>
+                <th>Partner-ID</th>
+                <th>Role</th>
+                <th>TakeRate</th>
+                <th>ETakeRate</th>
+                <th>WTP</th>
+                <th>Actual Price</th>
+                <th>Message</th>
+                <th>FinalEarnings</th>
+              </tr>
+              <tr ng-repeat="subject in subjects | orderBy : 'userid'">
+                <td ng-bind="subject.userid"></td>
+                <td ng-bind="subject.partnerId"></td>
+                <td ng-bind="subject.role"></td>
+                <td ng-bind="subject.takerate"></td>
+                <td ng-bind="subject.etakerate"></td>
+                <td ng-bind="subject.wtp"></td>
+                <td ng-bind="subject.actualprice"></td>
+                <td ng-bind-html="subject.message"></td>
+                <td ng-bind="subject.finalearnings"></td>
+              </tr>
+            </table>
+          </div>
           <h3>Part 4</h3>
-          <table class="table table-striped table-hover table-condensed">
-            <tr>
-              <th>ID</th>
-              <th ng-repeat="emotion in emotions">{{emotion}}</th>
-            </tr>
-            <tr ng-repeat="subject in subjects | orderBy : 'userid'">
-              <td ng-bind="subject.userid"></td>
-              <td ng-bind="emotion.value" ng-repeat="emotion in subject.part4"></td>
-            </tr>
-          </table>
+          <div class="xscollable">
+            <table class="table table-striped table-hover table-condensed">
+              <tr>
+                <th>ID</th>
+                <th ng-repeat="emotion in emotions">{{emotion}}</th>
+              </tr>
+              <tr ng-repeat="subject in subjects | orderBy : 'userid'">
+                <td ng-bind="subject.userid"></td>
+                <td ng-bind="emotion.value" ng-repeat="emotion in subject.part4"></td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
 			<div class="row">
