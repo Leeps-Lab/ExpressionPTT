@@ -1109,7 +1109,7 @@
     };
 
     // creates all sliders used
-    $scope.createSliders = function() {
+    $scope.createQuestionaires = function() {
       console.log("begin creation");
 
       // create sliders for the initalquestions
@@ -1176,7 +1176,7 @@
       $(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
     };
-    $scope.createQuestionaires = function() {
+    $scope.createSliders = function() {
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
           max: 100,
