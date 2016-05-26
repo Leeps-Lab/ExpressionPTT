@@ -1175,6 +1175,8 @@
       });
       $(".ui-slider-labels").css("margin-left", "100%");
       // create sliders for core interaction
+    };
+    $scope.createQuestionaires = function() {
       if ($scope.role === "T") {
         $scope.percentSlider = $("#tSlider").labeledslider({
           max: 100,
@@ -1530,14 +1532,14 @@
       console.log('and here we are at last');
       $scope.initalfinished = true
       if ($scope.initalfinished && $scope.finalfinished) {
-        $scope.createSliders();
+        $scope.createQuestionaires();
       }
     });
     $scope.$on('ngRepeatFinalFinished', function(ngRepeatFinishedEvent) {
       console.log('and here we are at last');
       $scope.finalfinished = true;
       if ($scope.initalfinished && $scope.finalfinished) {
-        $scope.createSliders();
+        $scope.createQuestionaires();
       }
     });
 
@@ -1607,6 +1609,7 @@
           }
         }
       }
+      $scope.createSliders();
 
       rs.trigger("admininital", {
         partnerId: $scope.partner.index,
