@@ -1219,8 +1219,8 @@
         });
       }
       $(".ui-state-default").hide();
-      $(".ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
-      console.log("sliders created, buttons hidden");
+      $("#pSlider.ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
+      $("#tSlider.ui-slider-wrapper.ui-widget.horizontal").css("margin-left", "23%");
     };
     $scope.showSliders = function() {
       $scope.showpage.roles = false;
