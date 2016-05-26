@@ -1109,9 +1109,7 @@
     };
 
     // creates all sliders used
-    $scope.createQuestionaires = function() {
-      console.log("begin creation");
-
+    $scope.createInitQuestionaires = function() {
       // create sliders for the initalquestions
       var options = $scope.questionaireoptions[$scope.questionaire].options;
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
@@ -1143,7 +1141,12 @@
           $scope.initalResponses[val.name] = null;
         }
       });
+      $(".ui-slider-labels").css("margin-left", "100%");
+      $(".ui-state-default").hide();
+    };
 
+    $scope.createFinalQuestionaires = function() {
+      var options = $scope.questionaireoptions[$scope.questionaire].options;
       $scope.finalquestionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
         $("#finalslider-"+index).slider({
           range: "min",
@@ -1175,8 +1178,6 @@
       });
       $(".ui-slider-labels").css("margin-left", "100%");
       $(".ui-state-default").hide();
-
-      // create sliders for core interaction
     };
     $scope.createSliders = function() {
       if ($scope.role === "T") {
@@ -1534,14 +1535,14 @@
       console.log('and here we are at last');
       $scope.initalfinished = true
       if ($scope.initalfinished && $scope.finalfinished) {
-        $scope.createQuestionaires();
+        $scope.createInitQuestionaires();
       }
     });
     $scope.$on('ngRepeatFinalFinished', function(ngRepeatFinishedEvent) {
       console.log('and here we are at last');
       $scope.finalfinished = true;
       if ($scope.initalfinished && $scope.finalfinished) {
-        $scope.createQuestionaires();
+        $scope.createFinalQuestionaires();
       }
     });
 
