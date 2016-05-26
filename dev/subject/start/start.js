@@ -1110,6 +1110,7 @@
 
     // creates all sliders used
     $scope.createInitQuestionaires = function() {
+      console.log('creating inital questions');
       // create sliders for the initalquestions
       var options = $scope.questionaireoptions[$scope.questionaire].options;
       $scope.questionaireoptions[$scope.questionaire].values.forEach(function(val, index) {
@@ -1532,18 +1533,12 @@
     };
 
     $scope.$on('ngRepeatInitFinished', function(ngRepeatFinishedEvent) {
-      console.log('and here we are at last');
-      $scope.initalfinished = true
-      if ($scope.initalfinished && $scope.finalfinished) {
-        $scope.createInitQuestionaires();
-      }
+      console.log('and here we are at first');
+      $scope.createInitQuestionaires();
     });
     $scope.$on('ngRepeatFinalFinished', function(ngRepeatFinishedEvent) {
       console.log('and here we are at last');
-      $scope.finalfinished = true;
-      if ($scope.initalfinished && $scope.finalfinished) {
-        $scope.createFinalQuestionaires();
-      }
+      $scope.createFinalQuestionaires();
     });
 
     rs.on_load(function() {
