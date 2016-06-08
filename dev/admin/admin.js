@@ -25,7 +25,7 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		}
 		dataString += 'totalpoints,';
 		// part 3
-		dataString += 'takerate,etakerate,wtp,actualprice,message,finalearnings,';
+		dataString += 'takerate,takeratetime,etakerate,etakeratetime,wtp,actualprice,message,willingnesstime,finalearnings,';
 		// part 4
 		for (var i = 0; i < $scope.emotions.length; i++) {
 			dataString += 'final_'+$scope.emotions[i]+',';
@@ -46,8 +46,8 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 			}
 			dataString += element.totalpoints+",";
 			// part 3
-			dataString += element.takerate+","+element.etakerate+","+element.wtp+","+
-										element.actualprice+","+element.message+","+element.finalearnings+",";
+			dataString += element.takerate+","+element.takeratetime+","+element.etakerate+","+element.etakeratetime+","+
+			element.wtp+","+element.actualprice+","+element.message+","+element.willingnesstime+","+element.finalearnings+",";
 			// part 4
 			for (var i = 0; i < element.part4.length; i++) {
 				dataString += element.part4[i].value+",";
@@ -299,12 +299,15 @@ Redwood.controller("AdminCtrl", ["$rootScope", "$scope", "Admin", "$sce", functi
 		$scope.subjects[location].actualprice = '-----';
 		$scope.subjects[location].message = $sce.trustAsHtml('-----');
 		$scope.subjects[location].takeratetime = value.time;
+		$scope.subjects[location].etakeratetime = '-----';
+		$scope.subjects[location].willingnesstime = '-----';
 	});
 	ra.recv("adminetakerate", function(sender, value) {
 		// stores information
 		var location = getlocation(sender);
 		$scope.subjects[location].etakerate = value.etakerate;
 		$scope.subjects[location].takerate = '-----';
+		$scope.subjects[location].takeratetime = '-----';
 		$scope.subjects[location].etakeratetime = value.time;
 	});
 	ra.recv("adminwillingness", function(sender, value) {
