@@ -15,7 +15,7 @@ __Default : FALSE__
 __Default : FALSE__
 
 #### VideoLink (string)
-* Ex : https://www.youtube.com/...
+* Ex : https://www.youtube.com/watch?v=YgdR5FvnNPc
 
 ### Income Related
 #### Endowment (int | array)
@@ -33,13 +33,13 @@ __Default : 10__
 * 'Directed Message' "DM" (default)
 * 'No Message' "NM"
 * 'Free Message' "FM"
-* 'Readers' (soon to be called 'Third Party') "TP"
+* 'Third Party' (previously called 'Readers') "TP"
 __Default : "DM"__
 
 
 #### Group (array)
 Groups of two or three subject ID numbers.
-* Group of two integers. Ex : [5, 7] (default)
+* Group of two integers. Ex : (default) [5, 7] 
 * Group of three integers. Ex : [3, 1, 8]
 
 *Property : one ID does not repeat in one or other
@@ -49,7 +49,7 @@ __Default : [1,2]__
 
 
 #### Role (array)
-* Group of two integers. Ex : ["T", "P"] (default)
+* Group of two integers. Ex : (default) ["T", "P"] 
 * Group of three integers. Ex : ["R", "T", "P"]
 
 *Property : Role does not repeat within group*
@@ -67,7 +67,7 @@ __Default : ["T", "P"]__
 __Default : "BDM_CONT_WTP"__
 
 #### MethodParams (array | int)
-* For 'BDM' : [lowerbound, upperbound(, numberofsteps)] (default : [0, Endowment, 11])
+* For 'BDM' : (default : [0, Endowment, 11]) [lowerbound, upperbound(, numberofsteps)] 
 * For 'SOP' : price
 
 __Default : 'BDM' -> [0, 3(, 11)]; 'SOP' -> 0.50__
