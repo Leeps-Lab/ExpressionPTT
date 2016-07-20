@@ -445,16 +445,16 @@
       $scope.showpage.showStartExperiment = false;
       $scope.showpage.initalquestions = true;
       console.log("version # of experiment");
-      console.log($scope.Video);
+      console.log($scope.VideoInstruction);
     };
 
     $scope.checkVideo = function(){
-      console.log("value of video is ", $scope.Video);
-      if($scope.Video) {
+      console.log("value of video is ", $scope.VideoInstruction);
+      if($scope.VideoInstruction) {
         $scope.showpage.showVideo = true;
       }
       else{
-        $scope.showpage.showVideo = true;
+        $scope.showpage.initalquestions = true;
       }
         
     }
@@ -1562,6 +1562,7 @@
 
       $scope.userIndex = parseInt(rs.user_id); 
       console.log("user id", $scope.userIndex);
+
       for (var i = 0; i < rs.configs.length; i++) {
         var groupindex = rs.configs[i].Group.indexOf($scope.userIndex)
         console.log(groupindex);
@@ -1604,14 +1605,16 @@
       }
 
       //check if Video link is given
-      if (!configfile.Video) {
-        $scope.Video = null;
+      console.log("vide instruction", configfile.VideoInstruction)
+      if (!configfile.VideoInstruction) {
+        $scope.VideoInstruction = false;
         console.log("Video link is off");
       } else {
-        $scope.Video = configfile.Video;
+        $scope.VideoInstruction = true;
+        $scope.Video = configfile.VideoLink;
         $scope.VideoLink = $sce.trustAsResourceUrl ("https://www.youtube.com/embed/" + $scope.Video.split('v=')[1])
         console.log("Video link is on");
-        console.log($scope.VideLink)
+        console.log($scope.VideoLink)
       }
 
 

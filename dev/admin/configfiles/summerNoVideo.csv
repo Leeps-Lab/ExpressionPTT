@@ -1,2 +1,2 @@
 Endowment,TargetIncome,Treatment,Group,Role,Method,MethodParams,Questionaire,EmotionList,EmotionRange,Debug,VideoInstruction,VideoLink
-3,10,"DM","[1,3]","[T,P]","BDM_CONT_WTP",,"Batson",,,TRUE,TRUE,"https://www.youtube.com/watch?v=YgdR5FvnNPc"
+3,10,"DM","[1,3]","[T,P]","BDM_CONT_WTP",,"Batson",,,TRUE,FALSE,
