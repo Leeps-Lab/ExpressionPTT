@@ -44,7 +44,7 @@
 
     // config files
     $scope.numberofpeople = null;
-    $scope.scale = 1;
+    // $scope.scale = 1;
     $scope.incomegoal = 10;
     $scope.treatment = 1;
     $scope.method = {
@@ -366,6 +366,7 @@
       waitpage: false,
 
       showStartExperiment: false,
+      showVideo : false,
       part1: false,
       initalquestions: false,
       part2: false,
@@ -443,8 +444,20 @@
     $scope.startExperiment = function() {
       $scope.showpage.showStartExperiment = false;
       $scope.showpage.initalquestions = true;
+      console.log("version # of experiment");
+      console.log($scope.Video);
     };
 
+    $scope.checkVideo = function(){
+      console.log("value of video is ", $scope.Video);
+      if($scope.Video) {
+        $scope.showpage.showVideo = true;
+      }
+      else{
+        $scope.showpage.showVideo = true;
+      }
+        
+    }
     // finishes questions onto money part
     // barrier : have all people ready for part 2
     $scope.finishQuestions = function() {
@@ -636,7 +649,7 @@
     };
     $scope.nexttask = function() {
       $scope.income += $scope.locatorState.getPointvalue();
-      $scope.maxpoints = (Math.floor(Math.random() * 80) + 40) * $scope.scale;
+      $scope.maxpoints = (Math.floor(Math.random() * 80) + 40);// * $scope.scale;
       $("#income").text("So far, your income is $" +
         $scope.floatToMoney($scope.income).toFixed(2) + ".");
 
@@ -659,7 +672,8 @@
       });
 
       // reaches income goal or passes max number of tasks
-      if ($scope.income > $scope.incomegoal * 100 * $scope.scale || $scope.task > 22) {
+      //if ($scope.income > $scope.incomegoal * 100 * $scope.scale || $scope.task > 22) {
+      if ($scope.income > $scope.incomegoal * 100 /** $scope.scale*/ || $scope.task > 22) {
         $timeout.cancel($scope.mytimeout);
         console.log("sending payload, over.");
         rs.send("sendIncome", {
@@ -821,7 +835,7 @@
       $scope.showpage.willingnesspage = false;
 
       if ($scope.method.inc === "CONT") {
-        $scope.actualprice = Math.floor(Math.random() * 300 * $scope.scale);
+        $scope.actualprice = Math.floor(Math.random() * 300 /** $scope.scale*/);
         $scope.bid *= 100;
       } else if ($scope.method.inc === "LIST") {
         var length = $scope.bdm2values.length;
@@ -1027,9 +1041,9 @@
       this.maxlength = Math.sqrt(square(100 - 0) + square(100 - 0));
 
       this.point = new Point(this.width / 2, this.height * 7 / 8, 15);
-      $scope.maxpoints = (Math.floor(Math.random() * 80) + 20) * $scope.scale;
+      $scope.maxpoints = (Math.floor(Math.random() * 80) + 20);// * $scope.scale;
 
-      if (this.practice) $scope.maxpoints = maxpoints * $scope.scale;
+      if (this.practice) $scope.maxpoints = maxpoints;// * $scope.scale;
 
       $(this.pointsLocation).text("0.0");
     }
@@ -1543,11 +1557,14 @@
       var userIndex;
       var partnerIndex;
 
-      console.log("hello experiment");
+      console.log("hello Expression experiment");
+      //console.log("tratement value is ", $scope.treatment);
 
-      $scope.userIndex = parseInt(rs.user_id);
+      $scope.userIndex = parseInt(rs.user_id); 
+      console.log("user id", $scope.userIndex);
       for (var i = 0; i < rs.configs.length; i++) {
         var groupindex = rs.configs[i].Group.indexOf($scope.userIndex)
+        console.log(groupindex);
         if (groupindex !== -1) {
           console.log('config is at '+i);
           configfile = rs.configs[i];
@@ -1563,7 +1580,7 @@
       console.log('other index '+partnerIndex);
       // congif values
       $scope.incomegoal = configfile.TargetIncome;
-      $scope.scale = configfile.Scale;
+      //$scope.scale = configfile.Scale;
       $scope.treatment = configfile.Treatment;
       $scope.treatmentConfig();
       $scope.parseMethod(configfile.Method);
@@ -1575,14 +1592,28 @@
       // role index endowment
       configfile.Role = configfile.Role.substring(1,configfile.Role.length-1).split(",");
       $scope.role = configfile.Role[userIndex];
-      $scope.endowment = configfile.Endowment * 100 * $scope.scale;
+      $scope.endowment = configfile.Endowment * 100;// * $scope.scale;
 
       // check if debug is up
-      if (!configfile.Debug) $scope.debug = false;
-      else {
+      if (!configfile.Debug) {
+        $scope.debug = false;
+        console.log("debug mode is on");
+      } else {
         $scope.debug = true;
-        $scope.income = $scope.incomegoal * 100 * $scope.scale + 1;
+        $scope.income = $scope.incomegoal * 100 /** $scope.scale */+ 1;
       }
+
+      //check if Video link is given
+      if (!configfile.Video) {
+        $scope.Video = null;
+        console.log("Video link is off");
+      } else {
+        $scope.Video = configfile.Video;
+        $scope.VideoLink = $sce.trustAsResourceUrl ("https://www.youtube.com/embed/" + $scope.Video.split('v=')[1])
+        console.log("Video link is on");
+        console.log($scope.VideLink)
+      }
+
 
       // set partner values from config file
       // index role endowment
@@ -1590,8 +1621,8 @@
         $scope.partner.index = configfile.Group[partnerIndex];
         $scope.partner.role = configfile.Role[partnerIndex];
         $scope.partner.endowment = $.isArray(configfile.Endowment) ?
-          configfile.Endowment[partnerIndex] * 100 * $scope.scale :
-          configfile.Endowment * 100 * $scope.scale;
+          configfile.Endowment[partnerIndex] * 100 /* $scope.scale*/ :
+          configfile.Endowment * 100;// * $scope.scale;
         console.log("userId : "+$scope.userIndex);
         console.log("role : "+$scope.role);
         console.log("partnerId : "+$scope.partner.index);

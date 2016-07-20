@@ -1,0 +1,2 @@
+Endowment,TargetIncome,Scale,Treatment,Group,Role,Method,MethodParams,Questionaire,EmotionList,EmotionRange,Debug
+3,10,1,"DM","[1,3]","[T,P]","BDM_CONT_WTP",,"Batson",,,TRUE

@@ -15,6 +15,9 @@
       </div>
     </div>
   </div>
+
+
+
   <!-- start part 1 -->
   <div class="container" ng-show="showpage.part1;">
     <div class="row">
@@ -23,12 +26,39 @@
         <p class="text-center">To start click continue</p>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="showpage.part1 = false; showpage.initalquestions = true; saveState();">
+        <!-- <button type="button" class="btn btn-info" ng-click="showpage.part1 = false; showpage.initalquestions = true; saveState();"> -->
+        <button type="button" class="btn btn-info" ng-click="showpage.part1 = false; checkVideo(); saveState();">
           Continue
         </button>
       </div>
     </div>
   </div>
+
+
+  <!-- video page -->
+  <div class="container" ng-show="showpage.showVideo">
+    <div class="row">
+      <div class="col-mid-4 col-mid-offset-4">
+        <h3 class="text-center">A Video will be displayed here</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <iframe width="420" height="345" ng-attr-src="{{VideoLink}}">
+      </iframe>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-center">
+        <button type="button" class="btn btn-info"
+          ng-click="showpage.showVideo = false; showpage.initalquestions = true; saveState();">
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+
   <!-- inital questions -->
   <div class="container" ng-show="showpage.initalquestions">
     <div class="row">
@@ -79,6 +109,9 @@
       </div>
     </div>
   </div>
+
+
+
   <!-- start part 2 -->
   <!-- have a barrier here -->
   <div class="container" ng-show="showpage.part2">
