@@ -406,7 +406,7 @@
 
     // user variables
     // set in config
-    $scope.role = "T";
+    $scope.role = "A";
     $scope.endowment = 300;
     $scope.income = 0;
     $scope.percent = 0;
@@ -1193,7 +1193,7 @@
       $(".ui-state-default").hide();
     };
     $scope.createSliders = function() {
-      if ($scope.role === "T") {
+      if ($scope.role === "A") {
         $scope.percentSlider = $("#tSlider").labeledslider({
           max: 100,
           tickArray: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -1211,7 +1211,7 @@
             rs.trigger("tickmark", {role: $scope.role, percent: ui.value, money: $scope.transferred});
           }
         });
-      } else if ($scope.role === "P"){
+      } else if ($scope.role === "B"){
         $scope.percentSlider = $("#pSlider").labeledslider({
           max: 100,
           tickArray: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
@@ -1241,9 +1241,9 @@
     $scope.noSliders = function() {
       $scope.showpage.roles = false;
       $scope.showpage.waitpage = true;
-      if ($scope.role === "T") {
+      if ($scope.role === "A") {
         $("#tSlider").val(50);
-      } else if ($scope.role === "P") {
+      } else if ($scope.role === "B") {
         $("#pSlider").val(50);
       }
       rs.trigger("readyTransferProcessSelf", {});
@@ -1446,12 +1446,12 @@
     })
     $scope.transferprocessbarrier = function() {
       if ($scope.nomessage) {
-        if ($scope.role === "T") {
+        if ($scope.role === "A") {
           $scope.showpage.waitpage = false;
           $scope.showpage.showEarnings = true;
           $scope.saveState();
         }
-        if ($scope.role === "P") {
+        if ($scope.role === "B") {
           $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
           $scope.bid = 0;
           rs.send("sendWillingness", {
@@ -1470,9 +1470,9 @@
           $scope.saveState();
         }
       } else if ($scope.freemessage) {
-        if ($scope.role === "T") {
+        if ($scope.role === "A") {
         }
-        if ($scope.role === "P") {
+        if ($scope.role === "B") {
           $scope.totalincome = $scope.income - $scope.partner.moneytransferred;
           $scope.bid = 0;
           rs.send("sendWillingness", {
@@ -1492,7 +1492,7 @@
         }
       } else {
         console.log('through part 3');
-        if ($scope.role === "P") {
+        if ($scope.role === "B") {
           $scope.showpage.waitpage = false;
           $scope.showpage.willingnesspage = true;
         }
@@ -1633,7 +1633,7 @@
       } else {
         $scope.readerlist = [];
         for (var i = 0; i < configfile.Group.length; i++) {
-          if (i !== $scope.userIndex && configfile.Role[i] === 'P') {
+          if (i !== $scope.userIndex && configfile.Role[i] === 'B') {
             $scope.readerlist.push(i);
           }
         }

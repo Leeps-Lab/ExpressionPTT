@@ -49,12 +49,13 @@ __Default : [1,2]__
 
 
 #### Role (array)
-* Group of two integers. Ex : (default) ["T", "P"] 
-* Group of three integers. Ex : ["R", "T", "P"]
+A replaces T, B replaces P
+* Group of two integers. Ex : (default) ["A", "B"] 
+* Group of three integers. Ex : ["R", "A", "B"]
 
-*Property : Role does not repeat within group*
+*Property : Roles A, B do not repeat within group*
 
-__Default : ["T", "P"]__
+__Default : ["A", "B"]__
 
 #### Method (string)
 * 'BDM_CONT_WTP' (default)
