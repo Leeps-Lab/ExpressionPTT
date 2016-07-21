@@ -43,7 +43,7 @@ Groups of two or three subject ID numbers.
 * Group of three integers. Ex : [3, 1, 8]
 
 *Property : one ID does not repeat in one or other
-groups*
+groups (exection if ID corresponds to R)*
 
 __Default : [1,2]__
 
@@ -53,7 +53,7 @@ A replaces T, B replaces P
 * Group of two integers. Ex : (default) ["A", "B"] 
 * Group of three integers. Ex : ["R", "A", "B"]
 
-*Property : Roles A, B do not repeat within group*
+*Property : Role does not repeat within group*
 
 __Default : ["A", "B"]__
 
@@ -91,3 +91,9 @@ __Default : Batson -> 10; Bosman -> 7__
 * Bosman -> Array of strings. Ex : ['interested', 'excited']
 
 __Default : 'there are in the code'__
+
+## Change log
+*add page for video
+*change to config for videoInstruction option
+*get rid of scale parameter from config file
+*replace P, T with A, B for user roles. R remains R for third party
