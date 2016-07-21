@@ -93,7 +93,7 @@ __Default : Batson -> 10; Bosman -> 7__
 __Default : 'there are in the code'__
 
 ## Change log
-*add page for video
-*change to config for videoInstruction option
-*get rid of scale parameter from config file
-*replace P, T with A, B for user roles. R remains R for third party
+* add page for video
+* change to config for videoInstruction option
+* get rid of scale parameter from config file
+* replace P, T with A, B for user roles. R remains R for third party
