@@ -475,6 +475,7 @@
       };
 
       rs.trigger("sendinitalanswers", value);
+      console.log("Ready for part 2? initial ansers ", value);
       // get ready for a barrier
       console.log("ready for part 2?");
       rs.trigger("readypart2self", {
@@ -715,7 +716,7 @@
       $scope.showpage.part3 = true;
       $scope.saveState();
       rs.trigger("readypart3self", {});
-      console.log("slider is up");
+      console.log("done with game, setting up for part 2, slider is up");
     };
     $scope.part3ready = function() {
       $scope.showpage.roles = true;
@@ -1201,7 +1202,7 @@
           range: 'min',
           slide: function(event, ui) {
             ui.handle.style.display = "inline";
-            console.log("T slider");
+            console.log("A slider");
             $scope.percent = ui.value;
             $("#tPercentTransfered").text("Percentage transfered: " + $scope.percent + "%");
             $scope.transferred = $scope.partner.income * $scope.percent / 100;
@@ -1219,7 +1220,7 @@
           range: 'min',
           slide: function(event, ui) {
             ui.handle.style.display = "inline";
-            console.log("P slider");
+            console.log("B slider");
             $scope.percent = ui.value;
             $("#pPercentTransferred").text("Percentage transfered: " + $scope.percent + "%");
             $scope.transferred = $scope.income * $scope.percent / 100;
@@ -1326,8 +1327,8 @@
       }
     });
     rs.recv("readRMessage", function(sender, value) {
-      console.log(value.userid);
-      console.log($scope.userIndex);
+      console.log("value ", value.userid);
+      console.log("userIndex ", $scope.userIndex);
       if (parseInt(value.userid) === $scope.userIndex) {
         console.log("message recieved");
         $scope.showpage.pwait = false;
@@ -1386,6 +1387,7 @@
         $scope.part2barrier();
       }
     });
+
     rs.recv("readypart2send", function(sender, value) {
       if (sender == parseInt($scope.partner.index)) {
         $scope.barrier.partner.readyPart2 = true;
@@ -1562,12 +1564,15 @@
 
       $scope.userIndex = parseInt(rs.user_id); 
       console.log("user id", $scope.userIndex);
+      console.log("configs", rs.configs);
+      console.log("configs length", rs.configs.length);
+
 
       for (var i = 0; i < rs.configs.length; i++) {
         var groupindex = rs.configs[i].Group.indexOf($scope.userIndex)
-        console.log(groupindex);
+        console.log("groupIndex ", groupindex);
         if (groupindex !== -1) {
-          console.log('config is at '+i);
+          console.log('config is at group'+i);
           configfile = rs.configs[i];
           userIndex = groupindex;
           for (var j = 0; j < rs.configs[i].Group.length; j++) {
@@ -1578,7 +1583,7 @@
         }
       }
       console.log('my index '+userIndex);
-      console.log('other index '+partnerIndex);
+      console.log('other partner index '+partnerIndex);
       // congif values
       $scope.incomegoal = configfile.TargetIncome;
       //$scope.scale = configfile.Scale;
