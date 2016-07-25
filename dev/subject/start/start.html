@@ -120,7 +120,7 @@
         <p>To start click continue</p>
       </div>
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="showpage.part2ready = false; showpage.exampleTasks = true;saveState();">
+        <button type="button" class="btn btn-info" ng-click="showpage.part2ready = false; checkDebugPractice(); saveState();">
           Continue
         </button>
       </div>
@@ -584,7 +584,7 @@
   </div>
   <!-- message box -->
 
-  <!-- T message box -->
+  <!-- A message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'A'">
     <div class="row">
       <h3 class="text-center">Here is the message from your counterpart :</h3>
@@ -603,7 +603,7 @@
         </button>
     </div>
   </div>
-  <!-- P message box -->
+  <!-- B message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'B'">
     <div class="row">
       <h3 class="text-center">Write your message :</h3>
@@ -642,6 +642,7 @@
             </h4>
           </div>
         </div>
+        
     </div>
     <br>
     <div class="row text-center" ng-show="readerlist.length === 0 && readerconfirm === 0">

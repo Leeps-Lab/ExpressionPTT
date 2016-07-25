@@ -458,6 +458,15 @@
       }
         
     }
+
+    $scope.checkDebugPractice = function(){
+      if ($scope.debug){
+        $scope.showpage.realTasks = true;
+        $scope.showpage.realTasksReady = true;
+      } else {
+        $scope.showpage.exampleTasks = true;
+      }
+    }
     // finishes questions onto money part
     // barrier : have all people ready for part 2
     $scope.finishQuestions = function() {
@@ -964,7 +973,8 @@
       $scope.saveState();
     };
     $scope.finishFinalQuestions = function() {
-      if (!$scope.isValid($scope.finalResponses)) return;
+      return;
+      if (!$scope.debug && !$scope.isValid($scope.finalResponses)) return;
       $scope.showpage.finalquestions = false;
 
       $scope.showpage.thanks = true;
@@ -1193,6 +1203,12 @@
       });
       $(".ui-state-default").hide();
     };
+    $scope.checkReaderList = function(list, value){
+      for(var i = 0; i < list.length; i++){
+        if(list[i] == value) return true;
+      }
+      return false;
+    };
     $scope.createSliders = function() {
       if ($scope.role === "A") {
         $scope.percentSlider = $("#tSlider").labeledslider({
@@ -1254,7 +1270,8 @@
     // rs.recv
     // sent from self to server and self
     rs.recv("sendIncome", function(sender, value) {
-      console.log("got from the other person");
+      
+      console.log("got income from the other person");
       if (sender == parseInt($scope.partner.index)) {
         console.log("got the payload, over.");
         $scope.partner.income = value.income;
@@ -1298,10 +1315,17 @@
     });
     rs.recv("sendMessage", function(sender, value) {
       console.log ("sendmessage recv");
-      if ($scope.reader && $scope.role === "R") {
+      if ($scope.reader && $scope.role === "R") {// if you are R, you rev message
         console.log("r recieved message");
         // check if on readerlist
-        if ($scope.readerlist.indexOf(sender) !== -1) {
+        console.log("readerlist is ", $scope.readerlist);
+        console.log(" the sender ", parseInt(sender));
+        console.log("typecheck", typeof sender);
+        console.log("index of sender ", $scope.readerlist.indexOf(sender));
+        //if ($scope.readerlist.indexOf(sender) !== -1) {
+          var inList = $scope.checkReaderList($scope.readerlist, sender);
+          console.log("sender in readerlist?", inList);
+        if (inList) {
           $scope.readerMessages.push({
             text : $sce.trustAsHtml(value.messages),
             taken : value.taken,
@@ -1309,6 +1333,7 @@
           });
           $scope.readerconfirm++;
           $scope.readerlist.splice($scope.readerlist.indexOf(sender),1);
+          console.log("currently one wait page? ", $scope.showpage.waitpage);
           if ($scope.showpage.waitpage) {
             $scope.showpage.waitpage = false;
             $scope.showpage.messagePage = true;
@@ -1330,7 +1355,7 @@
       console.log("value ", value.userid);
       console.log("userIndex ", $scope.userIndex);
       if (parseInt(value.userid) === $scope.userIndex) {
-        console.log("message recieved");
+        console.log("message received");
         $scope.showpage.pwait = false;
         $scope.showpage.readMessage = true;
       }
@@ -1415,6 +1440,8 @@
         $scope.part3barrier();
       }
     });
+
+
     rs.recv("readypart3send", function(sender, value) {
       if (sender == parseInt($scope.partner.index)) {
         $scope.barrier.partner.readyPart3 = true;
@@ -1607,6 +1634,7 @@
       } else {
         $scope.debug = true;
         $scope.income = $scope.incomegoal * 100 /** $scope.scale */+ 1;
+        $scope.bid = 3;
       }
 
       //check if Video link is given
@@ -1635,11 +1663,13 @@
         console.log("role : "+$scope.role);
         console.log("partnerId : "+$scope.partner.index);
         console.log("partnerRole : "+$scope.partner.role);
-      } else {
-        $scope.readerlist = [];
+      } else {//role is R
         for (var i = 0; i < configfile.Group.length; i++) {
           if (i !== $scope.userIndex && configfile.Role[i] === 'B') {
-            $scope.readerlist.push(i);
+
+            console.log("B is at user index", i);
+            console.log("B is is user ", configfile.Group[i]);
+            $scope.readerlist.push(configfile.Group[i]);
           }
         }
       }
