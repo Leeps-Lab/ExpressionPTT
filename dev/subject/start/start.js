@@ -457,13 +457,24 @@
       else{
         $scope.showpage.initalquestions = true;
       }
-        
     }
+
+    // $scope.skipQuestions = function(){
+    //   $scope.showpage.showStartExperiment = false;
+    //   if(!$scope.debug){
+    //     $scope.showpage.part1 = true;
+    //   } else{
+    //     $scope.showpage.part2 = true;
+    //     $scope.showpage.part1 = true;
+    //   }
+    //   $scope.saveState();
+    // }
 
     $scope.checkDebugPractice = function(){
       if ($scope.debug){
         $scope.showpage.realTasks = true;
         $scope.showpage.realTasksReady = true;
+        // $scope.showpage.willingnesspage = true;
       } else {
         $scope.showpage.exampleTasks = true;
       }
@@ -931,7 +942,7 @@
         time: $scope.getTime()
       });
       if ($scope.reader) {//method TP
-        console.log("message was sent to the reader ", $scope.message);
+        console.log("message was sent to the reader : ", $scope.message);
         rs.send("sendMessage", {
           messages : $scope.message.replace(/\n/g, '<br />'),
           taken : $scope.partner.moneytransferred
@@ -1265,7 +1276,14 @@
     };
     $scope.noSliders = function() {
       $scope.showpage.roles = false;
-      $scope.showpage.waitpage = true;
+      if($scope.readerMessages.length === 0){
+        $scope.showpage.waitpage = true;
+        $scope.showpage.messagePage = false;
+      } else {
+        $scope.showpage.waitpage = false;
+        $scope.showpage.messagePage = true;
+      }
+
       if ($scope.role === "A") {
         $("#tSlider").val(50);
       } else if ($scope.role === "B") {
@@ -1350,11 +1368,14 @@
           // });
 
           $scope.$apply();
-          console.log("$scope.readerMessages");
+          console.log("$scope.readerMessages", $scope.readerMessages);
           $scope.readerconfirm++;
           console.log("readerconfirm ", $scope.readerconfirm);
 //          $scope.readerlist.splice($scope.readerlist.indexOf(sender),1);
-          console.log("currently one wait page? ", $scope.showpage.waitpage);
+          console.log("currently on wait page? ", $scope.showpage.waitpage);
+            // $scope.showpage.waitpage = false;
+            // $scope.showpage.messagePage = true;
+
           if ($scope.showpage.waitpage) {
             $scope.showpage.waitpage = false;
             $scope.showpage.messagePage = true;
@@ -1667,8 +1688,8 @@
       // check if debug is up
       if (!configfile.Debug) {
         $scope.debug = false;
-        console.log("debug mode is on");
       } else {
+        console.log("debug mode is on");
         $scope.debug = true;
         $scope.income = $scope.incomegoal * 100 /** $scope.scale */+ 1;
         $scope.bid = 3;

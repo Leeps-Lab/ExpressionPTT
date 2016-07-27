@@ -633,9 +633,10 @@
   <!-- R message box -->
   <div class="container" ng-show="showpage.messagePage && role === 'R'">
     <div class="row">
-      <h3 class="text-center">Here are the messages :</h3>
+      
     </div>
-    <div class="row">
+    <div class="row" ng-hide = "readerSeen == readerlist.length && readerconfirm === 0">
+      <h3 class="text-center">Here are the messages :</h3>
         <div class="col-md-offset-3 scollable"
           style="border-style:solid;border-width:2px;height:300px;width:600px;padding:10px;">
           <div ng-repeat="message in readerMessages track by $index">
@@ -655,9 +656,10 @@
     </div>
     <br>
     <div class="row text-center" ng-show="readerSeen == readerlist.length && readerconfirm === 0">
-        <button type="button" class="btn btn-info" ng-click="showpage.showEarnings = true; showpage.messagePage = false; saveState();">
-          Continue
-        </button>
+      <h3>All messages have been read.</h3>  
+      <button type="button" class="btn btn-info" ng-click="showpage.showEarnings = true; showpage.messagePage = false; saveState();">
+        Continue
+      </button>
     </div>
   </div>
 
