@@ -6,13 +6,17 @@
 * TRUE
 * FALSE
 
-__Default : FALSE__
+__By Default : FALSE__
+
+---
 
 #### VideoInstruction (string)
 * TRUE
 * FALSE
 
 __Default : FALSE__
+
+---
 
 #### VideoLink (string)
 * Ex : https://www.youtube.com/watch?v=YgdR5FvnNPc
@@ -21,12 +25,20 @@ __Default : FALSE__
 #### Endowment (int | array)
 * Same for all. Ex : 3
 * Different between Subjects. Ex : [3, 5]
-__Default : 3__
+
+**Default : 3**
+
+---
+
 
 #### TargetIncome (int | array)
 * Same for all. Ex : 10
 * Different between Subjects. Ex : 15
-__Default : 10__
+
+**Default : 10**
+
+---
+
 
 ### Treatment
 #### Treatment (string)
@@ -34,7 +46,11 @@ __Default : 10__
 * 'No Message' "NM"
 * 'Free Message' "FM"
 * 'Third Party' (previously called 'Readers') "TP"
-__Default : "DM"__
+
+**Default : "DM"**
+
+---
+
 
 
 #### Group (array)
@@ -45,7 +61,10 @@ Groups of two or three subject ID numbers.
 *Property : one ID does not repeat in one or other
 groups (exection if ID corresponds to R)*
 
-__Default : [1,2]__
+**Default : [1,2]**
+
+---
+
 
 
 #### Role (array)
@@ -57,6 +76,9 @@ A replaces T, B replaces P
 
 __Default : ["A", "B"]__
 
+---
+
+
 #### Method (string)
 * 'BDM_CONT_WTP' (default)
 * 'BDM_LIST_WTP'
@@ -67,11 +89,17 @@ __Default : ["A", "B"]__
 
 __Default : "BDM_CONT_WTP"__
 
+---
+
+
 #### MethodParams (array | int)
 * For 'BDM' : (default : [0, Endowment, 11]) [lowerbound, upperbound(, numberofsteps)] 
 * For 'SOP' : price
 
 __Default : 'BDM' -> [0, 3(, 11)]; 'SOP' -> 0.50__
+
+---
+
 
 ### Emotion Questionaire
 #### Questionaire (string)
@@ -80,17 +108,26 @@ __Default : 'BDM' -> [0, 3(, 11)]; 'SOP' -> 0.50__
 
 __Default : 'Batson'__
 
+---
+
+
 #### EmotionRange (array | int)
 * Batson -> Both emotions add to value. Ex : 10, both emotions add up to 10.
 * Bosman -> Range for emotion. Ex : [0,9], slider goes from 0 to 9
 
 __Default : Batson -> 10; Bosman -> 7__
 
+---
+
+
 #### EmotionList (array)
 * Batson -> Array of pairs. Ex : [['happy', 'sad'], ['inspired', 'uninspired']]
 * Bosman -> Array of strings. Ex : ['interested', 'excited']
 
-__Default : 'there are in the code'__
+__Default : 'they're are in the code'__
+
+---
+
 
 ## Change log
 * add page for video

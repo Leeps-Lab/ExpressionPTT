@@ -20,7 +20,7 @@
   <div class="container" ng-show="showpage.part1;">
     <div class="row">
       <div class="col-mid-4 col-mid-offset-4">
-        <h3 class="text-center">Part 1</h3>
+        <h3 class="text-center">Questionnaire</h3>
         <p class="text-center">To start click continue</p>
       </div>
       <div class="text-center">
@@ -116,7 +116,7 @@
   <div class="container" ng-show="showpage.part2ready">
     <div class="row">
       <div class="text-center">
-        <h3>Part 2</h3>
+        <h3>Part 1</h3>
         <p>To start click continue</p>
       </div>
       <div class="text-center">
@@ -340,7 +340,7 @@
   <!-- start part 3 -->
   <div class="container" ng-show="showpage.part3ready">
     <div class="row">
-      <h3 class="text-center">Part 3</h3>
+      <h3 class="text-center">Part 2</h3>
       <p class="text-center">To start click continue</p>
       <div class="col-mid-4 col-mid-offset-4">
       </div>
@@ -361,7 +361,7 @@
     <div class="row">
       <h2 class="text-center">Your role is {{role}}</h2>
       <div ng-if="endowment">
-        <h2 class="text-center">In Part 2, you have recieved ${{floatToMoney(endowment)}} as
+        <h2 class="text-center">In Part 1, you have recieved ${{floatToMoney(endowment)}} as
           endowment and earned ${{floatToMoney(income)}} of income.</h2>
         <h2 class="text-center" ng-hide="role === 'R'">Your counterpart, {{partner.role}}, has received
           ${{floatToMoney(partner.endowment)}} as endowment and earned
@@ -369,7 +369,7 @@
         </h2>
       </div>
       <div ng-if="!endowment">
-        <h2 class="text-center">In Part 2, you have recieved earned ${{floatToMoney(income)}} of income.</h2>
+        <h2 class="text-center">In Part 1, you have recieved earned ${{floatToMoney(income)}} of income.</h2>
         <h2 class="text-center" ng-hide="role === 'R'">Your counterpart, {{partner.role}}, has received
           earned ${{floatToMoney(partner.income)}} of income.
         </h2>
@@ -399,7 +399,7 @@
     <div class="row">
       <h3 class="text-center" style="line-height:1.6;">
         Being A, you are given the authority to transfer money from B's account to your own account.
-        The maximum amount of money you can collect is what B has earned as income in Part 2
+        The maximum amount of money you can collect is what B has earned as income in Part 1
         (${{floatToMoney(partner.income)}}).
       </h3>
     </div>
@@ -472,6 +472,15 @@
   <div class="container" ng-show="showpage.pwait">
     <div class="row">
       <h1 class="text-center">Your message has been sent to the reader.</h1>
+    </div>
+    <div class="row">
+      <!--
+      <div class="text-center">
+        <button type="button" class="btn btn-success" ng-click="showpage.pwait = false; showpage.showEarnings = false;">
+          Continue
+        </button>
+      </div>
+    -->
     </div>
   </div>
 
@@ -645,7 +654,7 @@
         
     </div>
     <br>
-    <div class="row text-center" ng-show="readerlist.length === 0 && readerconfirm === 0">
+    <div class="row text-center" ng-show="readerSeen == readerlist.length && readerconfirm === 0">
         <button type="button" class="btn btn-info" ng-click="showpage.showEarnings = true; showpage.messagePage = false; saveState();">
           Continue
         </button>
@@ -792,7 +801,7 @@
   <!-- start part 4 -->
   <div class="container" ng-show="showpage.part4">
     <div class="row">
-      <h3 class="text-center">Part 4</h3>
+      <h3 class="text-center">Questionnaire</h3>
       <p class="text-center">To start click continue</p>
     </div>
     <div class="row">
@@ -852,9 +861,8 @@
     </div>
     <div class="row">
       <div class="text-center">
-        <button type="button" class="btn btn-info" ng-click="finishFinalQuestions()">Continue</button>
+        <button type="button" class="btn btn-info" ng-click="finishFinalQuestions(); showpage.thanks = true;">Continue</button>
       </div>
-    </div>
     </div>
   </div>
 

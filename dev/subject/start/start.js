@@ -356,6 +356,7 @@
     $scope.allmessages = false;
     $scope.readerMessages = [];
     $scope.readerlist = [];
+    $scope.readerSeen = 0;
     $scope.readerconfirm = 0;
 
     // debug
@@ -904,12 +905,14 @@
         message: $scope.ablesendmessage
       });
     };
+    //for B sending to A
     $scope.checkprice = function() {
       if ($scope.ablesendmessage) {
         $scope.showpage.waitpage = true;
         $scope.showpage.checkprice = false;
         $scope.saveState();
 
+        console.log("sending message, from B to A");
         rs.send("sendMessage", {
           messages : $scope.message.replace(/\n/g, '<br />'),
           taken : $scope.partner.moneytransferred
@@ -927,7 +930,8 @@
         message: $scope.message.replace(/\n/g, '<br />'),
         time: $scope.getTime()
       });
-      if ($scope.reader) {
+      if ($scope.reader) {//method TP
+        console.log("message was sent to the reader ", $scope.message);
         rs.send("sendMessage", {
           messages : $scope.message.replace(/\n/g, '<br />'),
           taken : $scope.partner.moneytransferred
@@ -939,7 +943,8 @@
           taken : $scope.partner.moneytransferred
         });
         $scope.showpage.waitpage = true;
-      } else {
+      } else {//only from b to a
+        console.log("message from B to a");
         $scope.showpage.checkprice = true;
       }
       $scope.saveState();
@@ -961,10 +966,12 @@
     };
     $scope.rmessageConfirm = function(userid,index) {
       $scope.readerconfirm--;
+      console.log("readerconfirm", $scope.readerconfirm)
       $scope.readerMessages.splice(index,1);
       rs.send("readRMessage", {
         userid: userid
       });
+
     };
     $scope.sawEarnings = function() {
       $scope.showpage.showEarnings = false;
@@ -973,21 +980,22 @@
       $scope.saveState();
     };
     $scope.finishFinalQuestions = function() {
-      return;
-      if (!$scope.debug && !$scope.isValid($scope.finalResponses)) return;
-      $scope.showpage.finalquestions = false;
-
-      $scope.showpage.thanks = true;
-      // send answers back to server
-      var value = {
-        showpage: $scope.showpage,
-        time: $scope.getTime()
-      };
-      for(emotion in $scope.finalResponses) {
-        value[emotion] = $scope.finalResponses[emotion];
-      };
-
-      rs.trigger("sendfinalanswers", value);
+      if($scope.debug || $scope.isValid($scope.finalResponses)){
+        console.log("either in debug, or valid responses");
+        $scope.showpage.finalquestions = false;
+        $scope.showpage.thanks = true;
+        // send answers back to server
+        var value = {
+          showpage: $scope.showpage,
+          time: $scope.getTime()
+        };
+        for(emotion in $scope.finalResponses) {
+          value[emotion] = $scope.finalResponses[emotion];
+        };
+        rs.trigger("sendfinalanswers", value);
+      } else if (!$scope.isValid($scope.finalResponses)){
+        return;
+      } 
     };
 
     $scope.floatToMoney = function(number) {
@@ -1316,23 +1324,36 @@
     rs.recv("sendMessage", function(sender, value) {
       console.log ("sendmessage recv");
       if ($scope.reader && $scope.role === "R") {// if you are R, you rev message
-        console.log("r recieved message");
+        console.log("r received message");
         // check if on readerlist
         console.log("readerlist is ", $scope.readerlist);
         console.log(" the sender ", parseInt(sender));
         console.log("typecheck", typeof sender);
         console.log("index of sender ", $scope.readerlist.indexOf(sender));
         //if ($scope.readerlist.indexOf(sender) !== -1) {
-          var inList = $scope.checkReaderList($scope.readerlist, sender);
-          console.log("sender in readerlist?", inList);
+        var inList = $scope.checkReaderList($scope.readerlist, sender);
+        console.log("sender in readerlist?", inList);
         if (inList) {
+          $scope.readerSeen ++;
           $scope.readerMessages.push({
             text : $sce.trustAsHtml(value.messages),
             taken : value.taken,
             userid : sender
           });
+
+          // $scope.$apply(function(){
+          //   $scope.readerMessages.push({
+          //     text : $sce.trustAsHtml(value.messages),
+          //     taken : value.taken,
+          //     userid : sender
+          //   });              
+          // });
+
+          $scope.$apply();
+          console.log("$scope.readerMessages");
           $scope.readerconfirm++;
-          $scope.readerlist.splice($scope.readerlist.indexOf(sender),1);
+          console.log("readerconfirm ", $scope.readerconfirm);
+//          $scope.readerlist.splice($scope.readerlist.indexOf(sender),1);
           console.log("currently one wait page? ", $scope.showpage.waitpage);
           if ($scope.showpage.waitpage) {
             $scope.showpage.waitpage = false;
@@ -1373,6 +1394,7 @@
     // responce after a barrier
     rs.on("afterbarrier", function(value) {
       $scope.showpage = value.showpage;
+      console.log("show page after barrier ", $scope.showpage);
     });
     // recieves income after game
     rs.on("saveIncome", function(value) {
@@ -1398,6 +1420,10 @@
     rs.on("sendfinalanswers", function(value) {
       $scope.finalResponses = value.finalResponses;
       $scope.showpage = value.showpage;
+
+
+      console.log("show page", $scope.showpage);
+      console.log("value", value);
     });
     // barriers
     rs.on("readypart2self", function(value) {
@@ -1591,24 +1617,34 @@
 
       $scope.userIndex = parseInt(rs.user_id); 
       console.log("user id", $scope.userIndex);
-      console.log("configs", rs.configs);
       console.log("configs length", rs.configs.length);
 
 
       for (var i = 0; i < rs.configs.length; i++) {
+        console.log("rs.configs ", rs.configs);
         var groupindex = rs.configs[i].Group.indexOf($scope.userIndex)
         console.log("groupIndex ", groupindex);
         if (groupindex !== -1) {
-          console.log('config is at group'+i);
+          console.log('config is at group ', i);
           configfile = rs.configs[i];
+          configfile.Role = configfile.Role.substring(1,configfile.Role.length-1).split(",");
           userIndex = groupindex;
           for (var j = 0; j < rs.configs[i].Group.length; j++) {
             if (j !== userIndex && rs.configs[i].Role[j] !== 'R') {
               partnerIndex = j;
             }
+            console.log("configs", rs.configs[i].Role[j]);
+            if(rs.configs[i].Role[j] == 'B'){
+              console.log("B is at user index", j);
+              console.log("B is is user ", configfile.Group[j]);            
+              $scope.readerlist.push(configfile.Group[j]);
+            }
           }
         }
       }
+
+      console.log("readerlist", $scope.readerlist);
+
       console.log('my index '+userIndex);
       console.log('other partner index '+partnerIndex);
       // congif values
@@ -1623,7 +1659,8 @@
       $scope.showpage.showStartExperiment = true;
       // set values from config file
       // role index endowment
-      configfile.Role = configfile.Role.substring(1,configfile.Role.length-1).split(",");
+//      configfile.Role = configfile.Role.substring(1,configfile.Role.length-1).split(",");
+//      console.log("fixed role", configfile.Role);
       $scope.role = configfile.Role[userIndex];
       $scope.endowment = configfile.Endowment * 100;// * $scope.scale;
 
@@ -1664,15 +1701,16 @@
         console.log("partnerId : "+$scope.partner.index);
         console.log("partnerRole : "+$scope.partner.role);
       } else {//role is R
-        for (var i = 0; i < configfile.Group.length; i++) {
-          if (i !== $scope.userIndex && configfile.Role[i] === 'B') {
+        console.log("skipped setting readerlist");
+      //   for (var i = 0; i < configfile.Group.length; i++) {
+      //     if (i !== $scope.userIndex && configfile.Role[i] === 'B') {
 
-            console.log("B is at user index", i);
-            console.log("B is is user ", configfile.Group[i]);
-            $scope.readerlist.push(configfile.Group[i]);
-          }
-        }
-      }
+      //       console.log("B is at user index", i);
+      //       console.log("B is is user ", configfile.Group[i]);
+      //       $scope.readerlist.push(configfile.Group[i]);
+      //     }
+      //   }
+       }
       $scope.createSliders();
 
       rs.trigger("admininital", {
@@ -1684,7 +1722,7 @@
         $scope.questions = false;
         $scope.showGame = true;
         console.log("its barrier time");
-        $scope.showpage.thanks = false;
+        //$scope.showpage.thanks = false;
       });
   	});
 
